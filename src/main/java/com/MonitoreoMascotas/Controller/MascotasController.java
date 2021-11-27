@@ -57,7 +57,7 @@ public class MascotasController {
             return new ResponseEntity(new Mensaje("el nombre es obligatorio"), HttpStatus.BAD_REQUEST);
         if(mascotasService.existsByNombre(mascotasDto.getNombre()))
             return new ResponseEntity(new Mensaje("ese nombre ya existe"), HttpStatus.BAD_REQUEST);
-        Mascotas mascota = new Mascotas(mascotasDto.getNombre(), mascotasDto.getColor(),mascotasDto.getRaza(),mascotasDto.getEsterilizacion(),mascotasDto.getFechaEsterilizacion(),mascotasDto.getFechaNacimiento());
+        Mascotas mascota = new Mascotas(mascotasDto.getNombre(), mascotasDto.getColor(),mascotasDto.getRaza(),mascotasDto.getEsterilizacion(),mascotasDto.getFechaEsterilizacion(),mascotasDto.getFechaNacimiento(),null,null,null,null);
         mascotasService.save(mascota);
         return new ResponseEntity(new Mensaje("producto creado"), HttpStatus.OK);
     }
@@ -66,7 +66,7 @@ public class MascotasController {
     public ResponseEntity<?> update(@PathVariable("id")int id, @RequestBody MascotasDto mascotasDto){
         if(!mascotasService.existsById(id))
             return new ResponseEntity(new Mensaje("no existe"), HttpStatus.NOT_FOUND);
-        if(mascotasService.existsByNombre(mascotasDto.getNombre()) && mascotasService.getByNombre(mascotasDto.getNombre()).get().getIdMascota() != id)
+        if(mascotasService.existsByNombre(mascotasDto.getNombre()) && mascotasService.getByNombre(mascotasDto.getNombre()).get().getId() != id)
             return new ResponseEntity(new Mensaje("ese nombre ya existe"), HttpStatus.BAD_REQUEST);
         if(StringUtils.isBlank(mascotasDto.getNombre()))
             return new ResponseEntity(new Mensaje("el nombre es obligatorio"), HttpStatus.BAD_REQUEST);
