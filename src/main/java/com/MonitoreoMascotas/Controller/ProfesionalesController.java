@@ -25,7 +25,7 @@ public class ProfesionalesController {
 	
 
 
-	@GetMapping(produces = "application/json")
+	@GetMapping(produces = "application/json") 
     public ResponseEntity<List<Profesionales>> list(){
         List<Profesionales> list = profesionalesService.lista();
         return new ResponseEntity<>(list, HttpStatus.OK);
