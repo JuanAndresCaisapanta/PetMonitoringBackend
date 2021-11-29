@@ -9,10 +9,12 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import com.MonitoreoMascotas.Security.Entity.Usuarios;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Mascotas {
@@ -26,20 +28,25 @@ public class Mascotas {
 	private Date fechaEsterilizacion;
 	private Date fechaNacimiento;
 	
+	
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "mascotas")
 	private List<Profesionales> profesionales;
 	
-	
 	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="especies_id")
+	@JsonIgnore
 	private Especies especies;
 	
+
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "mascotas")
 	private List<Vacunas> vacunas;
+	
 	
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "mascotas")
 	private List<Dispositivos> dispositivos;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="usuarios_id")
 	private Usuarios usuarios;
 
 	public Mascotas() {

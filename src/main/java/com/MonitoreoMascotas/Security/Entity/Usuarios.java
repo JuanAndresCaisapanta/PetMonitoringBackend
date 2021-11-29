@@ -17,6 +17,7 @@ import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 
 import com.MonitoreoMascotas.Entity.Mascotas;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Usuarios {
@@ -37,11 +38,13 @@ public class Usuarios {
     
     private String telefono;
     @NotNull
+    
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "usuario_rol", joinColumns = @JoinColumn(name = "usuario_id"),
     inverseJoinColumns = @JoinColumn(name = "rol_id"))
     private Set<Roles> roles = new HashSet<>();
     
+
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "usuarios")
 	private List<Mascotas> mascotas;
     

@@ -10,6 +10,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Especies {
 
@@ -18,7 +20,10 @@ public class Especies {
 	private int id;
 	private String nombre;
 	
+	
+	
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "especies")
+	
 	private List<Mascotas> mascotas;
 	
 	
