@@ -2,14 +2,20 @@ package com.MonitoreoMascotas.Controller;
 
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.MonitoreoMascotas.Dto.EspecialidadesDto;
+import com.MonitoreoMascotas.Dto.Mensaje;
 import com.MonitoreoMascotas.Entity.Especialidades;
 import com.MonitoreoMascotas.Service.EspecialidadesService;
 
@@ -18,14 +24,13 @@ import com.MonitoreoMascotas.Service.EspecialidadesService;
 @CrossOrigin(origins = "http://localhost:3000")
 public class EspecialidadesController {
 	@Autowired
-    EspecialidadesService especialidadesService;
+	EspecialidadesService especialidadesService;
 
-	 
 	@GetMapping(produces = "application/json")
-    public ResponseEntity<List<Especialidades>> list(){
-        List<Especialidades> list = especialidadesService.lista();
-        return new ResponseEntity<>(list, HttpStatus.OK);
-    }
+	public ResponseEntity<List<Especialidades>> list() {
+		List<Especialidades> list = especialidadesService.lista();
+		return new ResponseEntity<>(list, HttpStatus.OK);
+	}
 
 //    @GetMapping("{id}")
 //    public ResponseEntity<Mascotas> getById(@PathVariable("id") int id){
@@ -43,16 +48,16 @@ public class EspecialidadesController {
 //        return new ResponseEntity(mascota, HttpStatus.OK);
 //    }
 //
-//    @PostMapping(produces = "application/json")
-//    public ResponseEntity<?> create(@RequestBody MascotasDto mascotasDto){
-//        if(StringUtils.isBlank(mascotasDto.getNombre()))
-//            return new ResponseEntity(new Mensaje("el nombre es obligatorio"), HttpStatus.BAD_REQUEST);
-//        if(mascotasService.existsByNombre(mascotasDto.getNombre()))
-//            return new ResponseEntity(new Mensaje("ese nombre ya existe"), HttpStatus.BAD_REQUEST);
-//        Mascotas mascota = new Mascotas(mascotasDto.getNombre(), mascotasDto.getColor(),mascotasDto.getRaza(),mascotasDto.getEsterilizacion(),mascotasDto.getFechaEsterilizacion(),mascotasDto.getFechaNacimiento(),null,null,null,null);
-//        mascotasService.save(mascota);
-//        return new ResponseEntity(new Mensaje("producto creado"), HttpStatus.OK);
-//    }
+	@PostMapping(produces = "application/json")
+	public ResponseEntity<?> crear(@RequestBody @Validated EspecialidadesDto especialidadesDto) {
+		if (StringUtils.isBlank(especialidadesDto.getNombre()))
+			return new ResponseEntity<>(new Mensaje("el nombre es obligatorio"), HttpStatus.BAD_REQUEST);
+		if (especialidadesService.existsByNombre(especialidadesDto.getNombre()))
+			return new ResponseEntity<>(new Mensaje("ese nombre ya existe"), HttpStatus.BAD_REQUEST);
+		Especialidades especialidad = new Especialidades(especialidadesDto.getNombre(),especialidadesDto.getProfesionales());
+		especialidadesService.save(especialidad);
+		return new ResponseEntity<>(new Mensaje("Especialidad creada"), HttpStatus.OK);
+	}
 //
 //    @PutMapping("{id}")
 //    public ResponseEntity<?> update(@PathVariable("id")int id, @RequestBody MascotasDto mascotasDto){

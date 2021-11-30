@@ -9,9 +9,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
+
 public class Profesionales {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,13 +23,13 @@ public class Profesionales {
 	private String telefono;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-
+	@JsonBackReference (value = "mascotas-profesionales")
 	@JoinColumn(name="mascotas_id")
-	@JsonIgnore
+	
 	private Mascotas mascotas;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JsonIgnore
+	@JsonBackReference(value = "especialidades-profesionales")
 	@JoinColumn(name="especialidades_id")
 	private Especialidades especialidades;
 	

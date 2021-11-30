@@ -8,6 +8,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 public class Ubicaciones {
 	@Id
@@ -18,6 +20,7 @@ public class Ubicaciones {
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="dispositivos_id")
+	@JsonBackReference(value = "dispositivos-ubicaciones")
 	private Dispositivos dispositivos;
 
 	public Ubicaciones() {

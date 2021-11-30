@@ -12,7 +12,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 public class Dispositivos {
@@ -26,14 +27,17 @@ public class Dispositivos {
 	
 	
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "dispositivos")
+	@JsonManagedReference(value = "dispositivos-temperaturas")
 	private List<Temperaturas> temperaturas;
 	
 	
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "dispositivos")
+	@JsonManagedReference(value = "dispositivos-ubicaciones")
 	private List<Ubicaciones> ubicaciones;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="mascotas_id")
+	@JsonBackReference(value = "mascotas-dispositivos")
 	private Mascotas mascotas;
 
 	public Dispositivos() {

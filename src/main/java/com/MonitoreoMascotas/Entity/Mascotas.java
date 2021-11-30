@@ -14,7 +14,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import com.MonitoreoMascotas.Security.Entity.Usuarios;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 public class Mascotas {
@@ -30,23 +31,27 @@ public class Mascotas {
 	
 	
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "mascotas")
+	@JsonManagedReference(value = "mascotas-profesionales")
 	private List<Profesionales> profesionales;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="especies_id")
-	@JsonIgnore
+	@JsonBackReference(value = "especies-mascotas")
 	private Especies especies;
 	
 
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "mascotas")
+	@JsonManagedReference(value = "mascotas-vacunas")
 	private List<Vacunas> vacunas;
 	
 	
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "mascotas")
+	@JsonManagedReference(value = "mascotas-dispositivos")
 	private List<Dispositivos> dispositivos;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="usuarios_id")
+	@JsonBackReference(value = "usuarios-mascotas")
 	private Usuarios usuarios;
 
 	public Mascotas() {

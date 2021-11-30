@@ -8,6 +8,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 public class Temperaturas {
 	@Id
@@ -17,6 +19,7 @@ public class Temperaturas {
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="dispositivos_id")
+	@JsonBackReference(value = "dispositivos-temperaturas")
 	private Dispositivos dispositivos;
 
 	public Temperaturas() {

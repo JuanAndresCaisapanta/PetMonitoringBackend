@@ -10,7 +10,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 public class Especies {
@@ -23,7 +24,7 @@ public class Especies {
 	
 	
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "especies")
-	
+	@JsonManagedReference(value = "especies-mascotas")
 	private List<Mascotas> mascotas;
 	
 	

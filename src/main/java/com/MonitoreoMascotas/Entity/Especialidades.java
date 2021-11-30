@@ -10,9 +10,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
+
 public class Especialidades {
 	
 	@Id
@@ -22,16 +23,21 @@ public class Especialidades {
 
 	
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "especialidades")
-	
+	@JsonManagedReference(value = "especialidades-profesionales")
 	private List<Profesionales> profesionales;
 	
 	public Especialidades() {
 	}
 
+	
+
 	public Especialidades(String nombre, List<Profesionales> profesionales) {
+		super();
 		this.nombre = nombre;
 		this.profesionales = profesionales;
 	}
+
+
 
 	public int getId() {
 		return id;
@@ -58,6 +64,4 @@ public class Especialidades {
 	}
 
 	
-	
-
 }

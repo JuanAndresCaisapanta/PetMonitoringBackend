@@ -17,7 +17,7 @@ import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 
 import com.MonitoreoMascotas.Entity.Mascotas;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 public class Usuarios {
@@ -46,6 +46,7 @@ public class Usuarios {
     
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "usuarios")
+    @JsonManagedReference(value = "usuarios-mascotas")
 	private List<Mascotas> mascotas;
     
 	public Usuarios() {

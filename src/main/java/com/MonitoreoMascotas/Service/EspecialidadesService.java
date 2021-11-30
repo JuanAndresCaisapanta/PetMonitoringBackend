@@ -3,9 +3,12 @@ package com.MonitoreoMascotas.Service;
 import java.util.List;
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import com.MonitoreoMascotas.Entity.Especialidades;
 import com.MonitoreoMascotas.Repository.EspecialidadesRepository;
@@ -29,7 +32,7 @@ public class EspecialidadesService {
 	        return especialidadesRepository.findByNombre(nombre);
 	    }
 
-	    public void  save(Especialidades especialidades){
+	    public void  save(@Valid @RequestBody Especialidades especialidades){
 	        especialidadesRepository.save(especialidades);
 	    }
 
