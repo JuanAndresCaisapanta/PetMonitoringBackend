@@ -63,5 +63,17 @@ public class Especialidades {
 		this.profesionales = profesionales;
 	}
 
-	
+	public Profesionales addProfesionale(Profesionales profesionales) {
+		getProfesionales().add(profesionales);
+		profesionales.setEspecialidades(this);
+
+		return profesionales;
+	}
+
+	public Profesionales removeProfesionale(Profesionales profesionales) {
+		getProfesionales().remove(profesionales);
+		profesionales.setEspecialidades(null);
+
+		return profesionales;
+	}
 }

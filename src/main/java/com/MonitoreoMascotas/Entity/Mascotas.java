@@ -153,6 +153,19 @@ public class Mascotas {
 		this.profesionales = profesionales;
 	}
 
+	public Profesionales addProfesionales(Profesionales profesionales) {
+		getProfesionales().add(profesionales);
+		profesionales.setMascotas(this);
+
+		return profesionales;
+	}
+
+	public Profesionales removeProfesionale(Profesionales profesionale) {
+		getProfesionales().remove(profesionale);
+		profesionale.setMascotas(null);
+
+		return profesionale;
+	}
 
 	public Especies getEspecies() {
 		return especies;
