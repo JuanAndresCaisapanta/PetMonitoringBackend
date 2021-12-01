@@ -10,6 +10,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
 public class Vacunas {
@@ -19,9 +20,13 @@ public class Vacunas {
 	private String fabricador;
 	private String lote;
 	private String aplicador;
+	@JsonFormat(pattern = "dd/MM/yyyy")
 	private Date fechaFabricacion;
+	@JsonFormat(pattern = "dd/MM/yyyy")
 	private Date fechaCaducidad;
+	@JsonFormat(pattern = "dd/MM/yyyy")
 	private Date fechaAplicacion;
+	@JsonFormat(pattern = "dd/MM/yyyy")
 	private Date fechaRevacuna;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
