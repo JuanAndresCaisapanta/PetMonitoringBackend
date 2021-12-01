@@ -30,7 +30,7 @@ public class MascotasController {
     MascotasService mascotasService;
 
     @GetMapping(produces = "application/json")
-    public ResponseEntity<List<Mascotas>> list(){
+    public ResponseEntity<List<Mascotas>> lista(){
         List<Mascotas> list = mascotasService.list();
         return new ResponseEntity(list, HttpStatus.OK);
     }

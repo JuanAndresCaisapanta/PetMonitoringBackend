@@ -31,7 +31,7 @@ public class EspecialidadesController {
 	EspecialidadesService especialidadesService;
 
 	@GetMapping(produces = "application/json")
-	public ResponseEntity<List<Especialidades>> list() {
+	public ResponseEntity<List<Especialidades>> lista() {
 		List<Especialidades> list = especialidadesService.lista();
 		return new ResponseEntity<>(list, HttpStatus.OK);
 	}

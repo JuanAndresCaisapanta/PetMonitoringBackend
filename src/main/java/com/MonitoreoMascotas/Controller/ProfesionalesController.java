@@ -31,7 +31,7 @@ public class ProfesionalesController {
 	ProfesionalesService profesionalesService;
 
 	@GetMapping(produces = "application/json")
-	public ResponseEntity<List<Profesionales>> list() {
+	public ResponseEntity<List<Profesionales>> lista() {
 		List<Profesionales> list = profesionalesService.lista();
 		return new ResponseEntity<>(list, HttpStatus.OK);
 	}

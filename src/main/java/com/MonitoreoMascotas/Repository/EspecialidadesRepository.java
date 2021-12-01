@@ -8,9 +8,10 @@ import org.springframework.stereotype.Repository;
 import com.MonitoreoMascotas.Entity.Especialidades;
 
 @Repository
-public interface EspecialidadesRepository extends JpaRepository<Especialidades, Integer>{
-	
+public interface EspecialidadesRepository extends JpaRepository<Especialidades, Integer> {
+
 	Optional<Especialidades> findByNombre(String nombre);
+
 	boolean existsByNombre(String nombre);
 
 }

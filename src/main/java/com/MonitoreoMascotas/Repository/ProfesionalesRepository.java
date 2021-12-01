@@ -14,6 +14,4 @@ public interface ProfesionalesRepository extends JpaRepository<Profesionales, In
 
 	boolean existsByNombre(String nombre);
 	
-	
-
 }
