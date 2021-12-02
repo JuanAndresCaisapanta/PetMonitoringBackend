@@ -41,8 +41,8 @@ public class ProfesionalesController {
 	public ResponseEntity<Profesionales> getById(@PathVariable("id") int id) {
 		if (!profesionalesService.existsById(id))
 			return new ResponseEntity(new Mensaje("no existe"), HttpStatus.NOT_FOUND);
-		Profesionales profesional = profesionalesService.getOne(id).get();
-		return new ResponseEntity<>(profesional, HttpStatus.OK);
+		Profesionales profesionales = profesionalesService.getOne(id).get();
+		return new ResponseEntity<>(profesionales, HttpStatus.OK);
 	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
@@ -50,8 +50,8 @@ public class ProfesionalesController {
 	public ResponseEntity<Profesionales> getByNombre(@PathVariable("nombre") String nombre) {
 		if (!profesionalesService.existsByNombre(nombre))
 			return new ResponseEntity(new Mensaje("no existe"), HttpStatus.NOT_FOUND);
-		Profesionales profesional = profesionalesService.getByNombre(nombre).get();
-		return new ResponseEntity<>(profesional, HttpStatus.OK);
+		Profesionales profesionales = profesionalesService.getByNombre(nombre).get();
+		return new ResponseEntity<>(profesionales, HttpStatus.OK);
 	}
 
 	@PostMapping(produces = "application/json")
@@ -60,14 +60,14 @@ public class ProfesionalesController {
 			return new ResponseEntity<>(new Mensaje("el nombre es obligatorio"), HttpStatus.BAD_REQUEST);
 		if (profesionalesService.existsByNombre(profesionalesDto.getNombre()))
 			return new ResponseEntity<>(new Mensaje("ese nombre ya existe"), HttpStatus.BAD_REQUEST);
-		Profesionales profesional = new Profesionales();
-		profesional.setNombre(profesionalesDto.getNombre());
-		profesional.setApellido(profesionalesDto.getApellido());
-		profesional.setDireccion(profesionalesDto.getDireccion());
-		profesional.setTelefono(profesionalesDto.getTelefono());
-		profesional.setMascotas(profesionalesDto.getMascotas());
-		profesional.setEspecialidades(profesionalesDto.getEspecialidades());
-		profesionalesService.guardar(profesional);
+		Profesionales profesionales = new Profesionales();
+		profesionales.setNombre(profesionalesDto.getNombre());
+		profesionales.setApellido(profesionalesDto.getApellido());
+		profesionales.setDireccion(profesionalesDto.getDireccion());
+		profesionales.setTelefono(profesionalesDto.getTelefono());
+		profesionales.setMascotas(profesionalesDto.getMascotas());
+		profesionales.setEspecialidades(profesionalesDto.getEspecialidades());
+		profesionalesService.guardar(profesionales);
 		return new ResponseEntity<>(new Mensaje("Profesional creado"), HttpStatus.OK);
 	}
 	
@@ -80,14 +80,14 @@ public class ProfesionalesController {
 			return new ResponseEntity<>(new Mensaje("ese nombre ya existe"), HttpStatus.BAD_REQUEST);
 		if (StringUtils.isBlank(profesionalesDto.getNombre()))
 			return new ResponseEntity<>(new Mensaje("el nombre es obligatorio"), HttpStatus.BAD_REQUEST);
-		Profesionales profesional = profesionalesService.getOne(id).get();
-		profesional.setNombre(profesionalesDto.getNombre());
-		profesional.setApellido(profesionalesDto.getApellido());
-		profesional.setDireccion(profesionalesDto.getDireccion());
-		profesional.setTelefono(profesionalesDto.getTelefono());
-		profesional.setMascotas(profesionalesDto.getMascotas());
-		profesional.setEspecialidades(profesionalesDto.getEspecialidades());
-		profesionalesService.actualizar(profesional);
+		Profesionales profesionales = profesionalesService.getOne(id).get();
+		profesionales.setNombre(profesionalesDto.getNombre());
+		profesionales.setApellido(profesionalesDto.getApellido());
+		profesionales.setDireccion(profesionalesDto.getDireccion());
+		profesionales.setTelefono(profesionalesDto.getTelefono());
+		profesionales.setMascotas(profesionalesDto.getMascotas());
+		profesionales.setEspecialidades(profesionalesDto.getEspecialidades());
+		profesionalesService.actualizar(profesionales);
 		return new ResponseEntity<>(new Mensaje("Profesional actualizado"), HttpStatus.OK);
 	}
 	

@@ -28,29 +28,25 @@ public class Mascotas {
 	private Boolean esterilizacion;
 	private Date fechaEsterilizacion;
 	private Date fechaNacimiento;
-	
-	
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "mascotas")
-	@JsonManagedReference(value = "mascotas-profesionales")
+
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "mascotas")
 	private List<Profesionales> profesionales;
-	
+
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="especies_id")
+	@JoinColumn(name = "especies_id")
 	@JsonBackReference(value = "especies-mascotas")
 	private Especies especies;
-	
 
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "mascotas")
 	@JsonManagedReference(value = "mascotas-vacunas")
 	private List<Vacunas> vacunas;
-	
-	
+
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "mascotas")
 	@JsonManagedReference(value = "mascotas-dispositivos")
 	private List<Dispositivos> dispositivos;
-	
+
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="usuarios_id")
+	@JoinColumn(name = "usuarios_id")
 	@JsonBackReference(value = "usuarios-mascotas")
 	private Usuarios usuarios;
 
@@ -169,6 +165,4 @@ public class Mascotas {
 		this.usuarios = usuarios;
 	}
 
-
-	
 }
