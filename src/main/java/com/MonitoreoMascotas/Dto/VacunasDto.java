@@ -1,26 +1,16 @@
-package com.MonitoreoMascotas.Entity;
+package com.MonitoreoMascotas.Dto;
+
 
 
 
 
 import java.util.Date;
 
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.MonitoreoMascotas.Entity.Mascotas;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-@Entity
-public class Vacunas {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+public class VacunasDto {
+	
 	private String fabricador;
 	private String lote;
 	private String aplicador;
@@ -32,16 +22,12 @@ public class Vacunas {
 	private Date fechaAplicacion;
 	@JsonFormat(pattern = "dd/MM/yyyy")
 	private Date fechaRevacuna;
-	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="mascotas_id")
-	@JsonBackReference(value = "mascotas-vacunas")
 	private Mascotas mascotas;
-
-	public Vacunas() {
+	
+	public VacunasDto() {
 	}
 
-	public Vacunas(String fabricador, String lote, String aplicador, Date fechaFabricacion, Date fechaCaducidad,
+	public VacunasDto(String fabricador, String lote, String aplicador, Date fechaFabricacion, Date fechaCaducidad,
 			Date fechaAplicacion, Date fechaRevacuna, Mascotas mascotas) {
 		this.fabricador = fabricador;
 		this.lote = lote;
@@ -51,14 +37,6 @@ public class Vacunas {
 		this.fechaAplicacion = fechaAplicacion;
 		this.fechaRevacuna = fechaRevacuna;
 		this.mascotas = mascotas;
-	}
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
 	}
 
 	public String getFabricador() {
@@ -125,6 +103,5 @@ public class Vacunas {
 		this.mascotas = mascotas;
 	}
 
-	
 	
 }
