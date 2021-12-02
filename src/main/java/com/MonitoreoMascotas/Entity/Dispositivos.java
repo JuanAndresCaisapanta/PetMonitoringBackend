@@ -25,15 +25,9 @@ public class Dispositivos {
 	private String fabricante;
 	private String observacion;
 	
-	
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "dispositivos")
-	@JsonManagedReference(value = "dispositivos-temperaturas")
-	private List<Temperaturas> temperaturas;
-	
-	
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "dispositivos")
-	@JsonManagedReference(value = "dispositivos-ubicaciones")
-	private List<Ubicaciones> ubicaciones;
+	@JsonManagedReference(value = "dispositivos-recopilaciones")
+	private List<Recopilaciones> recopilaciones;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="mascotas_id")
@@ -44,13 +38,12 @@ public class Dispositivos {
 	}
 
 	public Dispositivos(String nombre, String marca, String fabricante, String observacion,
-			List<Temperaturas> temperaturas, List<Ubicaciones> ubicaciones, Mascotas mascotas) {
+			List<Recopilaciones> recopilaciones, Mascotas mascotas) {
 		this.nombre = nombre;
 		this.marca = marca;
 		this.fabricante = fabricante;
 		this.observacion = observacion;
-		this.temperaturas = temperaturas;
-		this.ubicaciones = ubicaciones;
+		this.recopilaciones = recopilaciones;
 		this.mascotas = mascotas;
 	}
 
@@ -94,20 +87,12 @@ public class Dispositivos {
 		this.observacion = observacion;
 	}
 
-	public List<Temperaturas> getTemperaturas() {
-		return temperaturas;
+	public List<Recopilaciones> getRecopilaciones() {
+		return recopilaciones;
 	}
 
-	public void setTemperaturas(List<Temperaturas> temperaturas) {
-		this.temperaturas = temperaturas;
-	}
-
-	public List<Ubicaciones> getUbicaciones() {
-		return ubicaciones;
-	}
-
-	public void setUbicaciones(List<Ubicaciones> ubicaciones) {
-		this.ubicaciones = ubicaciones;
+	public void setRecopilaciones(List<Recopilaciones> recopilaciones) {
+		this.recopilaciones = recopilaciones;
 	}
 
 	public Mascotas getMascotas() {

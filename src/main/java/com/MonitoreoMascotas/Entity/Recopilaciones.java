@@ -11,22 +11,28 @@ import javax.persistence.ManyToOne;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
-public class Temperaturas {
+public class Recopilaciones {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	private Float grados;
+	
+	private Float latitud;
+	private Float longitud;
+	private Float temperatura;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="dispositivos_id")
-	@JsonBackReference(value = "dispositivos-temperaturas")
+	@JsonBackReference(value = "dispositivos-recopilaciones")
 	private Dispositivos dispositivos;
 
-	public Temperaturas() {
+	public Recopilaciones() {
 	}
 
-	public Temperaturas(Float grados, Dispositivos dispositivos) {
-		this.grados = grados;
+	public Recopilaciones(Float latitud, Float longitud, Float temperatura, Dispositivos dispositivos) {
+		this.latitud = latitud;
+		this.longitud = longitud;
+		this.temperatura = temperatura;
 		this.dispositivos = dispositivos;
 	}
 
@@ -38,12 +44,28 @@ public class Temperaturas {
 		this.id = id;
 	}
 
-	public Float getGrados() {
-		return grados;
+	public Float getLatitud() {
+		return latitud;
 	}
 
-	public void setGrados(Float grados) {
-		this.grados = grados;
+	public void setLatitud(Float latitud) {
+		this.latitud = latitud;
+	}
+
+	public Float getLongitud() {
+		return longitud;
+	}
+
+	public void setLongitud(Float longitud) {
+		this.longitud = longitud;
+	}
+
+	public Float getTemperatura() {
+		return temperatura;
+	}
+
+	public void setTemperatura(Float temperatura) {
+		this.temperatura = temperatura;
 	}
 
 	public Dispositivos getDispositivos() {
@@ -53,6 +75,9 @@ public class Temperaturas {
 	public void setDispositivos(Dispositivos dispositivos) {
 		this.dispositivos = dispositivos;
 	}
-
+	
+	
+	
+	
 	
 }

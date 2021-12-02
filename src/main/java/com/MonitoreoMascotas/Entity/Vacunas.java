@@ -21,6 +21,7 @@ public class Vacunas {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
+	
 	private String fabricador;
 	private String lote;
 	private String aplicador;
