@@ -17,7 +17,7 @@ public class MascotasService {
 	  @Autowired
 	    MascotasRepository mascotasRepository;
 
-	    public List<Mascotas> list(){
+	    public List<Mascotas> lista(){
 	        return (List<Mascotas>)mascotasRepository.findAll();
 	    }
 
@@ -29,11 +29,15 @@ public class MascotasService {
 	        return mascotasRepository.findByNombre(nombre);
 	    }
 
-	    public void  save(Mascotas mascota){
+	    public void  guardar(Mascotas mascota){
+	        mascotasRepository.save(mascota);
+	    }
+	    
+	    public void  actualizar(Mascotas mascota){
 	        mascotasRepository.save(mascota);
 	    }
 
-	    public void delete(int id){
+	    public void eliminar(int id){
 	        mascotasRepository.deleteById(id);
 	    }
 

@@ -31,11 +31,12 @@ public class MascotasController {
 
     @GetMapping(produces = "application/json")
     public ResponseEntity<List<Mascotas>> lista(){
-        List<Mascotas> list = mascotasService.list();
-        return new ResponseEntity(list, HttpStatus.OK);
+        List<Mascotas> list = mascotasService.lista();
+        return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
-    @GetMapping("{id}")
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+	@GetMapping("{id}")
     public ResponseEntity<Mascotas> getById(@PathVariable("id") int id){
         if(!mascotasService.existsById(id))
             return new ResponseEntity(new Mensaje("no existe"), HttpStatus.NOT_FOUND);
@@ -43,7 +44,8 @@ public class MascotasController {
         return new ResponseEntity(mascota, HttpStatus.OK);
     }
 
-    @GetMapping("{nombre}")
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+	@GetMapping("{nombre}")
     public ResponseEntity<Mascotas> getByNombre(@PathVariable("nombre") String nombre){
         if(!mascotasService.existsByNombre(nombre))
             return new ResponseEntity(new Mensaje("no existe"), HttpStatus.NOT_FOUND);
@@ -52,26 +54,33 @@ public class MascotasController {
     }
 
     @PostMapping(produces = "application/json")
-    public ResponseEntity<?> create(@RequestBody MascotasDto mascotasDto){
+    public ResponseEntity<?> guardar(@RequestBody MascotasDto mascotasDto){
         if(StringUtils.isBlank(mascotasDto.getNombre()))
-            return new ResponseEntity(new Mensaje("el nombre es obligatorio"), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new Mensaje("el nombre es obligatorio"), HttpStatus.BAD_REQUEST);
         if(mascotasService.existsByNombre(mascotasDto.getNombre()))
-            return new ResponseEntity(new Mensaje("ese nombre ya existe"), HttpStatus.BAD_REQUEST);
-        Mascotas mascota = new Mascotas(mascotasDto.getNombre(), mascotasDto.getColor(),mascotasDto.getRaza(),mascotasDto.getEsterilizacion(),mascotasDto.getFechaEsterilizacion(),mascotasDto.getFechaNacimiento(),null,null,null,null);
-        mascotasService.save(mascota);
-        return new ResponseEntity(new Mensaje("producto creado"), HttpStatus.OK);
+            return new ResponseEntity<>(new Mensaje("ese nombre ya existe"), HttpStatus.BAD_REQUEST);
+        Mascotas mascota = new Mascotas();
+        mascota.setNombre(mascotasDto.getNombre());
+        mascota.setColor(mascotasDto.getColor());
+        mascota.setRaza(mascotasDto.getRaza());
+        mascota.setEsterilizacion(mascotasDto.getEsterilizacion());
+        mascota.setFechaEsterilizacion(mascotasDto.getFechaEsterilizacion());
+        mascota.setFechaNacimiento(mascotasDto.getFechaNacimiento());
+        mascota.setEspecies(mascotasDto.getEspecies());
+        mascota.setUsuarios(mascotasDto.getUsuarios());
+        mascotasService.guardar(mascota);
+        return new ResponseEntity<>(new Mensaje("Mascota creada"), HttpStatus.OK);
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<?> update(@PathVariable("id")int id, @RequestBody MascotasDto mascotasDto){
+    public ResponseEntity<?> actualizar(@PathVariable("id")int id, @RequestBody MascotasDto mascotasDto){
         if(!mascotasService.existsById(id))
-            return new ResponseEntity(new Mensaje("no existe"), HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(new Mensaje("no existe"), HttpStatus.NOT_FOUND);
         if(mascotasService.existsByNombre(mascotasDto.getNombre()) && mascotasService.getByNombre(mascotasDto.getNombre()).get().getId() != id)
-            return new ResponseEntity(new Mensaje("ese nombre ya existe"), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new Mensaje("ese nombre ya existe"), HttpStatus.BAD_REQUEST);
         if(StringUtils.isBlank(mascotasDto.getNombre()))
-            return new ResponseEntity(new Mensaje("el nombre es obligatorio"), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new Mensaje("el nombre es obligatorio"), HttpStatus.BAD_REQUEST);
       
-
         Mascotas mascota = mascotasService.getOne(id).get();
         mascota.setNombre(mascotasDto.getNombre());
         mascota.setColor(mascotasDto.getColor());
@@ -79,16 +88,18 @@ public class MascotasController {
         mascota.setEsterilizacion(mascotasDto.getEsterilizacion());
         mascota.setFechaEsterilizacion(mascotasDto.getFechaEsterilizacion());
         mascota.setFechaNacimiento(mascotasDto.getFechaNacimiento());
-        mascotasService.save(mascota);
-        return new ResponseEntity(new Mensaje("mascota actualizada"), HttpStatus.OK);
+        mascota.setEspecies(mascotasDto.getEspecies());
+        mascota.setUsuarios(mascotasDto.getUsuarios());
+        mascotasService.actualizar(mascota);
+        return new ResponseEntity<>(new Mensaje("Mascota actualizada"), HttpStatus.OK);
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity<?> delete(@PathVariable("id")int id){
+    public ResponseEntity<?> eliminar(@PathVariable("id")int id){
         if(!mascotasService.existsById(id))
-            return  new ResponseEntity(new Mensaje("no existe"), HttpStatus.NOT_FOUND);
-        mascotasService.delete(id);
-        return new ResponseEntity(new Mensaje("mascota borrada"), HttpStatus.OK);
+            return  new ResponseEntity<>(new Mensaje("no existe"), HttpStatus.NOT_FOUND);
+        mascotasService.eliminar(id);
+        return new ResponseEntity<>(new Mensaje("Mascota borrada"), HttpStatus.OK);
     }
 
 }
