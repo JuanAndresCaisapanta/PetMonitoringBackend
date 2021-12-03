@@ -6,6 +6,7 @@ import javax.validation.constraints.NotBlank;
 
 import com.MonitoreoMascotas.Entity.Especies;
 import com.MonitoreoMascotas.Security.Entity.Usuarios;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class MascotasDto {
 	@NotBlank
@@ -17,8 +18,10 @@ public class MascotasDto {
 	@NotBlank
 	private Boolean esterilizacion;
 	@NotBlank
+	@JsonFormat(pattern = "dd/MM/yyyy")
 	private Date fechaEsterilizacion;
 	@NotBlank
+	@JsonFormat(pattern = "dd/MM/yyyy")
 	private Date fechaNacimiento;
 	private Especies especies;
 	private Usuarios usuarios;

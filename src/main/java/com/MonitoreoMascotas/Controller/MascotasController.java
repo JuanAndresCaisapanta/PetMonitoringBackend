@@ -36,7 +36,7 @@ public class MascotasController {
     }
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
-	@GetMapping("{id}")
+	@GetMapping("/listaid/{id}")
     public ResponseEntity<Mascotas> getById(@PathVariable("id") int id){
         if(!mascotasService.existsById(id))
             return new ResponseEntity(new Mensaje("no existe"), HttpStatus.NOT_FOUND);
@@ -45,7 +45,7 @@ public class MascotasController {
     }
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
-	@GetMapping("{nombre}")
+	@GetMapping("/listanombre/{nombre}")
     public ResponseEntity<Mascotas> getByNombre(@PathVariable("nombre") String nombre){
         if(!mascotasService.existsByNombre(nombre))
             return new ResponseEntity(new Mensaje("no existe"), HttpStatus.NOT_FOUND);

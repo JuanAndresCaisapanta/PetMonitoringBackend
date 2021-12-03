@@ -12,8 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 public class Dispositivos {
@@ -25,13 +24,12 @@ public class Dispositivos {
 	private String fabricante;
 	private String observacion;
 	
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "dispositivos")
-	@JsonManagedReference(value = "dispositivos-recopilaciones")
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE, orphanRemoval = true, mappedBy = "dispositivos")
 	private List<Recopilaciones> recopilaciones;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(optional = false)
 	@JoinColumn(name="mascotas_id")
-	@JsonBackReference(value = "mascotas-dispositivos")
+	@JsonIgnoreProperties({"dispositivos","profesionales","vacunas"})
 	private Mascotas mascotas;
 
 	public Dispositivos() {

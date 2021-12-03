@@ -10,6 +10,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 
 public class Especialidades {
@@ -19,7 +21,8 @@ public class Especialidades {
 	private int id;
 	private String nombre;
 
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "especialidades")
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE, orphanRemoval = true, mappedBy = "especialidades")
+	@JsonIgnore
 	private List<Profesionales> profesionales;
 
 	public Especialidades() {

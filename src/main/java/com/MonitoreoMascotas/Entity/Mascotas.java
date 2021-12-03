@@ -13,9 +13,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import com.MonitoreoMascotas.Security.Entity.Usuarios;
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 public class Mascotas {
@@ -26,28 +29,33 @@ public class Mascotas {
 	private String color;
 	private String raza;
 	private Boolean esterilizacion;
+	@JsonFormat(pattern = "dd/MM/yyyy")
 	private Date fechaEsterilizacion;
+	@JsonFormat(pattern = "dd/MM/yyyy")
 	private Date fechaNacimiento;
 
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "mascotas")
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE, orphanRemoval = true, mappedBy = "mascotas")
+	@Fetch(value = FetchMode.SUBSELECT)
+	@JsonIgnoreProperties("mascotas")
 	private List<Profesionales> profesionales;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(optional = false)
 	@JoinColumn(name = "especies_id")
-	@JsonBackReference(value = "especies-mascotas")
 	private Especies especies;
 
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "mascotas")
-	@JsonManagedReference(value = "mascotas-vacunas")
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE, orphanRemoval = true, mappedBy = "mascotas")
+	@Fetch(value = FetchMode.SUBSELECT)
+	@JsonIgnoreProperties("mascotas")
 	private List<Vacunas> vacunas;
 
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "mascotas")
-	@JsonManagedReference(value = "mascotas-dispositivos")
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE, orphanRemoval = true, mappedBy = "mascotas")
+	@Fetch(value = FetchMode.SUBSELECT)
+	@JsonIgnoreProperties("mascotas")
 	private List<Dispositivos> dispositivos;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(optional = false)
 	@JoinColumn(name = "usuarios_id")
-	@JsonBackReference(value = "usuarios-mascotas")
+	@JsonIgnoreProperties("mascotas")
 	private Usuarios usuarios;
 
 	public Mascotas() {
