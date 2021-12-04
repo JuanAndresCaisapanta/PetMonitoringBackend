@@ -44,7 +44,7 @@ public class Usuarios {
     private Set<Roles> roles = new HashSet<>();
     
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "usuarios")
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "usuarios")
 	private List<Mascotas> mascotas;
     
 	public Usuarios() {
