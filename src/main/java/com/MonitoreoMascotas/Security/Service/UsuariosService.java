@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.MonitoreoMascotas.Entity.Mascotas;
 import com.MonitoreoMascotas.Security.Entity.Usuarios;
 import com.MonitoreoMascotas.Security.Repository.UsuariosRepository;
 

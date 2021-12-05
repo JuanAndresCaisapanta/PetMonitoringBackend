@@ -11,7 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 public class UsuariosPrivilegios implements UserDetails {
 	
 	private static final long serialVersionUID = 1L;
-	
+	private Integer id;
 	private String nombre;
 	private String apellido;
 	private String email;
@@ -20,7 +20,7 @@ public class UsuariosPrivilegios implements UserDetails {
 	private String telefono;
 	private Collection<? extends GrantedAuthority> authorities;
 
-	public UsuariosPrivilegios(String nombre, String apellido, String email, String password, String direccion,
+	public UsuariosPrivilegios(Integer id,String nombre, String apellido, String email, String password, String direccion,
 			String telefono, Collection<? extends GrantedAuthority> authorities) {
 		this.nombre = nombre;
 		this.apellido = apellido;
@@ -29,13 +29,22 @@ public class UsuariosPrivilegios implements UserDetails {
 		this.direccion = direccion;
 		this.telefono = telefono;
 		this.authorities = authorities;
+		this.id=id;
 	}
 
 	public static UsuariosPrivilegios build(Usuarios usuario) {
 		List<GrantedAuthority> authorities = usuario.getRoles().stream()
 				.map(roles -> new SimpleGrantedAuthority(roles.getNombre().name())).collect(Collectors.toList());
-		return new UsuariosPrivilegios(usuario.getNombre(), usuario.getApellido(), usuario.getEmail(),
+		return new UsuariosPrivilegios(usuario.getId(),usuario.getNombre(), usuario.getApellido(), usuario.getEmail(),
 				usuario.getPassword(), usuario.getDireccion(), usuario.getTelefono(), authorities);
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 	@Override

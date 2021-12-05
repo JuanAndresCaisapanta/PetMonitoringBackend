@@ -24,7 +24,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.MonitoreoMascotas.Dto.Mensaje;
-import com.MonitoreoMascotas.Entity.Mascotas;
 import com.MonitoreoMascotas.Security.Dto.JwtDto;
 import com.MonitoreoMascotas.Security.Dto.LoginDto;
 import com.MonitoreoMascotas.Security.Dto.UsuariosDto;
@@ -66,7 +65,7 @@ public class AuthController {
 				usuariosDto.getTelefono());
 		Set<Roles> roles = new HashSet<>();
 		roles.add(rolesService.getByRolNombre(RolNombre.ROLE_USER).get());
-		if (usuariosDto.getRoles().contains("admin"))
+		if (usuariosDto.getRoles().contains((Object)"admin"))
 			roles.add(rolesService.getByRolNombre(RolNombre.ROLE_ADMIN).get());
 		usuario.setRoles(roles);
 		usuariosService.guardar(usuario);

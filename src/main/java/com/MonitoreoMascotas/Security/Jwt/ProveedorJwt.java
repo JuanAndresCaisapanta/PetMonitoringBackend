@@ -31,7 +31,7 @@ public class ProveedorJwt {
     public String generateToken(Authentication authentication){
     	UsuariosPrivilegios usuarioPrivilegio = (UsuariosPrivilegios) authentication.getPrincipal();
     	// construir token
-        return Jwts.builder().setSubject(usuarioPrivilegio.getUsername())
+        return Jwts.builder().setSubject(usuarioPrivilegio.getUsername()).setId(usuarioPrivilegio.getId().toString())
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(new Date().getTime() + expiration * 1000))
                 .signWith(SignatureAlgorithm.HS512, secret)

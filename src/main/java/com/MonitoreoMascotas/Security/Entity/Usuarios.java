@@ -17,6 +17,7 @@ import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 
 import com.MonitoreoMascotas.Entity.Mascotas;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 public class Usuarios {
@@ -44,6 +45,7 @@ public class Usuarios {
     
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "usuarios")
+    @JsonIgnoreProperties("usuarios")
 	private List<Mascotas> mascotas;
     
 	public Usuarios() {
