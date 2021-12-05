@@ -36,7 +36,6 @@ public class Usuarios {
     private String direccion;
     
     private String telefono;
-    @NotNull
     
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "usuario_rol", joinColumns = @JoinColumn(name = "usuario_id"),
@@ -50,14 +49,13 @@ public class Usuarios {
 	public Usuarios() {
 	}
 	public Usuarios(@NotNull String nombre, @NotNull String apellido, @NotNull String email, @NotNull String password,
-			String direccion, String telefono, @NotNull Set<Roles> roles) {
+			String direccion, String telefono) {
 		this.nombre = nombre;
 		this.apellido = apellido;
 		this.email = email;
 		this.password = password;
 		this.direccion = direccion;
 		this.telefono = telefono;
-		this.roles = roles;
 	}
 	public int getId() {
 		return id;
@@ -107,7 +105,11 @@ public class Usuarios {
 	public void setRoles(Set<Roles> roles) {
 		this.roles = roles;
 	}
-    
-    
-
+	public List<Mascotas> getMascotas() {
+		return mascotas;
+	}
+	public void setMascotas(List<Mascotas> mascotas) {
+		this.mascotas = mascotas;
+	}
+	
 }
