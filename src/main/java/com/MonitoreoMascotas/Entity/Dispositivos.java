@@ -12,6 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import com.MonitoreoMascotas.Security.Entity.Usuarios;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
@@ -31,18 +32,24 @@ public class Dispositivos {
 	@JoinColumn(name="mascotas_id")
 	@JsonIgnoreProperties({"dispositivos","profesionales","vacunas"})
 	private Mascotas mascotas;
+	
+	@ManyToOne(optional = false)
+	@JoinColumn(name = "usuarios_id")
+	@JsonIgnoreProperties("dispositivos")
+	private Usuarios usuarios;
 
 	public Dispositivos() {
 	}
 
 	public Dispositivos(String nombre, String marca, String fabricante, String observacion,
-			List<Recopilaciones> recopilaciones, Mascotas mascotas) {
+			List<Recopilaciones> recopilaciones, Mascotas mascotas, Usuarios usuarios) {
 		this.nombre = nombre;
 		this.marca = marca;
 		this.fabricante = fabricante;
 		this.observacion = observacion;
 		this.recopilaciones = recopilaciones;
 		this.mascotas = mascotas;
+		this.usuarios= usuarios;
 	}
 
 	public int getId() {
@@ -99,6 +106,14 @@ public class Dispositivos {
 
 	public void setMascotas(Mascotas mascotas) {
 		this.mascotas = mascotas;
+	}
+
+	public Usuarios getUsuarios() {
+		return usuarios;
+	}
+
+	public void setUsuarios(Usuarios usuarios) {
+		this.usuarios = usuarios;
 	}
 
 	

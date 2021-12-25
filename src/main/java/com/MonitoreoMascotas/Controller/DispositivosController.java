@@ -64,6 +64,7 @@ public class DispositivosController {
 		dispositivo.setFabricante(dispositivosDto.getFabricante());
 		dispositivo.setObservacion(dispositivosDto.getObservacion());
 		dispositivo.setMascotas(dispositivosDto.getMascotas());
+		dispositivo.setUsuarios(dispositivosDto.getUsuarios());
 		dispositivosService.guardar(dispositivo);
 		return new ResponseEntity<>(new Mensaje("Dispositivo creado"), HttpStatus.OK);
 	}
@@ -80,6 +81,7 @@ public class DispositivosController {
 		dispositivo.setFabricante(dispositivosDto.getFabricante());
 		dispositivo.setObservacion(dispositivosDto.getObservacion());
 		dispositivo.setMascotas(dispositivosDto.getMascotas());
+		dispositivo.setUsuarios(dispositivosDto.getUsuarios());
 		dispositivosService.actualizar(dispositivo);
 		return new ResponseEntity<>(new Mensaje("Dispostivo actualizado"), HttpStatus.OK);
 	}

@@ -1,6 +1,7 @@
 package com.MonitoreoMascotas.Dto;
 
 import com.MonitoreoMascotas.Entity.Mascotas;
+import com.MonitoreoMascotas.Security.Entity.Usuarios;
 
 public class DispositivosDto {
 	
@@ -9,6 +10,8 @@ public class DispositivosDto {
 	private String fabricante;
 	private String observacion;
 	private Mascotas mascotas;
+	private Usuarios usuarios;
+	
 	
 	public DispositivosDto() {
 	}
@@ -19,6 +22,7 @@ public class DispositivosDto {
 		this.fabricante = fabricante;
 		this.observacion = observacion;
 		this.mascotas = mascotas;
+		this.usuarios = usuarios;
 	}
 
 	public String getNombre() {
@@ -59,6 +63,14 @@ public class DispositivosDto {
 
 	public void setMascotas(Mascotas mascotas) {
 		this.mascotas = mascotas;
+	}
+
+	public Usuarios getUsuarios() {
+		return usuarios;
+	}
+
+	public void setUsuarios(Usuarios usuarios) {
+		this.usuarios = usuarios;
 	}
 
 }
