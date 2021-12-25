@@ -16,7 +16,7 @@ public class DispositivosDto {
 	public DispositivosDto() {
 	}
 
-	public DispositivosDto(String nombre, String marca, String fabricante, String observacion, Mascotas mascotas) {
+	public DispositivosDto(String nombre, String marca, String fabricante, String observacion, Mascotas mascotas, Usuarios usuarios) {
 		this.nombre = nombre;
 		this.marca = marca;
 		this.fabricante = fabricante;
