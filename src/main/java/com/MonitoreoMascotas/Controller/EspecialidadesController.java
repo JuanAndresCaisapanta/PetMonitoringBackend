@@ -60,8 +60,9 @@ public class EspecialidadesController {
 			return new ResponseEntity<>(new Mensaje("el nombre es obligatorio"), HttpStatus.BAD_REQUEST);
 		if (especialidadesService.existsByNombre(especialidadesDto.getNombre()))
 			return new ResponseEntity<>(new Mensaje("ese nombre ya existe"), HttpStatus.BAD_REQUEST);
-		Especialidades especialidad = new Especialidades(especialidadesDto.getNombre(),
-				especialidadesDto.getProfesionales());
+		Especialidades especialidad = new Especialidades();
+		especialidad.setNombre(especialidadesDto.getNombre());
+		especialidad.setProfesionales(especialidadesDto.getProfesionales());
 		especialidadesService.guardar(especialidad);
 		return new ResponseEntity<>(new Mensaje("Especialidad creada"), HttpStatus.OK);
 	}

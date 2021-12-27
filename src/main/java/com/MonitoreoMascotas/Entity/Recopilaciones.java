@@ -9,7 +9,14 @@ import javax.persistence.ManyToOne;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 @Entity
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Recopilaciones {
 
 	@Id
@@ -22,61 +29,12 @@ public class Recopilaciones {
 	
 	@ManyToOne(optional = false)
 	@JoinColumn(name="dispositivos_id")
-	@JsonIgnoreProperties({"recopilaciones", "mascotas"})
+	@JsonIgnoreProperties({"recopilaciones", "mascotas","usuarios"})
 	private Dispositivos dispositivos;
-
-	public Recopilaciones() {
-	}
-
-	public Recopilaciones(Float latitud, Float longitud, Float temperatura, Dispositivos dispositivos) {
-		this.latitud = latitud;
-		this.longitud = longitud;
-		this.temperatura = temperatura;
-		this.dispositivos = dispositivos;
-	}
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
-
-	public Float getLatitud() {
-		return latitud;
-	}
-
-	public void setLatitud(Float latitud) {
-		this.latitud = latitud;
-	}
-
-	public Float getLongitud() {
-		return longitud;
-	}
-
-	public void setLongitud(Float longitud) {
-		this.longitud = longitud;
-	}
-
-	public Float getTemperatura() {
-		return temperatura;
-	}
-
-	public void setTemperatura(Float temperatura) {
-		this.temperatura = temperatura;
-	}
-
-	public Dispositivos getDispositivos() {
-		return dispositivos;
-	}
-
-	public void setDispositivos(Dispositivos dispositivos) {
-		this.dispositivos = dispositivos;
-	}
 	
-	
-	
-	
-	
+	@ManyToOne(optional = false)
+	@JoinColumn(name="mascotas_id")
+	@JsonIgnoreProperties({"recopilaciones","profesionales","vacunas","usuarios","dispositivos"})
+	private Mascotas mascotas;
+
 }

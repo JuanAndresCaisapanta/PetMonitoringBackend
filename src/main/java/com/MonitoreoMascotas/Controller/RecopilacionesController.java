@@ -39,6 +39,7 @@ public class RecopilacionesController {
 		recopilacion.setLongitud(recopilacionesDto.getLongitud());
 		recopilacion.setTemperatura(recopilacionesDto.getTemperatura());
 		recopilacion.setDispositivos(recopilacionesDto.getDispositivos());
+		recopilacion.setMascotas(recopilacionesDto.getMascotas());
 		recopilacionesService.guardar(recopilacion);
 		return new ResponseEntity<>(new Mensaje("Recopilacion creada"), HttpStatus.OK);
 	}

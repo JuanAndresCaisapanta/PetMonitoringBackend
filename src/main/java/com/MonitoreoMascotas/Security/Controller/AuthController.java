@@ -60,12 +60,16 @@ public class AuthController {
 			return new ResponseEntity<>(new Mensaje("campos mal puestos o email inválido"), HttpStatus.BAD_REQUEST);
 		if (usuariosService.existsByEmail(usuariosDto.getEmail()))
 			return new ResponseEntity<>(new Mensaje("ese email ya existe"), HttpStatus.BAD_REQUEST);
-		Usuarios usuario = new Usuarios(usuariosDto.getNombre(), usuariosDto.getApellido(), usuariosDto.getEmail(),
-				passwordEncoder.encode(usuariosDto.getPassword()), usuariosDto.getDireccion(),
-				usuariosDto.getTelefono());
+		Usuarios usuario = new Usuarios();
+		usuario.setNombre(usuariosDto.getNombre());
+		usuario.setApellido(usuariosDto.getApellido());
+		usuario.setEmail(usuariosDto.getEmail());
+		usuario.setPassword(passwordEncoder.encode(usuariosDto.getPassword()));
+		usuario.setDireccion(usuariosDto.getDireccion());
+		usuario.setTelefono(usuariosDto.getTelefono());
 		Set<Roles> roles = new HashSet<>();
 		roles.add(rolesService.getByRolNombre(RolNombre.ROLE_USER).get());
-		if (usuariosDto.getRoles().contains((Object)"admin"))
+		if (usuariosDto.getRoles().contains((Object) "admin"))
 			roles.add(rolesService.getByRolNombre(RolNombre.ROLE_ADMIN).get());
 		usuario.setRoles(roles);
 		usuariosService.guardar(usuario);
@@ -85,14 +89,14 @@ public class AuthController {
 		JwtDto jwtDto = new JwtDto(jwt, userDetails.getUsername(), userDetails.getAuthorities());
 		return new ResponseEntity(jwtDto, HttpStatus.OK);
 	}
-	
+
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@GetMapping("/listaid/{id}")
-    public ResponseEntity<Usuarios> getById(@PathVariable("id") int id){
-       // if(!usuariosService.existsById(id))
-      //      return new ResponseEntity(new Mensaje("no existe"), HttpStatus.NOT_FOUND);
-        Usuarios usuario = usuariosService.getOne(id).get();
-        return new ResponseEntity(usuario, HttpStatus.OK);
-    }
+	public ResponseEntity<Usuarios> getById(@PathVariable("id") int id) {
+		// if(!usuariosService.existsById(id))
+		// return new ResponseEntity(new Mensaje("no existe"), HttpStatus.NOT_FOUND);
+		Usuarios usuario = usuariosService.getOne(id).get();
+		return new ResponseEntity(usuario, HttpStatus.OK);
+	}
 
 }

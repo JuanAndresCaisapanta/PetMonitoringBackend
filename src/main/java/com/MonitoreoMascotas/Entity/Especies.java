@@ -12,67 +12,21 @@ import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 @Entity
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Especies {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	private String nombre;
-	
-	
-	
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE, orphanRemoval = true, mappedBy = "especies")
 	@JsonIgnore
 	private List<Mascotas> mascotas;
-	
-	
-
-	public Especies() {
-	}
-
-
-
-	public Especies(String nombre, List<Mascotas> mascotas) {
-		this.nombre = nombre;
-		this.mascotas = mascotas;
-	}
-
-
-
-	public int getId() {
-		return id;
-	}
-
-
-
-	public void setId(int id) {
-		this.id = id;
-	}
-
-
-
-	public String getNombre() {
-		return nombre;
-	}
-
-
-
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
-
-
-
-	public List<Mascotas> getMascotas() {
-		return mascotas;
-	}
-
-
-
-	public void setMascotas(List<Mascotas> mascotas) {
-		this.mascotas = mascotas;
-	}
-
-	
 }

@@ -10,40 +10,21 @@ import javax.validation.constraints.NotNull;
 
 import com.MonitoreoMascotas.Security.Enums.RolNombre;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 @Entity
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Roles {
-	
+
 	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-    @NotNull
-    @Enumerated(EnumType.STRING)
-    private RolNombre nombre;
-    
-	public Roles() {
-	}
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int id;
+	@NotNull
+	@Enumerated(EnumType.STRING)
+	private RolNombre nombre;
 
-	public Roles(@NotNull RolNombre nombre) {
-		this.nombre = nombre;
-	}
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
-
-	public RolNombre getNombre() {
-		return nombre;
-	}
-
-	public void setNombre(RolNombre nombre) {
-		this.nombre = nombre;
-	}
-
-	
-
-    
 }

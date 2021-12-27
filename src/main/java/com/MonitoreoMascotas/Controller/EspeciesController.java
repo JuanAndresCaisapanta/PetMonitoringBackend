@@ -60,7 +60,9 @@ public class EspeciesController {
 			return new ResponseEntity<>(new Mensaje("el nombre es obligatorio"), HttpStatus.BAD_REQUEST);
 		if (especiesService.existsByNombre(especiesDto.getNombre()))
 			return new ResponseEntity<>(new Mensaje("ese nombre ya existe"), HttpStatus.BAD_REQUEST);
-		Especies especie = new Especies(especiesDto.getNombre(), especiesDto.getMascotas());
+		Especies especie = new Especies();
+		especie.setNombre(especiesDto.getNombre());
+		especie.setMascotas(especiesDto.getMascotas());
 		especiesService.guardar(especie);
 		return new ResponseEntity<>(new Mensaje("Especie creada"), HttpStatus.OK);
 	}

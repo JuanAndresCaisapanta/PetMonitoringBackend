@@ -12,8 +12,14 @@ import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-@Entity
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Entity
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Especialidades {
 
 	@Id
@@ -24,37 +30,5 @@ public class Especialidades {
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE, orphanRemoval = true, mappedBy = "especialidades")
 	@JsonIgnore
 	private List<Profesionales> profesionales;
-
-	public Especialidades() {
-	}
-
-	public Especialidades(String nombre, List<Profesionales> profesionales) {
-		this.nombre = nombre;
-		this.profesionales = profesionales;
-	}
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
-
-	public String getNombre() {
-		return nombre;
-	}
-
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
-
-	public List<Profesionales> getProfesionales() {
-		return profesionales;
-	}
-
-	public void setProfesionales(List<Profesionales> profesionales) {
-		this.profesionales = profesionales;
-	}
 
 }
