@@ -69,8 +69,8 @@ public class AuthController {
 		usuario.setTelefono(usuariosDto.getTelefono());
 		Set<Roles> roles = new HashSet<>();
 		roles.add(rolesService.getByRolNombre(RolNombre.ROLE_USER).get());
-		if (usuariosDto.getRoles().contains((Object) "admin"))
-			roles.add(rolesService.getByRolNombre(RolNombre.ROLE_ADMIN).get());
+
+		// roles.add(rolesService.getByRolNombre(RolNombre.ROLE_ADMIN).get());
 		usuario.setRoles(roles);
 		usuariosService.guardar(usuario);
 		return new ResponseEntity<>(new Mensaje("usuario guardado"), HttpStatus.CREATED);
@@ -86,7 +86,11 @@ public class AuthController {
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 		String jwt = proveedorJwt.generateToken(authentication);
 		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-		JwtDto jwtDto = new JwtDto(jwt, userDetails.getUsername(), userDetails.getAuthorities());
+		JwtDto jwtDto = new JwtDto();
+		jwtDto.setToken(jwt);
+		jwtDto.setBearer("Bearer");
+		jwtDto.setEmail(userDetails.getUsername());
+		jwtDto.setAuthorities(userDetails.getAuthorities());
 		return new ResponseEntity(jwtDto, HttpStatus.OK);
 	}
 
