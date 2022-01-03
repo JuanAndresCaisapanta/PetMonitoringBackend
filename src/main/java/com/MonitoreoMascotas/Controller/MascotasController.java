@@ -24,7 +24,7 @@ import com.MonitoreoMascotas.Service.MascotasService;
 
 @RestController
 @RequestMapping("/mascotas")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin
 public class MascotasController {
     @Autowired
     MascotasService mascotasService;

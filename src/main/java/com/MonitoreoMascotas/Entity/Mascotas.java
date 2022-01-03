@@ -36,9 +36,9 @@ public class Mascotas {
 	private String color;
 	private String raza;
 	private Boolean esterilizacion;
-	@JsonFormat(pattern = "dd/MM/yyyy")
+	@JsonFormat(pattern = "yyyy-MM-dd")
 	private Date fechaEsterilizacion;
-	@JsonFormat(pattern = "dd/MM/yyyy")
+	@JsonFormat(pattern = "yyyy-MM-dd")
 	private Date fechaNacimiento;
 
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE, orphanRemoval = true, mappedBy = "mascotas")

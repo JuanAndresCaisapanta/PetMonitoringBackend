@@ -25,10 +25,10 @@ public class MascotasDto {
 	@NotBlank
 	private Boolean esterilizacion;
 	@NotBlank
-	@JsonFormat(pattern = "dd/MM/yyyy")
+	@JsonFormat(pattern = "yyyy-MM-dd")
 	private Date fechaEsterilizacion;
 	@NotBlank
-	@JsonFormat(pattern = "dd/MM/yyyy")
+	@JsonFormat(pattern = "yyyy-MM-dd")
 	private Date fechaNacimiento;
 	private Especies especies;
 	private Usuarios usuarios;
