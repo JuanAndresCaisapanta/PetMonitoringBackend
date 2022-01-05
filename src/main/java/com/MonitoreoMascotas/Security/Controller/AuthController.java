@@ -5,6 +5,7 @@ import java.util.Set;
 
 import javax.validation.Valid;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -74,6 +76,26 @@ public class AuthController {
 		usuario.setRoles(roles);
 		usuariosService.guardar(usuario);
 		return new ResponseEntity<>(new Mensaje("usuario guardado"), HttpStatus.CREATED);
+	}
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@PutMapping("{id}")
+	public ResponseEntity<Usuarios> actualizar(@PathVariable("id") int id, @RequestBody UsuariosDto usuariosDto) {
+		if (!usuariosService.existsById(id))
+			return new ResponseEntity(new Mensaje("no existe"), HttpStatus.NOT_FOUND);
+		if (usuariosService.existsByEmail(usuariosDto.getEmail())
+				&& usuariosService.getByEmail(usuariosDto.getEmail()).get().getId() != id)
+			return new ResponseEntity(new Mensaje("El email no esta disponible"), HttpStatus.BAD_REQUEST);
+		if (StringUtils.isBlank(usuariosDto.getEmail()))
+			return new ResponseEntity(new Mensaje("el email es obligatorio"), HttpStatus.BAD_REQUEST);
+		Usuarios usuario = usuariosService.getOne(id).get();
+		usuario.setNombre(usuariosDto.getNombre());
+		usuario.setApellido(usuariosDto.getApellido());
+		usuario.setEmail(usuariosDto.getEmail());
+		usuario.setPassword(passwordEncoder.encode(usuariosDto.getPassword()));
+		usuario.setDireccion(usuariosDto.getDireccion());
+		usuario.setTelefono(usuariosDto.getTelefono());
+		usuariosService.actualizar(usuario);
+		return new ResponseEntity(usuario, HttpStatus.OK);
 	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
