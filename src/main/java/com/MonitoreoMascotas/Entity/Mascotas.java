@@ -18,6 +18,7 @@ import org.hibernate.annotations.FetchMode;
 
 import com.MonitoreoMascotas.Security.Entity.Usuarios;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.AllArgsConstructor;
@@ -67,7 +68,7 @@ public class Mascotas {
 
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "usuarios_id")
-	@JsonIgnoreProperties("mascotas")
+	@JsonIgnore
 	private Usuarios usuarios;
 
 }

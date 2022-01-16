@@ -1,5 +1,6 @@
 package com.MonitoreoMascotas.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -14,6 +15,7 @@ public interface MascotasRepository extends JpaRepository<Mascotas, Integer> {
 
 	boolean existsByNombre(String nombre);
 	
-	
+	List<Mascotas> findByUsuarios_id(int id);
+
 
 }

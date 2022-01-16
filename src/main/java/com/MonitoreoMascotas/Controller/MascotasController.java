@@ -39,8 +39,8 @@ public class MascotasController {
 	public ResponseEntity<Mascotas> getById(@PathVariable("id") int id) {
 		if (!mascotasService.existsById(id))
 			return new ResponseEntity(new Mensaje("no existe"), HttpStatus.NOT_FOUND);
-		Mascotas mascota = mascotasService.getOne(id).get();
-		return new ResponseEntity(mascota, HttpStatus.OK);
+		List<Mascotas> list = mascotasService.findfindByUsuarios_id(id);
+		return new ResponseEntity(list, HttpStatus.OK);
 	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })

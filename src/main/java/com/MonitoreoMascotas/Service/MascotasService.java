@@ -48,5 +48,7 @@ public class MascotasService {
 	    public boolean existsByNombre(String nombre){
 	        return mascotasRepository.existsByNombre(nombre);
 	    }
-	
+	    public List<Mascotas> findfindByUsuarios_id(int id){
+	        return mascotasRepository.findByUsuarios_id(id);
+	    }
 }
