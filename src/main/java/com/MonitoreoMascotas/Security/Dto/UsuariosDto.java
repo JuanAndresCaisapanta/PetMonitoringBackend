@@ -19,7 +19,6 @@ public class UsuariosDto {
     private String apellido;
 	@Email
     private String email;
-    @NotBlank
     private String password;
     private String direccion;
     private String telefono;

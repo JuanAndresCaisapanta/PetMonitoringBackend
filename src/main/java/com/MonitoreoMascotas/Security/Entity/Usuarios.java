@@ -39,7 +39,6 @@ public class Usuarios {
 	private String apellido;
 	@NotNull
 	private String email;
-	@NotNull
 	private String password;
 
 	private String direccion;
