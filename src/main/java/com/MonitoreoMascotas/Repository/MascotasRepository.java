@@ -14,8 +14,6 @@ public interface MascotasRepository extends JpaRepository<Mascotas, Integer> {
 	Optional<Mascotas> findByNombre(String nombre);
 
 	boolean existsByNombre(String nombre);
-	
-	List<Mascotas> findByUsuarios_id(int id);
 
 
 }
