@@ -1,6 +1,6 @@
 package com.MonitoreoMascotas.Dto;
 
-import javax.validation.constraints.NotNull;
+
 
 import com.MonitoreoMascotas.Entity.Dispositivos;
 import com.MonitoreoMascotas.Entity.Mascotas;
@@ -17,7 +17,8 @@ public class RecopilacionesDto {
 	private Float latitud;
 	private Float longitud;
 	private Float temperatura;
-	@NotNull
+	private String fecha;
+	private String hora;
 	private Dispositivos dispositivos;
 	private Mascotas mascotas;
 

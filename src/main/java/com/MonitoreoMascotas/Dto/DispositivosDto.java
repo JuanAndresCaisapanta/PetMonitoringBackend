@@ -3,7 +3,6 @@ package com.MonitoreoMascotas.Dto;
 
 
 
-import com.MonitoreoMascotas.Entity.Mascotas;
 import com.MonitoreoMascotas.Security.Entity.Usuarios;
 
 import lombok.AllArgsConstructor;
@@ -18,7 +17,6 @@ public class DispositivosDto {
 	private String marca;
 	private String fabricante;
 	private String observacion;
-	private Mascotas mascotas;
 	private Usuarios usuarios;
 
 }

@@ -26,6 +26,8 @@ public class Recopilaciones {
 	private Float latitud;
 	private Float longitud;
 	private Float temperatura;
+	private String fecha;
+	private String hora;
 	
 	@ManyToOne(optional = false)
 	@JoinColumn(name="dispositivos_id")

@@ -59,11 +59,6 @@ public class Mascotas {
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE, orphanRemoval = true, mappedBy = "mascotas")
 	@Fetch(value = FetchMode.SUBSELECT)
 	@JsonIgnoreProperties("mascotas")
-	private List<Dispositivos> dispositivos;
-
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE, orphanRemoval = true, mappedBy = "mascotas")
-	@Fetch(value = FetchMode.SUBSELECT)
-	@JsonIgnoreProperties("mascotas")
 	private List<Recopilaciones> recopilaciones;
 
 	@ManyToOne(optional = false)

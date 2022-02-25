@@ -1,5 +1,7 @@
 package com.MonitoreoMascotas.Controller;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,10 +36,14 @@ public class RecopilacionesController {
 	
 	@PostMapping(produces = "application/json")
 	public ResponseEntity<?> crear(@RequestBody @Validated RecopilacionesDto recopilacionesDto) {
+		 DateTimeFormatter hora = DateTimeFormatter.ofPattern("HH:mm");
+		 DateTimeFormatter fecha = DateTimeFormatter.ofPattern("yyyy/MM/dd");
 		Recopilaciones recopilacion= new Recopilaciones();
 		recopilacion.setLatitud(recopilacionesDto.getLatitud());
 		recopilacion.setLongitud(recopilacionesDto.getLongitud());
 		recopilacion.setTemperatura(recopilacionesDto.getTemperatura());
+		recopilacion.setHora(hora.format(LocalDateTime.now()));
+		recopilacion.setFecha(fecha.format(LocalDateTime.now()));
 		recopilacion.setDispositivos(recopilacionesDto.getDispositivos());
 		recopilacion.setMascotas(recopilacionesDto.getMascotas());
 		recopilacionesService.guardar(recopilacion);

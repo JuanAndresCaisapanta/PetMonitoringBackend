@@ -13,6 +13,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import com.MonitoreoMascotas.Security.Entity.Usuarios;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.AllArgsConstructor;
@@ -33,16 +34,13 @@ public class Dispositivos {
 	private String observacion;
 	
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE, orphanRemoval = true, mappedBy = "dispositivos")
+	@JsonIgnoreProperties("dispositivos")
 	private List<Recopilaciones> recopilaciones;
 	
-	@ManyToOne(optional = false)
-	@JoinColumn(name="mascotas_id")
-	@JsonIgnoreProperties({"dispositivos","profesionales","vacunas","recopilaciones","usuarios"})
-	private Mascotas mascotas;
 	
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "usuarios_id")
-	@JsonIgnoreProperties({"dispositivos","usuarios","mascotas"})
+	@JsonIgnore
 	private Usuarios usuarios;
 	
 }
