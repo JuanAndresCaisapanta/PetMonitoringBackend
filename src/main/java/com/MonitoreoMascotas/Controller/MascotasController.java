@@ -62,6 +62,7 @@ public class MascotasController {
 		mascota.setNombre(mascotasDto.getNombre());
 		mascota.setColor(mascotasDto.getColor());
 		mascota.setRaza(mascotasDto.getRaza());
+		mascota.setGenero(mascotasDto.getGenero());
 		mascota.setEsterilizacion(mascotasDto.getEsterilizacion());
 		mascota.setFechaEsterilizacion(mascotasDto.getFechaEsterilizacion());
 		mascota.setFechaNacimiento(mascotasDto.getFechaNacimiento());
@@ -85,6 +86,7 @@ public class MascotasController {
 		mascota.setNombre(mascotasDto.getNombre());
 		mascota.setColor(mascotasDto.getColor());
 		mascota.setRaza(mascotasDto.getRaza());
+		mascota.setGenero(mascotasDto.getGenero());
 		mascota.setEsterilizacion(mascotasDto.getEsterilizacion());
 		mascota.setFechaEsterilizacion(mascotasDto.getFechaEsterilizacion());
 		mascota.setFechaNacimiento(mascotasDto.getFechaNacimiento());

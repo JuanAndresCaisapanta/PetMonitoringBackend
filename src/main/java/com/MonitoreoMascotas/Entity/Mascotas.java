@@ -36,6 +36,7 @@ public class Mascotas {
 	private String nombre;
 	private String color;
 	private String raza;
+	private String genero;
 	private Boolean esterilizacion;
 	@JsonFormat(pattern = "yyyy-MM-dd")
 	private Date fechaEsterilizacion;

@@ -23,6 +23,8 @@ public class MascotasDto {
 	@NotBlank
 	private String raza;
 	@NotBlank
+	private String genero;
+	@NotBlank
 	private Boolean esterilizacion;
 	@NotBlank
 	@JsonFormat(pattern = "yyyy-MM-dd")
