@@ -8,14 +8,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.Pet_Monitoring.Entity.Pet;
-import com.Pet_Monitoring.Repository.MascotasRepository;
+import com.Pet_Monitoring.Repository.PetRepository;
 
 @Service
 @Transactional
 public class MascotasService {
 
 	  @Autowired
-	    MascotasRepository mascotasRepository;
+	    PetRepository mascotasRepository;
 
 	    public List<Pet> lista(){
 	        return (List<Pet>)mascotasRepository.findAll();

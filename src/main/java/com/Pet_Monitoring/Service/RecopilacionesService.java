@@ -7,14 +7,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.Pet_Monitoring.Entity.Device_Data;
-import com.Pet_Monitoring.Repository.RecopilacionesRepository;
+import com.Pet_Monitoring.Repository.Device_DataRepository;
 
 @Service
 @Transactional
 public class RecopilacionesService {
 
 	@Autowired
-	RecopilacionesRepository recopilacionesRepository;
+	Device_DataRepository recopilacionesRepository;
 
 	public List<Device_Data> lista() {
 		return (List<Device_Data>) recopilacionesRepository.findAll();

@@ -44,15 +44,16 @@ public class DispositivoControlador {
 		Device dispositivo = dispositivosService.getOne(id).get();
 		return new ResponseEntity<>(dispositivo, HttpStatus.OK);
 	}
-
-	@SuppressWarnings({ "unchecked", "rawtypes" })
-	@GetMapping("/listanombre/{nombre}")
-	public ResponseEntity<Device> getByNombre(@PathVariable("nombre") String nombre) {
-		if (!dispositivosService.existsByNombre(nombre))
-			return new ResponseEntity(new Mensaje("no existe"), HttpStatus.NOT_FOUND);
-		Device dispositivo = dispositivosService.getByNombre(nombre).get();
-		return new ResponseEntity<>(dispositivo, HttpStatus.OK);
-	}
+	/*
+	 * @SuppressWarnings({ "unchecked", "rawtypes" })
+	 * 
+	 * @GetMapping("/listanombre/{nombre}") public ResponseEntity<Device>
+	 * getByNombre(@PathVariable("nombre") String nombre) { if
+	 * (!dispositivosService.existsByNombre(nombre)) return new ResponseEntity(new
+	 * Mensaje("no existe"), HttpStatus.NOT_FOUND); Device dispositivo =
+	 * dispositivosService.getByNombre(nombre).get(); return new
+	 * ResponseEntity<>(dispositivo, HttpStatus.OK); }
+	 */
 
 	/*
 	 * @PostMapping(produces = "application/json") public ResponseEntity<?>

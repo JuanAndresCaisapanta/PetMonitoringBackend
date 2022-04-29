@@ -45,14 +45,16 @@ public class EspeciesControlador {
 		return new ResponseEntity<>(especie, HttpStatus.OK);
 	}
 
-	@SuppressWarnings({ "unchecked", "rawtypes" })
-	@GetMapping("/listanombre/{nombre}")
-	public ResponseEntity<Species> getByNombre(@PathVariable("nombre") String nombre) {
-		if (!especiesService.existsByNombre(nombre))
-			return new ResponseEntity(new Mensaje("no existe"), HttpStatus.NOT_FOUND);
-		Species especie = especiesService.getByNombre(nombre).get();
-		return new ResponseEntity<>(especie, HttpStatus.OK);
-	}
+	/*
+	 * @SuppressWarnings({ "unchecked", "rawtypes" })
+	 * 
+	 * @GetMapping("/listanombre/{nombre}") public ResponseEntity<Species>
+	 * getByNombre(@PathVariable("nombre") String nombre) { if
+	 * (!especiesService.existsByNombre(nombre)) return new ResponseEntity(new
+	 * Mensaje("no existe"), HttpStatus.NOT_FOUND); Species especie =
+	 * especiesService.getByNombre(nombre).get(); return new
+	 * ResponseEntity<>(especie, HttpStatus.OK); }
+	 */
 
 	/*
 	 * @PostMapping(produces = "application/json") public ResponseEntity<?>

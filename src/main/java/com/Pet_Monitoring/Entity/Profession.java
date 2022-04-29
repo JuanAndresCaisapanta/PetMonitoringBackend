@@ -18,7 +18,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Type_Professional {
+public class Profession {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,6 +28,6 @@ public class Type_Professional {
 	private String name;
 
 	
-	@OneToMany(mappedBy = "type_professional", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "profession", cascade = CascadeType.ALL)
 	private List<Professional> professional;
 }

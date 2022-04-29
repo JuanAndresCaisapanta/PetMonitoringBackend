@@ -11,14 +11,14 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import com.Pet_Monitoring.Entity.Professional;
-import com.Pet_Monitoring.Repository.EspecialidadesRepository;
+import com.Pet_Monitoring.Repository.ProfessionRepository;
 
 @Service
 @Transactional
 public class EspecialidadesService {
 
 	@Autowired
-	EspecialidadesRepository especialidadesRepository;
+	ProfessionRepository especialidadesRepository;
 
 	public List<Professional> lista() {
 		return (List<Professional>) especialidadesRepository.findAll();

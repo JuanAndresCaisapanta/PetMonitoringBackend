@@ -8,14 +8,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.Pet_Monitoring.Entity.Establishment;
-import com.Pet_Monitoring.Repository.ProfesionalesRepository;
+import com.Pet_Monitoring.Repository.ProfessionalRepository;
 
 @Service
 @Transactional
 public class ProfesionalesService {
 
 	@Autowired
-	ProfesionalesRepository profesionalesRepository;
+	ProfessionalRepository profesionalesRepository;
 
 	public List<Establishment> lista() {
 		return (List<Establishment>) profesionalesRepository.findAll();

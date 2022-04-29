@@ -11,14 +11,14 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import com.Pet_Monitoring.Entity.Species;
-import com.Pet_Monitoring.Repository.EspeciesRepository;
+import com.Pet_Monitoring.Repository.SpeciesRepository;
 
 @Service
 @Transactional
 public class EspeciesService {
 	
 	@Autowired
-	EspeciesRepository especiesRepository;
+	SpeciesRepository especiesRepository;
 
 	public List<Species> lista() {
 		return (List<Species>) especiesRepository.findAll();
@@ -26,10 +26,6 @@ public class EspeciesService {
 
 	public Optional<Species> getOne(int id) {
 		return especiesRepository.findById(id);
-	}
-
-	public Optional<Species> getByNombre(String nombre) {
-		return especiesRepository.findByNombre(nombre);
 	}
 
 	public void guardar(@Valid @RequestBody Species especies) {
@@ -48,7 +44,4 @@ public class EspeciesService {
 		return especiesRepository.existsById(id);
 	}
 
-	public boolean existsByNombre(String nombre) {
-		return especiesRepository.existsByNombre(nombre);
-	}
 }

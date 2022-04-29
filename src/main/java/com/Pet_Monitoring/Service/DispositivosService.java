@@ -8,14 +8,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.Pet_Monitoring.Entity.Device;
-import com.Pet_Monitoring.Repository.DispositivosRepository;
+import com.Pet_Monitoring.Repository.DeviceRepository;
 
 @Service
 @Transactional
 public class DispositivosService {
 	
 	@Autowired
-	DispositivosRepository dispositivosRepository;
+	DeviceRepository dispositivosRepository;
 
 	public List<Device> lista() {
 		return (List<Device>) dispositivosRepository.findAll();
@@ -25,9 +25,7 @@ public class DispositivosService {
 		return dispositivosRepository.findById(id);
 	}
 
-	public Optional<Device> getByNombre(String nombre) {
-		return dispositivosRepository.findByNombre(nombre);
-	}
+
 
 	public void guardar(Device dispositivos) {
 		dispositivosRepository.save(dispositivos);
@@ -43,12 +41,6 @@ public class DispositivosService {
 
 	public boolean existsById(int id) {
 		return dispositivosRepository.existsById(id);
-	}
-
-	public boolean existsByNombre(String nombre) {
-		return dispositivosRepository.existsByNombre(nombre);
-		
-		
 	}
 
 }

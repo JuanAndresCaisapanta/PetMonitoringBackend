@@ -41,8 +41,8 @@ public class Professional {
 	private Date update_date;
 	
 	@ManyToOne
-	@JoinColumn(name = "type_professional_id")
-	private Type_Professional type_professional;
+	@JoinColumn(name = "profession_id")
+	private Profession profession;
 	
 	@ManyToOne
 	@JoinColumn(name="pet_id")
