@@ -16,8 +16,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 
-import com.Pet_Monitoring.Entity.Device;
-import com.Pet_Monitoring.Entity.Pet;
+import com.Pet_Monitoring.Entities.Device;
+import com.Pet_Monitoring.Entities.Pet;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.AllArgsConstructor;

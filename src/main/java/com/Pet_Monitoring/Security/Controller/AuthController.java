@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.Pet_Monitoring.Dto.Mensaje;
+import com.Pet_Monitoring.Dto.Message;
 import com.Pet_Monitoring.Security.Dto.JwtDto;
 import com.Pet_Monitoring.Security.Dto.LoginDto;
 import com.Pet_Monitoring.Security.Dto.UsuariosDto;
@@ -59,9 +59,9 @@ public class AuthController {
 	@PostMapping("/nuevo")
 	public ResponseEntity<?> nuevo(@Valid @RequestBody UsuariosDto usuariosDto, BindingResult bindingResult) {
 		if (bindingResult.hasErrors())
-			return new ResponseEntity<>(new Mensaje("campos mal puestos o email inválido"), HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>(new Message("campos mal puestos o email inválido"), HttpStatus.BAD_REQUEST);
 		if (usuariosService.existsByEmail(usuariosDto.getEmail()))
-			return new ResponseEntity<>(new Mensaje("ese email ya existe"), HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>(new Message("ese email ya existe"), HttpStatus.BAD_REQUEST);
 		Usuarios usuario = new Usuarios();
 		usuario.setNombre(usuariosDto.getNombre());
 		usuario.setApellido(usuariosDto.getApellido());
@@ -75,18 +75,18 @@ public class AuthController {
 		// roles.add(rolesService.getByRolNombre(RolNombre.ROLE_ADMIN).get());
 		usuario.setRoles(roles);
 		usuariosService.guardar(usuario);
-		return new ResponseEntity<>(new Mensaje("usuario guardado"), HttpStatus.CREATED);
+		return new ResponseEntity<>(new Message("usuario guardado"), HttpStatus.CREATED);
 	}
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@PutMapping("{id}")
 	public ResponseEntity<Usuarios> actualizar(@PathVariable("id") int id, @RequestBody UsuariosDto usuariosDto) {
 		if (!usuariosService.existsById(id))
-			return new ResponseEntity(new Mensaje("no existe"), HttpStatus.NOT_FOUND);
+			return new ResponseEntity(new Message("no existe"), HttpStatus.NOT_FOUND);
 		if (usuariosService.existsByEmail(usuariosDto.getEmail())
 				&& usuariosService.getByEmail(usuariosDto.getEmail()).get().getId() != id)
-			return new ResponseEntity(new Mensaje("El email no esta disponible"), HttpStatus.BAD_REQUEST);
+			return new ResponseEntity(new Message("El email no esta disponible"), HttpStatus.BAD_REQUEST);
 		if (StringUtils.isBlank(usuariosDto.getEmail()))
-			return new ResponseEntity(new Mensaje("el email es obligatorio"), HttpStatus.BAD_REQUEST);
+			return new ResponseEntity(new Message("el email es obligatorio"), HttpStatus.BAD_REQUEST);
 		Usuarios usuario = usuariosService.getOne(id).get();
 		usuario.setNombre(usuariosDto.getNombre());
 		usuario.setApellido(usuariosDto.getApellido());
@@ -102,7 +102,7 @@ public class AuthController {
 	@PostMapping("/login")
 	public ResponseEntity<JwtDto> login(@Valid @RequestBody LoginDto loginDto, BindingResult bindingResult) {
 		if (bindingResult.hasErrors())
-			return new ResponseEntity(new Mensaje("campos mal puestos"), HttpStatus.BAD_REQUEST);
+			return new ResponseEntity(new Message("campos mal puestos"), HttpStatus.BAD_REQUEST);
 		Authentication authentication = authenticationManager
 				.authenticate(new UsernamePasswordAuthenticationToken(loginDto.getEmail(), loginDto.getPassword()));
 		SecurityContextHolder.getContext().setAuthentication(authentication);
