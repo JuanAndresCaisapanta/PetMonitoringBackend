@@ -1,13 +1,16 @@
 package com.Pet_Monitoring.Controllers;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,75 +26,83 @@ import com.Pet_Monitoring.Entities.Device;
 import com.Pet_Monitoring.Services.DeviceService;
 
 @RestController
-@RequestMapping("/dispositivos")
-@CrossOrigin(origins = "http://localhost:3000")
-public class DispositivoControlador {
+@RequestMapping("/device")
+public class DeviceController {
 
 	@Autowired
-	DeviceService dispositivosService;
+	DeviceService deviceService;
 
-	/*
-	 * @GetMapping(produces = "application/json") public
-	 * ResponseEntity<List<Device>> lista() { List<Device> list =
-	 * dispositivosService.lista(); return new ResponseEntity<>(list,
-	 * HttpStatus.OK); }
-	 * 
-	 * @SuppressWarnings({ "unchecked", "rawtypes" })
-	 * 
-	 * @GetMapping("/listaid/{id}") public ResponseEntity<Device>
-	 * getById(@PathVariable("id") int id) { if
-	 * (!dispositivosService.existsById(id)) return new ResponseEntity(new
-	 * Message("no existe"), HttpStatus.NOT_FOUND); Device dispositivo =
-	 * dispositivosService.getOne(id).get(); return new
-	 * ResponseEntity<>(dispositivo, HttpStatus.OK); }
-	 */
-	/*
-	 * @SuppressWarnings({ "unchecked", "rawtypes" })
-	 * 
-	 * @GetMapping("/listanombre/{nombre}") public ResponseEntity<Device>
-	 * getByNombre(@PathVariable("nombre") String nombre) { if
-	 * (!dispositivosService.existsByNombre(nombre)) return new ResponseEntity(new
-	 * Mensaje("no existe"), HttpStatus.NOT_FOUND); Device dispositivo =
-	 * dispositivosService.getByNombre(nombre).get(); return new
-	 * ResponseEntity<>(dispositivo, HttpStatus.OK); }
-	 */
+	@GetMapping
+	public ResponseEntity<List<Device>> read() {
 
-	/*
-	 * @PostMapping(produces = "application/json") public ResponseEntity<?>
-	 * crear(@RequestBody @Validated DispositivosDto dispositivosDto) { if
-	 * (StringUtils.isBlank(dispositivosDto.getNombre())) return new
-	 * ResponseEntity<>(new Mensaje("el nombre es obligatorio"),
-	 * HttpStatus.BAD_REQUEST); Device dispositivo = new Device();
-	 * dispositivo.setNombre(dispositivosDto.getNombre());
-	 * dispositivo.setMarca(dispositivosDto.getMarca());
-	 * dispositivo.setFabricante(dispositivosDto.getFabricante());
-	 * dispositivo.setObservacion(dispositivosDto.getObservacion());
-	 * dispositivo.setUsuarios(dispositivosDto.getUsuarios());
-	 * dispositivosService.guardar(dispositivo); return new ResponseEntity<>(new
-	 * Mensaje("Dispositivo creado"), HttpStatus.OK); }
-	 * 
-	 * @PutMapping("{id}") public ResponseEntity<?> actualizar(@PathVariable("id")
-	 * int id, @RequestBody DispositivosDto dispositivosDto) { if
-	 * (!dispositivosService.existsById(id)) return new ResponseEntity<>(new
-	 * Mensaje("no existe"), HttpStatus.NOT_FOUND); if
-	 * (StringUtils.isBlank(dispositivosDto.getNombre())) return new
-	 * ResponseEntity<>(new Mensaje("el nombre es obligatorio"),
-	 * HttpStatus.BAD_REQUEST); Device dispositivo =
-	 * dispositivosService.getOne(id).get();
-	 * dispositivo.setNombre(dispositivosDto.getNombre());
-	 * dispositivo.setMarca(dispositivosDto.getMarca());
-	 * dispositivo.setFabricante(dispositivosDto.getFabricante());
-	 * dispositivo.setObservacion(dispositivosDto.getObservacion());
-	 * dispositivo.setUsuarios(dispositivosDto.getUsuarios());
-	 * dispositivosService.actualizar(dispositivo); return new ResponseEntity<>(new
-	 * Mensaje("Dispostivo actualizado"), HttpStatus.OK); }
-	 */
-	/*
-	 * @DeleteMapping("{id}") public ResponseEntity<?> borrar(@PathVariable("id")
-	 * int id) { if (!dispositivosService.existsById(id)) return new
-	 * ResponseEntity<>(new Message("no existe"), HttpStatus.NOT_FOUND);
-	 * dispositivosService.eliminar(id); return new ResponseEntity<>(new
-	 * Message("Dispositivo borrado"), HttpStatus.OK); }
-	 */
-	
+		List<Device> device = deviceService.read();
+		if (device.isEmpty()) {
+			return ResponseEntity.noContent().build();
+		}
+		return ResponseEntity.ok(device);
+		
+	}
+
+	@GetMapping("/{id}")
+	public ResponseEntity<Device> getById(@PathVariable("id") int id) {
+
+		Device device = deviceService.getOne(id).get();
+		if (device == null) {
+			return ResponseEntity.notFound().build();
+		}
+		return ResponseEntity.ok(device);
+		
+	}
+
+	@PostMapping(produces = "application/json")
+	public ResponseEntity<?> create(@RequestBody @Validated DeviceDto deviceDto, BindingResult bindingResult) {
+		
+		LocalDateTime localDateTime = LocalDateTime.now();
+		Date date = Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant());
+		Device device = new Device();
+		if (bindingResult.hasErrors())
+			return new ResponseEntity<>(new Message("Campos invalidos"), HttpStatus.BAD_REQUEST);
+		if (StringUtils.isBlank(deviceDto.getCode()))
+			return new ResponseEntity<>(new Message("El codigo es obligatorio"), HttpStatus.BAD_REQUEST);
+		if (StringUtils.isBlank(deviceDto.getCode()))
+			return new ResponseEntity<>(new Message("El codigo es incorrecto"), HttpStatus.BAD_REQUEST);
+		device.setCode(deviceDto.getCode());
+		device.setCreation_date(date);
+		device.setUpdate_date(deviceDto.getUpdate_date());
+		device.setUsuarios(deviceDto.getUsuarios());
+		deviceService.create(device);
+		return new ResponseEntity<>(new Message("Dispositivo creado"), HttpStatus.OK);
+		
+	}
+
+	@PutMapping("/{id}")
+	public ResponseEntity<?> update(@PathVariable("id") int id, @RequestBody DeviceDto deviceDto, BindingResult bindingResult) {
+		
+		Device device = deviceService.getOne(id).get();
+		if (!deviceService.existsById(id))
+			return new ResponseEntity<>(new Message("No existe"), HttpStatus.NOT_FOUND);
+		if (bindingResult.hasErrors())
+			return new ResponseEntity<>(new Message("Campos invalidos"), HttpStatus.BAD_REQUEST);
+		if (StringUtils.isBlank(deviceDto.getCode()))
+			return new ResponseEntity<>(new Message("El codigo es obligatorio"), HttpStatus.BAD_REQUEST);
+		if (StringUtils.isBlank(deviceDto.getCode()))
+			return new ResponseEntity<>(new Message("El codigo es incorrecto"), HttpStatus.BAD_REQUEST);
+		device.setCode(deviceDto.getCode());
+		device.setUpdate_date(deviceDto.getUpdate_date());
+		device.setUsuarios(deviceDto.getUsuarios());
+		deviceService.update(device);
+		return new ResponseEntity<>(new Message("Dispositivo actualizado"), HttpStatus.OK);
+		
+	}
+
+	@DeleteMapping("/{id}")
+	public ResponseEntity<?> delete(@PathVariable("id") int id) {
+		
+		if (!deviceService.existsById(id))
+			return new ResponseEntity<>(new Message("No existe"), HttpStatus.NOT_FOUND);
+		deviceService.delete(id);
+		return new ResponseEntity<>(new Message("Dispositivo borrado"), HttpStatus.OK);
+		
+	}
+
 }

@@ -33,7 +33,6 @@ public class Device {
 	@NotNull
 	private String code;
 
-	@NotNull
 	@JsonFormat(pattern = "yyyy-MM-dd")
 	private Date creation_date;
 

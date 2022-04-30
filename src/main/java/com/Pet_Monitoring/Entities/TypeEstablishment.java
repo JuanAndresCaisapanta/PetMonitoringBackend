@@ -27,7 +27,7 @@ public class TypeEstablishment {
 	@NotNull
 	private String name;
 
-	@OneToMany(mappedBy = "type_establishment", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "typeEstablishment", cascade = CascadeType.ALL)
 	private List<Establishment> establishment;
 	
 }

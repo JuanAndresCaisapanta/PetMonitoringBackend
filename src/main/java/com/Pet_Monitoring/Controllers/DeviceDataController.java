@@ -1,6 +1,5 @@
 package com.Pet_Monitoring.Controllers;
 
-
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
@@ -28,6 +27,7 @@ public class DeviceDataController {
 
 	@GetMapping
 	public ResponseEntity<List<DeviceData>> read() {
+		
 		List<DeviceData> deviceData = deviceDataService.read();
 		if (deviceData.isEmpty()) {
 			return ResponseEntity.noContent().build();
@@ -35,12 +35,11 @@ public class DeviceDataController {
 		return ResponseEntity.ok(deviceData);
 	}
 
-	@PostMapping(produces = "application/json")
+	@PostMapping
 	public ResponseEntity<DeviceData> create(@RequestBody @Validated DeviceDataDto deviceDataDto) {
 
 		LocalDateTime localDateTime = LocalDateTime.now();
-		Date date = java.util.Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant());
-
+		Date date = Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant());
 		DeviceData deviceData = new DeviceData();
 		deviceData.setLatitude(deviceDataDto.getLatitude());
 		deviceData.setLongitude(deviceDataDto.getLongitude());
@@ -51,6 +50,7 @@ public class DeviceDataController {
 		deviceData.setPet(deviceDataDto.getPet());
 		deviceDataService.create(deviceData);
 		return ResponseEntity.ok(deviceData);
+		
 	}
 
 }

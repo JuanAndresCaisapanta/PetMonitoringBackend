@@ -27,7 +27,7 @@ public class TypeMedicine {
 	@NotNull
 	private String name;
 
-	@OneToMany(mappedBy = "type_medicine", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "typeMedicine", cascade = CascadeType.ALL)
 	private List<Medicine> medicine;
 	
 }
