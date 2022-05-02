@@ -40,4 +40,11 @@ public class TypeEstablishmentService {
 	public boolean existsById(int id) {
 		return typeEstablishmentRepository.existsById(id);
 	}
+	public boolean existsByName(String name) {
+		return typeEstablishmentRepository.existsByName(name);
+	}
+
+	public Optional<TypeEstablishment> findByName(String name) {
+		return typeEstablishmentRepository.findByName(name);
+	}
 }

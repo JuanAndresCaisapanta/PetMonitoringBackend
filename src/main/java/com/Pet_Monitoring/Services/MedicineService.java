@@ -15,38 +15,30 @@ import com.Pet_Monitoring.Repositories.MedicineRepository;
 public class MedicineService {
 	
 	@Autowired
-	MedicineRepository vacunasRepository;
+	MedicineRepository medicineRepository;
 
-	public List<Medicine> lista() {
-		return (List<Medicine>) vacunasRepository.findAll();
+	public List<Medicine> read() {
+		return (List<Medicine>) medicineRepository.findAll();
+	}
+	
+	public void create(Medicine vacunas) {
+		medicineRepository.save(vacunas);
+	}
+
+	public void update(Medicine vacunas) {
+		medicineRepository.save(vacunas);
+	}
+
+	public void delete(int id) {
+		medicineRepository.deleteById(id);
 	}
 
 	public Optional<Medicine> getOne(int id) {
-		return vacunasRepository.findById(id);
-	}
-
-	public Optional<Medicine> getByNombre(String nombre) {
-		return vacunasRepository.findByFabricador(nombre);
-	}
-
-	public void guardar(Medicine vacunas) {
-		vacunasRepository.save(vacunas);
-	}
-
-	public void actualizar(Medicine vacunas) {
-		vacunasRepository.save(vacunas);
-	}
-
-	public void eliminar(int id) {
-		vacunasRepository.deleteById(id);
+		return medicineRepository.findById(id);
 	}
 
 	public boolean existsById(int id) {
-		return vacunasRepository.existsById(id);
-	}
-
-	public boolean existsByNombre(String nombre) {
-		return vacunasRepository.existsByFabricador(nombre);
+		return medicineRepository.existsById(id);
 	}
 
 }

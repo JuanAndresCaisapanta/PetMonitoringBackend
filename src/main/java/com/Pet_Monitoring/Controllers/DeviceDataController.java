@@ -1,8 +1,5 @@
 package com.Pet_Monitoring.Controllers;
 
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.Pet_Monitoring.Dto.DeviceDataDto;
 import com.Pet_Monitoring.Entities.DeviceData;
 import com.Pet_Monitoring.Services.DeviceDataService;
+import com.Pet_Monitoring.Utils.Util;
 
 @RestController
 @RequestMapping("/deviceData")
@@ -38,14 +36,12 @@ public class DeviceDataController {
 	@PostMapping
 	public ResponseEntity<DeviceData> create(@RequestBody @Validated DeviceDataDto deviceDataDto) {
 
-		LocalDateTime localDateTime = LocalDateTime.now();
-		Date date = Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant());
 		DeviceData deviceData = new DeviceData();
 		deviceData.setLatitude(deviceDataDto.getLatitude());
 		deviceData.setLongitude(deviceDataDto.getLongitude());
 		deviceData.setTemperature(deviceDataDto.getTemperature());
 		deviceData.setBattery(deviceDataDto.getBattery());
-		deviceData.setCreation_date(date);
+		deviceData.setCreation_date(Util.dateNow());
 		deviceData.setDevice(deviceDataDto.getDevice());
 		deviceData.setPet(deviceDataDto.getPet());
 		deviceDataService.create(deviceData);

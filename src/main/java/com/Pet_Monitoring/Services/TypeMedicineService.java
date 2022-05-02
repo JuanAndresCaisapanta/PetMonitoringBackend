@@ -40,4 +40,12 @@ public class TypeMedicineService {
 	public boolean existsById(int id) {
 		return typeMedicineRepository.existsById(id);
 	}
+	
+	public boolean existsByName(String name) {
+		return typeMedicineRepository.existsByName(name);
+	}
+
+	public Optional<TypeMedicine> findByName(String name) {
+		return typeMedicineRepository.findByName(name);
+	}
 }

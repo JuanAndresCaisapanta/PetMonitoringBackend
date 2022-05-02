@@ -1,8 +1,5 @@
 package com.Pet_Monitoring.Controllers;
 
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
@@ -24,7 +21,6 @@ import com.Pet_Monitoring.Dto.DeviceDto;
 import com.Pet_Monitoring.Dto.Message;
 import com.Pet_Monitoring.Entities.Device;
 import com.Pet_Monitoring.Services.DeviceService;
-
 @RestController
 @RequestMapping("/device")
 public class DeviceController {
@@ -40,7 +36,7 @@ public class DeviceController {
 			return ResponseEntity.noContent().build();
 		}
 		return ResponseEntity.ok(device);
-		
+
 	}
 
 	@GetMapping("/{id}")
@@ -51,14 +47,12 @@ public class DeviceController {
 			return ResponseEntity.notFound().build();
 		}
 		return ResponseEntity.ok(device);
-		
+
 	}
 
-	@PostMapping(produces = "application/json")
+	@PostMapping
 	public ResponseEntity<?> create(@RequestBody @Validated DeviceDto deviceDto, BindingResult bindingResult) {
-		
-		LocalDateTime localDateTime = LocalDateTime.now();
-		Date date = Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant());
+
 		Device device = new Device();
 		if (bindingResult.hasErrors())
 			return new ResponseEntity<>(new Message("Campos invalidos"), HttpStatus.BAD_REQUEST);
@@ -67,17 +61,18 @@ public class DeviceController {
 		if (StringUtils.isBlank(deviceDto.getCode()))
 			return new ResponseEntity<>(new Message("El codigo es incorrecto"), HttpStatus.BAD_REQUEST);
 		device.setCode(deviceDto.getCode());
-		device.setCreation_date(date);
+		device.setCreation_date(deviceDto.getCreation_date());
 		device.setUpdate_date(deviceDto.getUpdate_date());
 		device.setUsuarios(deviceDto.getUsuarios());
 		deviceService.create(device);
 		return new ResponseEntity<>(new Message("Dispositivo creado"), HttpStatus.OK);
-		
+
 	}
 
 	@PutMapping("/{id}")
-	public ResponseEntity<?> update(@PathVariable("id") int id, @RequestBody DeviceDto deviceDto, BindingResult bindingResult) {
-		
+	public ResponseEntity<?> update(@PathVariable("id") int id, @RequestBody DeviceDto deviceDto,
+			BindingResult bindingResult) {
+
 		Device device = deviceService.getOne(id).get();
 		if (!deviceService.existsById(id))
 			return new ResponseEntity<>(new Message("No existe"), HttpStatus.NOT_FOUND);
@@ -92,17 +87,17 @@ public class DeviceController {
 		device.setUsuarios(deviceDto.getUsuarios());
 		deviceService.update(device);
 		return new ResponseEntity<>(new Message("Dispositivo actualizado"), HttpStatus.OK);
-		
+
 	}
 
 	@DeleteMapping("/{id}")
 	public ResponseEntity<?> delete(@PathVariable("id") int id) {
-		
+
 		if (!deviceService.existsById(id))
 			return new ResponseEntity<>(new Message("No existe"), HttpStatus.NOT_FOUND);
 		deviceService.delete(id);
 		return new ResponseEntity<>(new Message("Dispositivo borrado"), HttpStatus.OK);
-		
+
 	}
 
 }

@@ -25,7 +25,7 @@ public class Species {
 	private int id;
 
 	@NotNull
-	private String nombre;
+	private String name;
 
 	@OneToMany(mappedBy = "species", cascade = CascadeType.ALL)
 	private List<Pet> pet;

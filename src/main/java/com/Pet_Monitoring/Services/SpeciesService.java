@@ -18,30 +18,38 @@ import com.Pet_Monitoring.Repositories.SpeciesRepository;
 public class SpeciesService {
 	
 	@Autowired
-	SpeciesRepository especiesRepository;
+	SpeciesRepository speciesRepository;
 
-	public List<Species> lista() {
-		return (List<Species>) especiesRepository.findAll();
+	public List<Species> read() {
+		return (List<Species>) speciesRepository.findAll();
+	}
+	
+	public void create(@Valid @RequestBody Species species) {
+		speciesRepository.save(species);
+	}
+
+	public void update(@Valid @RequestBody Species species) {
+		speciesRepository.save(species);
+	}
+
+	public void delete(int id) {
+		speciesRepository.deleteById(id);
 	}
 
 	public Optional<Species> getOne(int id) {
-		return especiesRepository.findById(id);
-	}
-
-	public void guardar(@Valid @RequestBody Species especies) {
-		especiesRepository.save(especies);
-	}
-
-	public void actualizar(@Valid @RequestBody Species especies) {
-		especiesRepository.save(especies);
-	}
-
-	public void eliminar(int id) {
-		especiesRepository.deleteById(id);
+		return speciesRepository.findById(id);
 	}
 
 	public boolean existsById(int id) {
-		return especiesRepository.existsById(id);
+		return speciesRepository.existsById(id);
+	}
+	
+	public boolean existsByName(String name) {
+		return speciesRepository.existsByName(name);
+	}
+
+	public Optional<Species> findByName(String name) {
+		return speciesRepository.findByName(name);
 	}
 
 }

@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import com.Pet_Monitoring.Entities.Professional;
+import com.Pet_Monitoring.Entities.Profession;
 import com.Pet_Monitoring.Repositories.ProfessionRepository;
 
 @Service
@@ -18,38 +18,38 @@ import com.Pet_Monitoring.Repositories.ProfessionRepository;
 public class ProfessionService {
 
 	@Autowired
-	ProfessionRepository especialidadesRepository;
+	ProfessionRepository professionRepository;
 
-	public List<Professional> lista() {
-		return (List<Professional>) especialidadesRepository.findAll();
+	public List<Profession> read() {
+		return (List<Profession>) professionRepository.findAll();
 	}
 
-	public Optional<Professional> getOne(int id) {
-		return especialidadesRepository.findById(id);
+	public void create(@Valid @RequestBody Profession profession) {
+		professionRepository.save(profession);
 	}
 
-	public Optional<Professional> getByNombre(String nombre) {
-		return especialidadesRepository.findByNombre(nombre);
+	public void update(@Valid @RequestBody Profession profession) {
+		professionRepository.save(profession);
 	}
 
-	public void guardar(@Valid @RequestBody Professional especialidades) {
-		especialidadesRepository.save(especialidades);
+	public void delete(int id) {
+		professionRepository.deleteById(id);
 	}
-
-	public void actualizar(@Valid @RequestBody Professional especialidades) {
-		especialidadesRepository.save(especialidades);
-	}
-
-	public void eliminar(int id) {
-		especialidadesRepository.deleteById(id);
+	
+	public Optional<Profession> getOne(int id) {
+		return professionRepository.findById(id);
 	}
 
 	public boolean existsById(int id) {
-		return especialidadesRepository.existsById(id);
+		return professionRepository.existsById(id);
+	}
+	
+	public boolean existsByName(String name) {
+		return professionRepository.existsByName(name);
 	}
 
-	public boolean existsByNombre(String nombre) {
-		return especialidadesRepository.existsByNombre(nombre);
+	public Optional<Profession> findByName(String name) {
+		return professionRepository.findByName(name);
 	}
-
+	
 }

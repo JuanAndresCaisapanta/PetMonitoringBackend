@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class SpeciesDto {
 
-	private String nombre;
+	private String name;
 
 	private List<Pet> pet;
 
