@@ -1,5 +1,5 @@
 package com.Pet_Monitoring.Security.Enums;
 
-public enum RolNombre {
+public enum RoleName {
 	ROLE_ADMIN, ROLE_USER
 }

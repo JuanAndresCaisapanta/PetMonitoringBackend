@@ -13,7 +13,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 
-import com.Pet_Monitoring.Security.Entity.Usuarios;
+import com.Pet_Monitoring.Security.Entities.Users;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import lombok.AllArgsConstructor;
@@ -43,7 +43,7 @@ public class Device {
 	private List<DeviceData> deviceData;
 
 	@ManyToOne
-	@JoinColumn(name = "user_id")
-	private Usuarios usuarios;
+	@JoinColumn(name = "users_id")
+	private Users users;
 
 }

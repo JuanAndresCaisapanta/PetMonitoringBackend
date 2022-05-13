@@ -14,9 +14,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import com.Pet_Monitoring.Security.Jwt.FiltroTokenJwt;
-import com.Pet_Monitoring.Security.Jwt.PuntoEntradaJwt;
-import com.Pet_Monitoring.Security.Service.UsuariosDetalleServiceImp;
+import com.Pet_Monitoring.Security.Jwt.JwtEntryPoint;
+import com.Pet_Monitoring.Security.Jwt.JwtTokenFilter;
+import com.Pet_Monitoring.Security.Services.UserDetailsServiceImp;
 
 @Configuration
 @EnableWebSecurity
@@ -24,14 +24,14 @@ import com.Pet_Monitoring.Security.Service.UsuariosDetalleServiceImp;
 public class MainSecurity extends WebSecurityConfigurerAdapter{
 	
 	@Autowired
-    UsuariosDetalleServiceImp usuariosDetalleService;
+    UserDetailsServiceImp userDetailsService;
 
     @Autowired
-    PuntoEntradaJwt puntoEntradaJwt;
+    JwtEntryPoint jwtEntryPoint;
 
     @Bean
-    public FiltroTokenJwt jwtTokenFilter(){
-        return new FiltroTokenJwt();
+    public JwtTokenFilter jwtTokenFilter(){
+        return new JwtTokenFilter();
     }
 
     @Bean
@@ -41,7 +41,7 @@ public class MainSecurity extends WebSecurityConfigurerAdapter{
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(usuariosDetalleService).passwordEncoder(passwordEncoder());
+        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
     }
 
     @Bean
@@ -60,11 +60,12 @@ public class MainSecurity extends WebSecurityConfigurerAdapter{
         http.cors().and().csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/auth/**").permitAll()
-                .antMatchers("/mascotas/**").permitAll()
-                .antMatchers("/dispositivos/**").permitAll()
+                .antMatchers("/user/**").hasAnyAuthority("ROLE_USER","ROLE_ADMIN")
+                .antMatchers("/pet/**").hasAnyAuthority("ROLE_USER","ROLE_ADMIN")
+                .antMatchers("/device/**").hasAnyAuthority("ROLE_USER","ROLE_ADMIN")
                 .anyRequest().authenticated()
                 .and()
-                .exceptionHandling().authenticationEntryPoint(puntoEntradaJwt)
+                .exceptionHandling().authenticationEntryPoint(jwtEntryPoint)
                 .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.addFilterBefore(jwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);

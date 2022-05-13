@@ -30,7 +30,7 @@ public class PetController {
 	PetService petService;
 
 	@GetMapping(produces = "application/json")
-	public ResponseEntity<List<Pet>> lista() {
+	public ResponseEntity<List<Pet>>readAll() {
 		List<Pet> pet = petService.read();
 		return new ResponseEntity<>(pet, HttpStatus.OK);
 	}
@@ -58,7 +58,7 @@ public class PetController {
 	 */
 
 	@PostMapping(produces = "application/json")
-	public ResponseEntity<?> guardar(@RequestBody PetDto petDto) {
+	public ResponseEntity<?> create(@RequestBody PetDto petDto) {
 
 		if (StringUtils.isBlank(petDto.getName()))
 			return new ResponseEntity<>(new Message("el nombre es obligatorio"), HttpStatus.BAD_REQUEST); //
@@ -76,7 +76,7 @@ public class PetController {
 		pet.setCreation_date(petDto.getCreation_date());
 		pet.setUpdate_date(petDto.getUpdate_date());
 		pet.setSpecies(petDto.getSpecies());
-		pet.setUsuarios(petDto.getUsuarios());
+		pet.setUsers(petDto.getUsers());
 		petService.create(pet);
 		return new ResponseEntity<>(new Message("Mascota creada"), HttpStatus.OK);
 

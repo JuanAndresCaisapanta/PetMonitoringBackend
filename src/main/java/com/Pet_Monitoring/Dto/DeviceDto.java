@@ -4,7 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.Pet_Monitoring.Entities.DeviceData;
-import com.Pet_Monitoring.Security.Entity.Usuarios;
+import com.Pet_Monitoring.Security.Entities.Users;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -23,6 +23,6 @@ public class DeviceDto {
 
 	private List<DeviceData> deviceData;
 
-	private Usuarios usuarios;
+	private Users users;
 
 }

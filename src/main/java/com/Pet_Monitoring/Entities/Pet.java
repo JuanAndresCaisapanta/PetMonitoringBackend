@@ -13,8 +13,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 
-import com.Pet_Monitoring.Security.Entity.Usuarios;
+import com.Pet_Monitoring.Security.Entities.Users;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -76,7 +77,8 @@ public class Pet {
 	private Species species;
 
 	@ManyToOne
-	@JoinColumn(name = "user_id")
-	private Usuarios usuarios;
+	@JoinColumn(name = "users_id")
+	@JsonIgnore
+	private Users users;
 
 }

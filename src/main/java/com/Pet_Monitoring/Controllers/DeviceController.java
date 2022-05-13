@@ -63,7 +63,7 @@ public class DeviceController {
 		device.setCode(deviceDto.getCode());
 		device.setCreation_date(deviceDto.getCreation_date());
 		device.setUpdate_date(deviceDto.getUpdate_date());
-		device.setUsuarios(deviceDto.getUsuarios());
+		device.setUsers(deviceDto.getUsers());
 		deviceService.create(device);
 		return new ResponseEntity<>(new Message("Dispositivo creado"), HttpStatus.OK);
 
@@ -84,7 +84,6 @@ public class DeviceController {
 			return new ResponseEntity<>(new Message("El codigo es incorrecto"), HttpStatus.BAD_REQUEST);
 		device.setCode(deviceDto.getCode());
 		device.setUpdate_date(deviceDto.getUpdate_date());
-		device.setUsuarios(deviceDto.getUsuarios());
 		deviceService.update(device);
 		return new ResponseEntity<>(new Message("Dispositivo actualizado"), HttpStatus.OK);
 

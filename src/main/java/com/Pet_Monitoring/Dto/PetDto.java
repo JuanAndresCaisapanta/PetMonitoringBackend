@@ -8,7 +8,7 @@ import com.Pet_Monitoring.Entities.Establishment;
 import com.Pet_Monitoring.Entities.Medicine;
 import com.Pet_Monitoring.Entities.Professional;
 import com.Pet_Monitoring.Entities.Species;
-import com.Pet_Monitoring.Security.Entity.Usuarios;
+import com.Pet_Monitoring.Security.Entities.Users;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import lombok.AllArgsConstructor;
@@ -51,6 +51,6 @@ public class PetDto {
 
 	private Species species;
 
-	private Usuarios usuarios;
+	private Users users;
 
 }

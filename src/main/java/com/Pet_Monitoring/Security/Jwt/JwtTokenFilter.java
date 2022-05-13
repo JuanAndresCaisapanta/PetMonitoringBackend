@@ -15,27 +15,27 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import com.Pet_Monitoring.Security.Service.UsuariosDetalleServiceImp;
+import com.Pet_Monitoring.Security.Services.UserDetailsServiceImp;
 
 // comprobar token y permite acceso
 
-public class FiltroTokenJwt extends OncePerRequestFilter {
-	private final static Logger logger = LoggerFactory.getLogger(FiltroTokenJwt.class);
+public class JwtTokenFilter extends OncePerRequestFilter {
+	private final static Logger logger = LoggerFactory.getLogger(JwtTokenFilter.class);
 
 	@Autowired
-	ProveedorJwt proveedorJwt;
+	JwtProvider jwtProvider;
 
 	@Autowired
-	UsuariosDetalleServiceImp usuariosDetallesService;
+	UserDetailsServiceImp userDetailsService;
 
 	@Override
 	protected void doFilterInternal(HttpServletRequest req, HttpServletResponse res, FilterChain filterChain)
 			throws IOException, ServletException {
 		try {
 			String token = getToken(req);
-			if (token != null && proveedorJwt.validateToken(token)) {
-				String email = proveedorJwt.getEmailFromToken(token);
-				UserDetails userDetails = usuariosDetallesService.loadUserByUsername(email);
+			if (token != null && jwtProvider.validateToken(token)) {
+				String email = jwtProvider.getEmailFromToken(token);
+				UserDetails userDetails = userDetailsService.loadUserByUsername(email);
 				UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(userDetails, null,
 						userDetails.getAuthorities());
 				SecurityContextHolder.getContext().setAuthentication(auth);

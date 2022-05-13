@@ -15,8 +15,8 @@ import org.springframework.stereotype.Component;
 // Comprueba token valido
 
 @Component
-public class PuntoEntradaJwt implements AuthenticationEntryPoint{
-	private final static Logger logger = LoggerFactory.getLogger(PuntoEntradaJwt.class);
+public class JwtEntryPoint implements AuthenticationEntryPoint{
+	private final static Logger logger = LoggerFactory.getLogger(JwtEntryPoint.class);
 
     @Override
     public void commence(HttpServletRequest req, HttpServletResponse res, AuthenticationException e) throws IOException {
