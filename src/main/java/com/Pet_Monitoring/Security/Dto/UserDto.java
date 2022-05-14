@@ -2,12 +2,14 @@ package com.Pet_Monitoring.Security.Dto;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 import com.Pet_Monitoring.Security.Entities.Role;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -33,6 +35,15 @@ public class UserDto {
 	private String address;
 
 	private String phone;
+	
+	@JsonFormat(pattern = "yyyy-MM-dd")
+	private Date creation_date;
+	
+	@JsonFormat(pattern = "yyyy-MM-dd")
+	private Date update_date;
+	
+	@JsonFormat(pattern = "yyyy-MM-dd")
+	private Date last_login;
 	
 	private Collection<Role> role = new ArrayList<>();
 

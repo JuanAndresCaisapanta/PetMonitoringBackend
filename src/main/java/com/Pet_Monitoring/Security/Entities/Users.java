@@ -2,6 +2,7 @@ package com.Pet_Monitoring.Security.Entities;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -19,6 +20,7 @@ import javax.validation.constraints.NotNull;
 
 import com.Pet_Monitoring.Entities.Device;
 import com.Pet_Monitoring.Entities.Pet;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -50,6 +52,12 @@ public class Users {
 	private String address;
 
 	private String phone;
+	
+	@JsonFormat(pattern = "yyyy-MM-dd")
+	private Date creation_date;
+	
+	@JsonFormat(pattern = "yyyy-MM-dd")
+	private Date update_date;
 
 	@NotNull
 	@ManyToMany(fetch = FetchType.EAGER)

@@ -83,9 +83,10 @@ public class AuthController {
 		user.setPassword(passwordEncoder.encode(userDto.getPassword()));
 		user.setAddress(userDto.getAddress());
 		user.setPhone(userDto.getPhone());
+		user.setCreation_date(userDto.getCreation_date());
 		Collection<Role> role = new ArrayList<>();
 		role.add(roleService.getByRoleName(RoleName.ROLE_USER).get());
-		role.add(roleService.getByRoleName(RoleName.ROLE_ADMIN).get());
+		//role.add(roleService.getByRoleName(RoleName.ROLE_ADMIN).get());
 		user.setRole(role);
 		userService.create(user);
 		return new ResponseEntity<>(new Message("usuario guardado"), HttpStatus.CREATED);
