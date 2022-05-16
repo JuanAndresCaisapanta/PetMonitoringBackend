@@ -14,7 +14,7 @@ public class JwtDto {
 	
 	private String token;
     private String bearer;
-    private String email;
+    private String user;
     private Collection<? extends GrantedAuthority> authorities;
     
 }

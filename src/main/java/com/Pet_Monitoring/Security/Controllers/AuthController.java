@@ -16,6 +16,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -65,12 +67,12 @@ public class AuthController {
 		JwtDto jwtDto = new JwtDto();
 		jwtDto.setToken(jwt);
 		jwtDto.setBearer("Bearer");
-		jwtDto.setEmail(userDetails.getUsername());
+		jwtDto.setUser(userDetails.getUsername());
 		jwtDto.setAuthorities(userDetails.getAuthorities());
 		return new ResponseEntity(jwtDto, HttpStatus.OK);
 	}
 
-	@PostMapping(produces = "application/json")
+	@PostMapping("/register")
 	public ResponseEntity<?> register(@Valid @RequestBody UserDto userDto, BindingResult bindingResult) {
 		if (bindingResult.hasErrors())
 			return new ResponseEntity<>(new Message("campos mal puestos o email inválido"), HttpStatus.BAD_REQUEST);
@@ -90,6 +92,13 @@ public class AuthController {
 		user.setRole(role);
 		userService.create(user);
 		return new ResponseEntity<>(new Message("usuario guardado"), HttpStatus.CREATED);
+	}
+	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@GetMapping("/validate-token/{token}")
+	public ResponseEntity<?> getById(@PathVariable("token") String token) {
+		return new ResponseEntity(jwtProvider.validateToken(token), HttpStatus.OK);
+
 	}
 
 }
