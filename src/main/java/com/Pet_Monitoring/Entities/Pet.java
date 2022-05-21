@@ -60,7 +60,7 @@ public class Pet {
 	@JsonFormat(pattern = "yyyy-MM-dd")
 	private Date update_date;
 
-	@OneToMany(mappedBy = "pet", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "pet", cascade =CascadeType.ALL)
 	private List<Establishment> establishment;
 	
 	@OneToMany(mappedBy = "pet", cascade = CascadeType.ALL)

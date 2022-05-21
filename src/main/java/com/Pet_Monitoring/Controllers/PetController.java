@@ -20,6 +20,7 @@ import com.Pet_Monitoring.Dto.PetDto;
 import com.Pet_Monitoring.Dto.Message;
 import com.Pet_Monitoring.Entities.Pet;
 import com.Pet_Monitoring.Services.PetService;
+import com.Pet_Monitoring.Utils.Util;
 
 @RestController
 @RequestMapping("/pet")
@@ -100,7 +101,7 @@ public class PetController {
 		pet.setGender(petDto.getGender());
 		pet.setSterilization(petDto.getSterilization());
 		pet.setBirth_date(petDto.getBirth_date());
-		pet.setUpdate_date(petDto.getUpdate_date());
+		pet.setUpdate_date(Util.dateNow());
 		pet.setSpecies(petDto.getSpecies());
 		petService.update(pet);
 		return new ResponseEntity<>(new Message("Mascota actualizada"), HttpStatus.OK);

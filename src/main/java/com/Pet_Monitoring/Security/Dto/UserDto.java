@@ -42,9 +42,6 @@ public class UserDto {
 	@JsonFormat(pattern = "yyyy-MM-dd")
 	private Date update_date;
 	
-	@JsonFormat(pattern = "yyyy-MM-dd")
-	private Date last_login;
-	
 	private Collection<Role> role = new ArrayList<>();
 
 }

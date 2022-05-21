@@ -54,6 +54,8 @@ public class Users {
 
 	private String phone;
 	
+	private byte[] image;
+	
 	@JsonFormat(pattern = "yyyy-MM-dd")
 	private Date creation_date;
 	
@@ -66,10 +68,10 @@ public class Users {
 	inverseJoinColumns = @JoinColumn(name = "role_id"))
 	private  Collection<Role> role = new ArrayList<>();
 
-	@OneToMany(mappedBy = "users", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "users", cascade =  CascadeType.REMOVE, orphanRemoval = true)
 	@JsonIgnore
 	private List<Pet> pet;
 	@JsonIgnore
-	@OneToMany(mappedBy = "users", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "users", cascade =  CascadeType.REMOVE, orphanRemoval = true)
 	private List<Device> device;
 }
