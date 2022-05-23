@@ -44,7 +44,7 @@ public class Pet {
 	private float weight;
 	
 	@NotNull
-	private String gender;
+	private String sex;
 	
 	@NotNull
 	private Boolean sterilization;

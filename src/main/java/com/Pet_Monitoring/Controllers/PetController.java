@@ -71,7 +71,7 @@ public class PetController {
 		pet.setColor(petDto.getColor());
 		pet.setRace(petDto.getRace());
 		pet.setWeight(petDto.getWeight());
-		pet.setGender(petDto.getGender());
+		pet.setSex(petDto.getSex());
 		pet.setSterilization(petDto.getSterilization());
 		pet.setBirth_date(petDto.getBirth_date());
 		pet.setCreation_date(petDto.getCreation_date());
@@ -98,7 +98,7 @@ public class PetController {
 		pet.setColor(petDto.getColor());
 		pet.setRace(petDto.getRace());
 		pet.setWeight(petDto.getWeight());
-		pet.setGender(petDto.getGender());
+		pet.setSex(petDto.getSex());
 		pet.setSterilization(petDto.getSterilization());
 		pet.setBirth_date(petDto.getBirth_date());
 		pet.setUpdate_date(Util.dateNow());

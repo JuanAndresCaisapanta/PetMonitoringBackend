@@ -28,7 +28,7 @@ public class PetDto {
 
 	private float weight;
 
-	private String gender;
+	private String sex;
 
 	private Boolean sterilization;
 
