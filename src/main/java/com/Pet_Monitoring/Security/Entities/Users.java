@@ -69,7 +69,6 @@ public class Users {
 	private  Collection<Role> role = new ArrayList<>();
 
 	@OneToMany(mappedBy = "users", cascade =  CascadeType.REMOVE, orphanRemoval = true)
-	@JsonIgnore
 	private List<Pet> pet;
 	@JsonIgnore
 	@OneToMany(mappedBy = "users", cascade =  CascadeType.REMOVE, orphanRemoval = true)

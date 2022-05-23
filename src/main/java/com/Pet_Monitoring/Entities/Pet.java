@@ -73,8 +73,8 @@ public class Pet {
 	private List<DeviceData> deviceData;
 
 	@ManyToOne
-	@JoinColumn(name = "species_id")
-	private Species species;
+	@JoinColumn(name = "breed_id")
+	private Breed breed;
 
 	@ManyToOne
 	@JoinColumn(name = "users_id")

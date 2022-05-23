@@ -3,11 +3,11 @@ package com.Pet_Monitoring.Dto;
 import java.util.Date;
 import java.util.List;
 
+import com.Pet_Monitoring.Entities.Breed;
 import com.Pet_Monitoring.Entities.DeviceData;
 import com.Pet_Monitoring.Entities.Establishment;
 import com.Pet_Monitoring.Entities.Medicine;
 import com.Pet_Monitoring.Entities.Professional;
-import com.Pet_Monitoring.Entities.Species;
 import com.Pet_Monitoring.Security.Entities.Users;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -49,7 +49,7 @@ public class PetDto {
 
 	private List<DeviceData> deviceData;
 
-	private Species species;
+	private Breed breed;
 
 	private Users users;
 

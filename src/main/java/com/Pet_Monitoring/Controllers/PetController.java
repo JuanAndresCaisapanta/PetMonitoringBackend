@@ -76,7 +76,7 @@ public class PetController {
 		pet.setBirth_date(petDto.getBirth_date());
 		pet.setCreation_date(petDto.getCreation_date());
 		pet.setUpdate_date(petDto.getUpdate_date());
-		pet.setSpecies(petDto.getSpecies());
+		pet.setBreed(petDto.getBreed());
 		pet.setUsers(petDto.getUsers());
 		petService.create(pet);
 		return new ResponseEntity<>(new Message("Mascota creada"), HttpStatus.OK);
@@ -102,7 +102,7 @@ public class PetController {
 		pet.setSterilization(petDto.getSterilization());
 		pet.setBirth_date(petDto.getBirth_date());
 		pet.setUpdate_date(Util.dateNow());
-		pet.setSpecies(petDto.getSpecies());
+		pet.setBreed(petDto.getBreed());
 		petService.update(pet);
 		return new ResponseEntity<>(new Message("Mascota actualizada"), HttpStatus.OK);
 
