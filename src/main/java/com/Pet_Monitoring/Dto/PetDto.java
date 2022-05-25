@@ -22,7 +22,9 @@ public class PetDto {
 
 	private String name;
 
-	private String color;
+	private String colorMain;
+	
+	private String colorSecondary;
 
 	private String race;
 

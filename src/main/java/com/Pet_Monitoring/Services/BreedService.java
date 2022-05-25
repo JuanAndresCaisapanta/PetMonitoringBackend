@@ -48,5 +48,9 @@ public class BreedService {
 	public Optional<Breed> findByName(String name) {
 		return breedRepository.findByName(name);
 	}
+	
+	public List<Breed> findAllBySpeciesId(int id) {
+		return breedRepository.findAllBySpeciesId(id);
+	}
 
 }

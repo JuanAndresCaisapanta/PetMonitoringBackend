@@ -63,6 +63,8 @@ public class MainSecurity extends WebSecurityConfigurerAdapter{
                 .antMatchers("/user/**").hasAnyAuthority("ROLE_USER","ROLE_ADMIN")
                 .antMatchers("/pet/**").hasAnyAuthority("ROLE_USER","ROLE_ADMIN")
                 .antMatchers("/device/**").hasAnyAuthority("ROLE_USER","ROLE_ADMIN")
+                .antMatchers("/species/**").hasAnyAuthority("ROLE_USER","ROLE_ADMIN")
+                .antMatchers("/breed/**").hasAnyAuthority("ROLE_USER","ROLE_ADMIN")
                 .anyRequest().authenticated()
                 .and()
                 .exceptionHandling().authenticationEntryPoint(jwtEntryPoint)

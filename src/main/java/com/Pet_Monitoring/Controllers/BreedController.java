@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,6 +24,7 @@ import com.Pet_Monitoring.Services.BreedService;
 
 @RestController
 @RequestMapping("/breed")
+@CrossOrigin
 public class BreedController {
 
 	@Autowired
@@ -39,12 +41,16 @@ public class BreedController {
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@GetMapping("/{id}")
 	public ResponseEntity<Breed> getById(@PathVariable("id") Long id) {
-
 		if (!breedService.existsById(id))
 			return new ResponseEntity(new Message("no existe"), HttpStatus.NOT_FOUND);
 		Breed breed = breedService.getOne(id).get();
 		return new ResponseEntity<>(breed, HttpStatus.OK);
+	}
 
+	@GetMapping("species/{id}")
+	public ResponseEntity<?> getBySpeciesId(@PathVariable("id") int id) {
+		List<Breed> breed = breedService.findAllBySpeciesId(id);
+		return new ResponseEntity<>(breed, HttpStatus.OK);
 	}
 
 	/*

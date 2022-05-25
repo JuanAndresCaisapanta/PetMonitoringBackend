@@ -35,10 +35,10 @@ public class Pet {
 	private String name;
 	
 	@NotNull
-	private String color;
+	private String colorMain;
 	
 	@NotNull
-	private String race;
+	private String colorSecondary;
 	
 	@NotNull
 	private float weight;
@@ -48,6 +48,8 @@ public class Pet {
 	
 	@NotNull
 	private Boolean sterilization;
+	
+	private byte[] image;
 	
 	@NotNull
 	@JsonFormat(pattern = "yyyy-MM-dd")

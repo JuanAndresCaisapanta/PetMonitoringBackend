@@ -1,24 +1,32 @@
 package com.Pet_Monitoring.Controllers;
 
+import java.io.IOException;
 import java.util.List;
+
+import javax.validation.Valid;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.Pet_Monitoring.Dto.PetDto;
 import com.Pet_Monitoring.Dto.Message;
 import com.Pet_Monitoring.Entities.Pet;
+import com.Pet_Monitoring.Security.Dto.UserDto;
 import com.Pet_Monitoring.Services.PetService;
 import com.Pet_Monitoring.Utils.Util;
 
@@ -31,7 +39,7 @@ public class PetController {
 	PetService petService;
 
 	@GetMapping(produces = "application/json")
-	public ResponseEntity<List<Pet>>readAll() {
+	public ResponseEntity<List<Pet>> readAll() {
 		List<Pet> pet = petService.read();
 		return new ResponseEntity<>(pet, HttpStatus.OK);
 	}
@@ -59,7 +67,8 @@ public class PetController {
 	 */
 
 	@PostMapping(produces = "application/json")
-	public ResponseEntity<?> create(@RequestBody PetDto petDto) {
+	public ResponseEntity<?> create(@Valid @ModelAttribute PetDto petDto, BindingResult bindingResult,
+			@RequestParam(required = false, value = "image") MultipartFile image) throws IOException {
 
 		if (StringUtils.isBlank(petDto.getName()))
 			return new ResponseEntity<>(new Message("el nombre es obligatorio"), HttpStatus.BAD_REQUEST); //
@@ -67,9 +76,15 @@ public class PetController {
 		// return new ResponseEntity<>(new Message("ese nombre ya existe"),
 		// HttpStatus.BAD_REQUEST);
 		Pet pet = new Pet();
+		if (image == null) {
+			pet.setImage(Util.extractBytes("src//main//resources//static//images//pet-profile.jpg"));
+		} else {
+			byte[] bytesImg = image.getBytes();
+			pet.setImage(bytesImg);
+		}
 		pet.setName(petDto.getName());
-		pet.setColor(petDto.getColor());
-		pet.setRace(petDto.getRace());
+		pet.setColorMain(petDto.getColorMain());
+		pet.setColorSecondary(petDto.getColorSecondary());
 		pet.setWeight(petDto.getWeight());
 		pet.setSex(petDto.getSex());
 		pet.setSterilization(petDto.getSterilization());
@@ -95,8 +110,8 @@ public class PetController {
 			return new ResponseEntity<>(new Message("el nombre es obligatorio"), HttpStatus.BAD_REQUEST);
 		Pet pet = petService.getOne(id).get();
 		pet.setName(petDto.getName());
-		pet.setColor(petDto.getColor());
-		pet.setRace(petDto.getRace());
+		pet.setColorMain(petDto.getColorMain());
+		pet.setColorSecondary(petDto.getColorSecondary());
 		pet.setWeight(petDto.getWeight());
 		pet.setSex(petDto.getSex());
 		pet.setSterilization(petDto.getSterilization());
