@@ -26,7 +26,6 @@ import org.springframework.web.multipart.MultipartFile;
 import com.Pet_Monitoring.Dto.PetDto;
 import com.Pet_Monitoring.Dto.Message;
 import com.Pet_Monitoring.Entities.Pet;
-import com.Pet_Monitoring.Security.Dto.UserDto;
 import com.Pet_Monitoring.Services.PetService;
 import com.Pet_Monitoring.Utils.Util;
 
@@ -83,8 +82,8 @@ public class PetController {
 			pet.setImage(bytesImg);
 		}
 		pet.setName(petDto.getName());
-		pet.setColorMain(petDto.getColorMain());
-		pet.setColorSecondary(petDto.getColorSecondary());
+		pet.setColor_main(petDto.getColor_main());
+		pet.setColor_secondary(petDto.getColor_secondary());
 		pet.setWeight(petDto.getWeight());
 		pet.setSex(petDto.getSex());
 		pet.setSterilization(petDto.getSterilization());
@@ -110,8 +109,8 @@ public class PetController {
 			return new ResponseEntity<>(new Message("el nombre es obligatorio"), HttpStatus.BAD_REQUEST);
 		Pet pet = petService.getOne(id).get();
 		pet.setName(petDto.getName());
-		pet.setColorMain(petDto.getColorMain());
-		pet.setColorSecondary(petDto.getColorSecondary());
+		pet.setColor_main(petDto.getColor_main());
+		pet.setColor_secondary(petDto.getColor_secondary());
 		pet.setWeight(petDto.getWeight());
 		pet.setSex(petDto.getSex());
 		pet.setSterilization(petDto.getSterilization());

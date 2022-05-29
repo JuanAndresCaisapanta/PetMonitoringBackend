@@ -4,7 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.Pet_Monitoring.Entities.Breed;
-import com.Pet_Monitoring.Entities.DeviceData;
+import com.Pet_Monitoring.Entities.DetailData;
 import com.Pet_Monitoring.Entities.Establishment;
 import com.Pet_Monitoring.Entities.Medicine;
 import com.Pet_Monitoring.Entities.Professional;
@@ -22,9 +22,9 @@ public class PetDto {
 
 	private String name;
 
-	private String colorMain;
+	private String color_main;
 	
-	private String colorSecondary;
+	private String color_secondary;
 
 	private String race;
 
@@ -49,7 +49,7 @@ public class PetDto {
 
 	private List<Professional> professional;
 
-	private List<DeviceData> deviceData;
+	private List<DetailData> detailData;
 
 	private Breed breed;
 

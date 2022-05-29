@@ -11,6 +11,7 @@ import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,11 +21,11 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class DeviceData {
+public class DetailData {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	private Long id;
 
 	@NotNull
 	private Float latitude;
@@ -38,16 +39,12 @@ public class DeviceData {
 	@NotNull
 	private int battery;
 	
-	@NotNull
 	@JsonFormat(pattern = "yyyy-MM-dd")
 	private Date creation_date;
 
 	@ManyToOne
-	@JoinColumn(name = "device_id")
-	private Device device;
-
-	@ManyToOne
-	@JoinColumn(name = "pet_id")
-	private Pet pet;
+	@JoinColumn(name = "masterData_id")
+	@JsonIgnore
+	private MasterData masterData;
 
 }

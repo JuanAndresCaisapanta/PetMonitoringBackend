@@ -19,9 +19,11 @@ import javax.persistence.JoinColumn;
 import javax.validation.constraints.NotNull;
 
 import com.Pet_Monitoring.Entities.Device;
+import com.Pet_Monitoring.Entities.MasterData;
 import com.Pet_Monitoring.Entities.Pet;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -70,7 +72,12 @@ public class Users {
 
 	@OneToMany(mappedBy = "users", cascade =  CascadeType.REMOVE, orphanRemoval = true)
 	private List<Pet> pet;
-	@JsonIgnore
+
 	@OneToMany(mappedBy = "users", cascade =  CascadeType.REMOVE, orphanRemoval = true)
+	
 	private List<Device> device;
+	
+	@OneToMany(mappedBy = "users", cascade =  CascadeType.REMOVE, orphanRemoval = true)
+	@JsonIgnore
+	private List<MasterData> masterData;
 }

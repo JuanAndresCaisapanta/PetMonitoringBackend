@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,6 +24,7 @@ import com.Pet_Monitoring.Entities.Device;
 import com.Pet_Monitoring.Services.DeviceService;
 @RestController
 @RequestMapping("/device")
+@CrossOrigin
 public class DeviceController {
 
 	@Autowired
@@ -65,7 +67,7 @@ public class DeviceController {
 		device.setUpdate_date(deviceDto.getUpdate_date());
 		device.setUsers(deviceDto.getUsers());
 		deviceService.create(device);
-		return new ResponseEntity<>(new Message("Dispositivo creado"), HttpStatus.OK);
+		return ResponseEntity.ok(device.getId());
 
 	}
 

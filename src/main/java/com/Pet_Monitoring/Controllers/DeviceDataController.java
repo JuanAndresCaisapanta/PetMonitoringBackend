@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.Pet_Monitoring.Dto.DeviceDataDto;
-import com.Pet_Monitoring.Entities.DeviceData;
-import com.Pet_Monitoring.Services.DeviceDataService;
+import com.Pet_Monitoring.Dto.DetailDataDto;
+import com.Pet_Monitoring.Entities.DetailData;
+import com.Pet_Monitoring.Services.DetailDataService;
 import com.Pet_Monitoring.Utils.Util;
 
 @RestController
@@ -21,31 +21,30 @@ import com.Pet_Monitoring.Utils.Util;
 public class DeviceDataController {
 
 	@Autowired
-	DeviceDataService deviceDataService;
+	DetailDataService detailDataService;
 
 	@GetMapping
-	public ResponseEntity<List<DeviceData>> read() {
+	public ResponseEntity<List<DetailData>> read() {
 		
-		List<DeviceData> deviceData = deviceDataService.read();
-		if (deviceData.isEmpty()) {
+		List<DetailData> detailData = detailDataService.read();
+		if (detailData.isEmpty()) {
 			return ResponseEntity.noContent().build();
 		}
-		return ResponseEntity.ok(deviceData);
+		return ResponseEntity.ok(detailData);
 	}
 
 	@PostMapping
-	public ResponseEntity<DeviceData> create(@RequestBody @Validated DeviceDataDto deviceDataDto) {
+	public ResponseEntity<DetailData> create(@RequestBody @Validated DetailDataDto detailDataDto) {
 
-		DeviceData deviceData = new DeviceData();
-		deviceData.setLatitude(deviceDataDto.getLatitude());
-		deviceData.setLongitude(deviceDataDto.getLongitude());
-		deviceData.setTemperature(deviceDataDto.getTemperature());
-		deviceData.setBattery(deviceDataDto.getBattery());
-		deviceData.setCreation_date(Util.dateNow());
-		deviceData.setDevice(deviceDataDto.getDevice());
-		deviceData.setPet(deviceDataDto.getPet());
-		deviceDataService.create(deviceData);
-		return ResponseEntity.ok(deviceData);
+		DetailData detailData = new DetailData();
+		detailData.setLatitude(detailDataDto.getLatitude());
+		detailData.setLongitude(detailDataDto.getLongitude());
+		detailData.setTemperature(detailDataDto.getTemperature());
+		detailData.setBattery(detailDataDto.getBattery());
+		detailData.setCreation_date(Util.dateNow());
+		detailData.setMasterData(detailDataDto.getMasterData());
+		detailDataService.create(detailData);
+		return ResponseEntity.ok(detailData);
 		
 	}
 

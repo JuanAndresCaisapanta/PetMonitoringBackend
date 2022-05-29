@@ -35,10 +35,10 @@ public class Pet {
 	private String name;
 	
 	@NotNull
-	private String colorMain;
+	private String color_main;
 	
 	@NotNull
-	private String colorSecondary;
+	private String color_secondary;
 	
 	@NotNull
 	private float weight;
@@ -46,7 +46,7 @@ public class Pet {
 	@NotNull
 	private String sex;
 	
-	@NotNull
+	
 	private Boolean sterilization;
 	
 	private byte[] image;
@@ -55,7 +55,7 @@ public class Pet {
 	@JsonFormat(pattern = "yyyy-MM-dd")
 	private Date birth_date;
 	
-	@NotNull
+	
 	@JsonFormat(pattern = "yyyy-MM-dd")
 	private Date creation_date;
 	
@@ -70,9 +70,10 @@ public class Pet {
 	
 	@OneToMany(mappedBy = "pet", cascade = CascadeType.ALL)
 	private List<Professional> professional;
-
+	
 	@OneToMany(mappedBy = "pet", cascade = CascadeType.ALL)
-	private List<DeviceData> deviceData;
+	@JsonIgnore
+	private List<MasterData> masterData;
 
 	@ManyToOne
 	@JoinColumn(name = "breed_id")
