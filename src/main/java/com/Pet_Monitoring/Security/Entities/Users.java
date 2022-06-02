@@ -23,7 +23,6 @@ import com.Pet_Monitoring.Entities.MasterData;
 import com.Pet_Monitoring.Entities.Pet;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

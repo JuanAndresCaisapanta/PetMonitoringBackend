@@ -16,6 +16,7 @@ import javax.validation.constraints.NotNull;
 import com.Pet_Monitoring.Security.Entities.Users;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -72,7 +73,7 @@ public class Pet {
 	private List<Professional> professional;
 	
 	@OneToMany(mappedBy = "pet", cascade = CascadeType.ALL)
-	@JsonIgnore
+	@JsonIgnoreProperties({"pet"})
 	private List<MasterData> masterData;
 
 	@ManyToOne
