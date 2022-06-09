@@ -20,8 +20,10 @@ public class ProfessionalDto {
 	private String last_name;
 
 	private String address;
+	
+	private String email;
 
-	private String phone;
+	private String cell_phone;
 
 	@JsonFormat(pattern = "yyyy-MM-dd")
 	private Date creation_date;

@@ -1,6 +1,8 @@
 package com.Pet_Monitoring.Entities;
 
 import java.util.Date;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -10,6 +12,7 @@ import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -24,6 +27,12 @@ public class Medicine {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
+	
+	@NotNull
+	@Column(unique=true) 
+	private String name;
+	
+	private byte[] image;
 
 	@NotNull
 	private String manufacturer;
@@ -33,6 +42,9 @@ public class Medicine {
 
 	@NotNull
 	private String applicator;
+	
+	@NotNull
+	private String description;
 
 	@NotNull
 	@JsonFormat(pattern = "dd/MM/yyyy")
@@ -58,6 +70,7 @@ public class Medicine {
 
 	@ManyToOne
 	@JoinColumn(name = "pet_id")
+	@JsonIgnore
 	private Pet pet;
 
 }

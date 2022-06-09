@@ -15,11 +15,15 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class MedicineDto {
 
+	private String name;
+
 	private String manufacturer;
 
 	private String batch;
 
 	private String applicator;
+
+	private String description;
 
 	@JsonFormat(pattern = "dd/MM/yyyy")
 	private Date production_date;
@@ -29,7 +33,7 @@ public class MedicineDto {
 
 	@JsonFormat(pattern = "dd/MM/yyyy")
 	private Date application_date;
-	
+
 	@JsonFormat(pattern = "dd/MM/yyyy")
 	private Date create_date;
 

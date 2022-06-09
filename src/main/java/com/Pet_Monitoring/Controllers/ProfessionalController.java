@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,13 +17,17 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.Pet_Monitoring.Dto.EmailDto;
 import com.Pet_Monitoring.Dto.Message;
 import com.Pet_Monitoring.Dto.ProfessionalDto;
+import com.Pet_Monitoring.Entities.Medicine;
 import com.Pet_Monitoring.Entities.Professional;
 import com.Pet_Monitoring.Services.ProfessionalService;
+import com.Pet_Monitoring.Utils.Util;
 
 @RestController
 @RequestMapping("/professional")
+@CrossOrigin
 public class ProfessionalController {
 
 	@Autowired
@@ -33,7 +38,6 @@ public class ProfessionalController {
 
 		List<Professional> professional = professionalService.read();
 		return new ResponseEntity<>(professional, HttpStatus.OK);
-
 	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
@@ -47,19 +51,12 @@ public class ProfessionalController {
 
 	}
 
-	/*
-	 * @SuppressWarnings({ "unchecked", "rawtypes" })
-	 * 
-	 * @GetMapping("/listanombre/{nombre}") public ResponseEntity<Establishment>
-	 * getByNombre(@PathVariable("nombre") String nombre) {
-	 * 
-	 * if (!professionalService.existsByNombre(nombre)) return new
-	 * ResponseEntity(new Message("no existe"), HttpStatus.NOT_FOUND); Establishment
-	 * profesionales = professionalService.getByNombre(nombre).get(); return new
-	 * ResponseEntity<>(profesionales, HttpStatus.OK);
-	 * 
-	 * }
-	 */
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@GetMapping("pet/{id}")
+	public ResponseEntity<?> getByPetId(@PathVariable("id") int id) {
+		List<Professional> professionals = professionalService.findAllByPetId(id);
+		return new ResponseEntity<>(professionals, HttpStatus.OK);
+	}
 
 	@PostMapping(produces = "application/json")
 	public ResponseEntity<?> create(@RequestBody @Validated ProfessionalDto professionalDto) {
@@ -73,9 +70,9 @@ public class ProfessionalController {
 		professional.setName(professionalDto.getName());
 		professional.setLast_name(professionalDto.getLast_name());
 		professional.setAddress(professionalDto.getAddress());
-		professional.setPhone(professionalDto.getPhone());
-		professional.setCreation_date(professionalDto.getCreation_date());
-		professional.setUpdate_date(professionalDto.getUpdate_date());
+		professional.setCell_phone(professionalDto.getCell_phone());
+		professional.setEmail(professionalDto.getEmail());
+		professional.setCreation_date(Util.dateNow());
 		professional.setProfession(professionalDto.getProfession());
 		professional.setPet(professionalDto.getPet());
 		professionalService.create(professional);
@@ -100,9 +97,9 @@ public class ProfessionalController {
 		professional.setName(professionalDto.getName());
 		professional.setLast_name(professionalDto.getLast_name());
 		professional.setAddress(professionalDto.getAddress());
-		professional.setPhone(professionalDto.getPhone());
-		professional.setCreation_date(professionalDto.getCreation_date());
-		professional.setUpdate_date(professionalDto.getUpdate_date());
+		professional.setEmail(professionalDto.getEmail());
+		professional.setCell_phone(professionalDto.getCell_phone());
+		professional.setUpdate_date(Util.dateNow());
 		professional.setProfession(professionalDto.getProfession());
 		professionalService.update(professional);
 		return new ResponseEntity<>(new Message("Profesional actualizado"), HttpStatus.OK);
@@ -118,4 +115,13 @@ public class ProfessionalController {
 		return new ResponseEntity<>(new Message("Profesional borrado"), HttpStatus.OK);
 
 	}
+
+	@PostMapping("/email")
+	public ResponseEntity<?> sendEmail(@RequestBody @Validated EmailDto emailDto) {
+		professionalService.sendEmail(emailDto.getFromEmail(), emailDto.getToEmail(), emailDto.getSubject(),
+				emailDto.getBody());
+		return new ResponseEntity<>(new Message("Email enviado"), HttpStatus.OK);
+
+	}
+
 }

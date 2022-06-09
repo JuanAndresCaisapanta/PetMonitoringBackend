@@ -13,14 +13,14 @@ import com.Pet_Monitoring.Repositories.MedicineRepository;
 @Service
 @Transactional
 public class MedicineService {
-	
+
 	@Autowired
 	MedicineRepository medicineRepository;
 
 	public List<Medicine> read() {
 		return (List<Medicine>) medicineRepository.findAll();
 	}
-	
+
 	public void create(Medicine vacunas) {
 		medicineRepository.save(vacunas);
 	}
@@ -31,6 +31,10 @@ public class MedicineService {
 
 	public void delete(int id) {
 		medicineRepository.deleteById(id);
+	}
+
+	public List<Medicine> findAllByPetId(int id) {
+		return medicineRepository.findAllByPetId(id);
 	}
 
 	public Optional<Medicine> getOne(int id) {
