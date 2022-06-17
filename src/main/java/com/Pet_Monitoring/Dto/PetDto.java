@@ -34,14 +34,8 @@ public class PetDto {
 
 	private Boolean sterilization;
 
-	@JsonFormat(pattern = "yyyy-MM-dd")
+	@JsonFormat(pattern = "dd/MM/yyyy")
 	private Date birth_date;
-
-	@JsonFormat(pattern = "yyyy-MM-dd")
-	private Date creation_date;
-
-	@JsonFormat(pattern = "yyyy-MM-dd")
-	private Date update_date;
 
 	private List<Establishment> establishment;
 

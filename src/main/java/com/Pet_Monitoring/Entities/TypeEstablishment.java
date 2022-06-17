@@ -10,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -28,6 +30,7 @@ public class TypeEstablishment {
 	private String name;
 
 	@OneToMany(mappedBy = "typeEstablishment", cascade = CascadeType.ALL)
+	@JsonIgnore
 	private List<Establishment> establishment;
 	
 }

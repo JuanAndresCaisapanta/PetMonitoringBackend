@@ -34,12 +34,6 @@ public class MedicineDto {
 	@JsonFormat(pattern = "dd/MM/yyyy")
 	private Date application_date;
 
-	@JsonFormat(pattern = "dd/MM/yyyy")
-	private Date create_date;
-
-	@JsonFormat(pattern = "dd/MM/yyyy")
-	private Date update_date;
-
 	private TypeMedicine typeMedicine;
 
 	private Pet pet;

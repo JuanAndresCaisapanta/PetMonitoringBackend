@@ -40,5 +40,8 @@ public class DeviceService {
 	public boolean existsById(int id) {
 		return deviceRepository.existsById(id);
 	}
+	public boolean existsByCode(String code) {
+		return deviceRepository.existsByCode(code);
+	}
 
 }

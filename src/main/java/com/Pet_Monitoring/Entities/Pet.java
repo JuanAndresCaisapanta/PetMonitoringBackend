@@ -53,14 +53,14 @@ public class Pet {
 	private byte[] image;
 	
 	@NotNull
-	@JsonFormat(pattern = "yyyy-MM-dd")
+	@JsonFormat(pattern = "dd/MM/yyyy")
 	private Date birth_date;
 	
 	
-	@JsonFormat(pattern = "yyyy-MM-dd")
+	@JsonFormat(pattern = "dd/MM/yyyy")
 	private Date creation_date;
 	
-	@JsonFormat(pattern = "yyyy-MM-dd")
+	@JsonFormat(pattern = "dd/MM/yyyy")
 	private Date update_date;
 
 	@OneToMany(mappedBy = "pet", cascade =CascadeType.ALL)

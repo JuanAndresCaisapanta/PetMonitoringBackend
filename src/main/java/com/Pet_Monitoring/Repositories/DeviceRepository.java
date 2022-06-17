@@ -7,4 +7,5 @@ import com.Pet_Monitoring.Entities.Device;
 
 @Repository
 public interface DeviceRepository extends CrudRepository<Device, Integer>{
+	boolean existsByCode(String code);
 }

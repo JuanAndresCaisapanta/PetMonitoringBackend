@@ -1,7 +1,6 @@
 package com.Pet_Monitoring.Controllers;
 
 import java.io.IOException;
-import java.text.ParseException;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -18,17 +17,14 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.Pet_Monitoring.Dto.Message;
-import com.Pet_Monitoring.Dto.PetDto;
 import com.Pet_Monitoring.Dto.MedicineDto;
 import com.Pet_Monitoring.Entities.Medicine;
-import com.Pet_Monitoring.Security.Dto.UserDto;
 import com.Pet_Monitoring.Services.MedicineService;
 import com.Pet_Monitoring.Utils.Util;
 
@@ -59,7 +55,6 @@ public class MedicineController {
 
 	}
 
-	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@GetMapping("pet/{id}")
 	public ResponseEntity<?> getByPetId(@PathVariable("id") int id) {
 		List<Medicine> medicine = medicineService.findAllByPetId(id);

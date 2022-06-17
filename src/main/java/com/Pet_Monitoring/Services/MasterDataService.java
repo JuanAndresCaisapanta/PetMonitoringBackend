@@ -23,4 +23,12 @@ public class MasterDataService {
 	public void create(MasterData masterData) {
 		masterDataRepository.save(masterData);
 	}
+	
+	public void delete(Long id) {
+		masterDataRepository.deleteById(id);
+	}
+	
+	public boolean existsById(Long id) {
+		return masterDataRepository.existsById(id);
+	}
 }

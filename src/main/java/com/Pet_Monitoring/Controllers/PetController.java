@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -88,8 +87,7 @@ public class PetController {
 		pet.setSex(petDto.getSex());
 		pet.setSterilization(petDto.getSterilization());
 		pet.setBirth_date(petDto.getBirth_date());
-		pet.setCreation_date(petDto.getCreation_date());
-		pet.setUpdate_date(petDto.getUpdate_date());
+		pet.setCreation_date(Util.dateNow());
 		pet.setBreed(petDto.getBreed());
 		pet.setUsers(petDto.getUsers());
 		petService.create(pet);
@@ -98,7 +96,8 @@ public class PetController {
 	}
 
 	@PutMapping("/{id}")
-	public ResponseEntity<?> actualizar(@PathVariable("id") int id, @RequestBody PetDto petDto) {
+	public ResponseEntity<?> actualizar(@PathVariable("id") int id, @ModelAttribute PetDto petDto,
+			@RequestParam(required=false,value="image") MultipartFile image) throws IOException {
 
 		if (!petService.existsById(id))
 			return new ResponseEntity<>(new Message("no existe"), HttpStatus.NOT_FOUND);
@@ -117,6 +116,10 @@ public class PetController {
 		pet.setBirth_date(petDto.getBirth_date());
 		pet.setUpdate_date(Util.dateNow());
 		pet.setBreed(petDto.getBreed());
+		if(image!=null) {
+			byte[] bytesImg = image.getBytes();
+			pet.setImage(bytesImg);
+		}
 		petService.update(pet);
 		return new ResponseEntity<>(new Message("Mascota actualizada"), HttpStatus.OK);
 

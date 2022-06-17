@@ -16,12 +16,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.Pet_Monitoring.Dto.DeviceDto;
 import com.Pet_Monitoring.Dto.Message;
 import com.Pet_Monitoring.Entities.Device;
 import com.Pet_Monitoring.Services.DeviceService;
+import com.Pet_Monitoring.Utils.Util;
 @RestController
 @RequestMapping("/device")
 @CrossOrigin
@@ -51,6 +53,13 @@ public class DeviceController {
 		return ResponseEntity.ok(device);
 
 	}
+	@RequestMapping(value = "/time/{id}", method = RequestMethod.GET, produces = "application/json")
+	public ResponseEntity<?> getTimeById(@PathVariable("id") int id) {
+
+		Device device = deviceService.getOne(id).get();
+		return new ResponseEntity<>("{ \"407B49\":{ \"downlinkData\": \"000000000000000A\"} }", HttpStatus.OK);
+
+	}
 
 	@PostMapping
 	public ResponseEntity<?> create(@RequestBody @Validated DeviceDto deviceDto, BindingResult bindingResult) {
@@ -58,13 +67,20 @@ public class DeviceController {
 		Device device = new Device();
 		if (bindingResult.hasErrors())
 			return new ResponseEntity<>(new Message("Campos invalidos"), HttpStatus.BAD_REQUEST);
-		if (StringUtils.isBlank(deviceDto.getCode()))
-			return new ResponseEntity<>(new Message("El codigo es obligatorio"), HttpStatus.BAD_REQUEST);
-		if (StringUtils.isBlank(deviceDto.getCode()))
-			return new ResponseEntity<>(new Message("El codigo es incorrecto"), HttpStatus.BAD_REQUEST);
+		
+		  if (StringUtils.isBlank(deviceDto.getCallback())) return new ResponseEntity<>(new
+		  Message("Callback no agregado"), HttpStatus.BAD_REQUEST); 
+		
+		  if (StringUtils.isBlank(deviceDto.getCode())) return new ResponseEntity<>(new
+		  Message("El codigo es necesario"), HttpStatus.BAD_REQUEST);
+		 
+		 
+		if (deviceService.existsByCode(deviceDto.getCode()))
+				 return new ResponseEntity<>(new Message("El código no esta disponible"), HttpStatus.BAD_REQUEST);
 		device.setCode(deviceDto.getCode());
-		device.setCreation_date(deviceDto.getCreation_date());
-		device.setUpdate_date(deviceDto.getUpdate_date());
+		device.setCallback(deviceDto.getCallback());
+		device.setTime(Integer.toHexString(10));
+		device.setCreation_date(Util.dateNow());
 		device.setUsers(deviceDto.getUsers());
 		deviceService.create(device);
 		return ResponseEntity.ok(device.getId());
@@ -76,16 +92,8 @@ public class DeviceController {
 			BindingResult bindingResult) {
 
 		Device device = deviceService.getOne(id).get();
-		if (!deviceService.existsById(id))
-			return new ResponseEntity<>(new Message("No existe"), HttpStatus.NOT_FOUND);
-		if (bindingResult.hasErrors())
-			return new ResponseEntity<>(new Message("Campos invalidos"), HttpStatus.BAD_REQUEST);
-		if (StringUtils.isBlank(deviceDto.getCode()))
-			return new ResponseEntity<>(new Message("El codigo es obligatorio"), HttpStatus.BAD_REQUEST);
-		if (StringUtils.isBlank(deviceDto.getCode()))
-			return new ResponseEntity<>(new Message("El codigo es incorrecto"), HttpStatus.BAD_REQUEST);
-		device.setCode(deviceDto.getCode());
-		device.setUpdate_date(deviceDto.getUpdate_date());
+		device.setCallback(deviceDto.getCallback());
+		device.setUpdate_date(Util.dateNow());
 		deviceService.update(device);
 		return new ResponseEntity<>(new Message("Dispositivo actualizado"), HttpStatus.OK);
 

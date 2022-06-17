@@ -11,6 +11,7 @@ import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -31,11 +32,16 @@ public class Establishment {
 
 	@NotNull
 	private String address;
+	
+	@NotNull
+	private String email;
+	
+	@NotNull
+	private String cell_phone;
 
 	@NotNull
 	private String phone;
 
-	@NotNull
 	@JsonFormat(pattern = "yyyy-MM-dd")
 	private Date creation_date;
 
@@ -48,6 +54,7 @@ public class Establishment {
 	
 	@ManyToOne
 	@JoinColumn(name = "pet_id")
+	@JsonIgnoreProperties({"establishment","medicine","professional","masterData","image"})
 	private Pet pet;
 
 }

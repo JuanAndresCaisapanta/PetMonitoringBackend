@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,6 +17,8 @@ import com.Pet_Monitoring.Repositories.EstablishmentRepository;
 public class EstablishmentService {
 	@Autowired
 	EstablishmentRepository establishmentRepository;
+	@Autowired
+	JavaMailSender javaMailSender;
 
 	public List<Establishment> read() {
 		return (List<Establishment>) establishmentRepository.findAll();
@@ -40,4 +44,13 @@ public class EstablishmentService {
 		return establishmentRepository.existsById(id);
 	}
 
+	public void sendEmail(String fromEmail, String toEmail, String subject, String body) {
+		SimpleMailMessage message = new SimpleMailMessage();
+		message.setReplyTo(fromEmail);
+		message.setFrom(fromEmail);
+		message.setTo(toEmail);
+		message.setSubject(subject);
+		message.setText(body);
+		javaMailSender.send(message);
+	}
 }

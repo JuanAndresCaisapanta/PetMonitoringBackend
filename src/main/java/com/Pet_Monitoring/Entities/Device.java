@@ -32,9 +32,13 @@ public class Device {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
-	@NotNull
 	@Column(unique=true)
 	private String code;
+	
+	private String callback;
+	
+	@NotNull
+	private String time;
 
 	@JsonFormat(pattern = "yyyy-MM-dd")
 	private Date creation_date;

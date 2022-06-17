@@ -9,7 +9,6 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.Pet_Monitoring.Entities.Medicine;
 import com.Pet_Monitoring.Entities.Professional;
 import com.Pet_Monitoring.Repositories.ProfessionalRepository;
 

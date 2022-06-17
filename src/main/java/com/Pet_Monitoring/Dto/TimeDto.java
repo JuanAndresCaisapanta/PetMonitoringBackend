@@ -7,14 +7,10 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class EmailDto {
+public class TimeDto {
+	
+	private String Device_id;
 
-	private String fromEmail;
-	
-	private String toEmail;
-	
-	private String subject;
-	
-	private String body;
+	private String time;
 
 }

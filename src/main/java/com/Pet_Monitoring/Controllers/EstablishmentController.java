@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,16 +18,19 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.Pet_Monitoring.Dto.EmailDto;
 import com.Pet_Monitoring.Dto.EstablishmentDto;
 import com.Pet_Monitoring.Dto.Message;
 import com.Pet_Monitoring.Entities.Establishment;
 import com.Pet_Monitoring.Services.EstablishmentService;
+import com.Pet_Monitoring.Utils.Util;
 
 @RestController
 @RequestMapping("/establishment")
+@CrossOrigin
 public class EstablishmentController {
 
-	@Autowired
+	@Autowired 
 	EstablishmentService establishmentService;
 
 	@GetMapping
@@ -36,7 +40,7 @@ public class EstablishmentController {
 		if (device.isEmpty()) {
 			return ResponseEntity.noContent().build();
 		}
-		return ResponseEntity.ok(device);
+		return ResponseEntity.ok(device); 
 
 	}
 
@@ -61,13 +65,14 @@ public class EstablishmentController {
 			return new ResponseEntity<>(new Message("El nombre es obligatorio"), HttpStatus.BAD_REQUEST);
 		// if (StringUtils.isBlank(deviceDto.getCode()))
 		// return new ResponseEntity<>(new Message("El codigo es incorrecto"),
-		// HttpStatus.BAD_REQUEST);
+		// HttpStatus.BAD_REQUEST); 
 		Establishment establishment = new Establishment();
 		establishment.setName(establishmentDto.getName());
 		establishment.setAddress(establishmentDto.getAddress());
+		establishment.setEmail(establishmentDto.getEmail());
+		establishment.setCell_phone(establishmentDto.getCell_phone());
 		establishment.setPhone(establishmentDto.getPhone());
-		establishment.setCreation_date(establishmentDto.getCreation_date());
-		establishment.setUpdate_date(establishmentDto.getUpdate_date());
+		establishment.setCreation_date(Util.dateNow());
 		establishment.setTypeEstablishment(establishmentDto.getTypeEstablishment());
 		establishment.setPet(establishmentDto.getPet());
 		establishmentService.create(establishment);
@@ -89,8 +94,10 @@ public class EstablishmentController {
 		Establishment establishment = establishmentService.getOne(id).get();
 		establishment.setName(establishmentDto.getName());
 		establishment.setAddress(establishmentDto.getAddress());
+		establishment.setEmail(establishmentDto.getEmail());
+		establishment.setCell_phone(establishmentDto.getCell_phone());
 		establishment.setPhone(establishmentDto.getPhone());
-		establishment.setUpdate_date(establishmentDto.getUpdate_date());
+		establishment.setUpdate_date(Util.dateNow());
 		establishmentService.update(establishment);
 		return new ResponseEntity<>(new Message("Establecimiento actualizado"), HttpStatus.OK);
 
@@ -103,7 +110,16 @@ public class EstablishmentController {
 			return new ResponseEntity<>(new Message("No existe"), HttpStatus.NOT_FOUND);
 		establishmentService.delete(id);
 		return new ResponseEntity<>(new Message("Establecimiento borrado"), HttpStatus.OK);
-
+ 
 	}
 
+
+	@PostMapping("/email")
+	public ResponseEntity<?> sendEmail(@RequestBody @Validated EmailDto emailDto) {
+	establishmentService.sendEmail(emailDto.getFromEmail(), emailDto.getToEmail(), emailDto.getSubject(),
+				emailDto.getBody());
+		return new ResponseEntity<>(new Message("Email enviado"), HttpStatus.OK);
+
+	}
+	
 }

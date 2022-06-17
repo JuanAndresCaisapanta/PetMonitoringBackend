@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.Pet_Monitoring.Dto.EmailDto;
 import com.Pet_Monitoring.Dto.Message;
 import com.Pet_Monitoring.Dto.ProfessionalDto;
-import com.Pet_Monitoring.Entities.Medicine;
 import com.Pet_Monitoring.Entities.Professional;
 import com.Pet_Monitoring.Services.ProfessionalService;
 import com.Pet_Monitoring.Utils.Util;
@@ -51,7 +50,6 @@ public class ProfessionalController {
 
 	}
 
-	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@GetMapping("pet/{id}")
 	public ResponseEntity<?> getByPetId(@PathVariable("id") int id) {
 		List<Professional> professionals = professionalService.findAllByPetId(id);
