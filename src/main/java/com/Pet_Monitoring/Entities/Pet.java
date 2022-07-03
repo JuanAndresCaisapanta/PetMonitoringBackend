@@ -13,10 +13,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 
+
 import com.Pet_Monitoring.Security.Entities.Users;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -52,10 +52,8 @@ public class Pet {
 	
 	private byte[] image;
 	
-	@NotNull
 	@JsonFormat(pattern = "dd/MM/yyyy")
 	private Date birth_date;
-	
 	
 	@JsonFormat(pattern = "dd/MM/yyyy")
 	private Date creation_date;
@@ -63,18 +61,17 @@ public class Pet {
 	@JsonFormat(pattern = "dd/MM/yyyy")
 	private Date update_date;
 
-	@OneToMany(mappedBy = "pet", cascade =CascadeType.ALL)
+	@OneToMany(mappedBy = "pet",  cascade =  CascadeType.REMOVE, orphanRemoval = true)
 	private List<Establishment> establishment;
 	
-	@OneToMany(mappedBy = "pet", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "pet",  cascade =  CascadeType.REMOVE, orphanRemoval = true)
 	private List<Medicine> medicine;
 	
-	@OneToMany(mappedBy = "pet", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "pet",  cascade =  CascadeType.REMOVE, orphanRemoval = true)
 	private List<Professional> professional;
 	
-	@OneToMany(mappedBy = "pet", cascade = CascadeType.ALL)
-	@JsonIgnoreProperties({"pet"})
-	private List<MasterData> masterData;
+	@OneToMany(mappedBy = "pet",  cascade =  CascadeType.REMOVE, orphanRemoval = true)
+	private List<Device> device; 
 
 	@ManyToOne
 	@JoinColumn(name = "breed_id")

@@ -31,7 +31,7 @@ public class Breed {
 	@NotNull
 	private String name;
 	
-	@OneToMany(mappedBy = "breed", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "breed",  cascade =  CascadeType.REMOVE, orphanRemoval = true)
 	@JsonIgnore
 	private List<Pet> pet;
 	

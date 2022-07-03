@@ -21,7 +21,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class DetailData {
+public class DeviceDetail {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -43,8 +43,8 @@ public class DetailData {
 	private Date creation_date;
 
 	@ManyToOne
-	@JoinColumn(name = "masterData_id")
+	@JoinColumn(name = "device_id")
 	@JsonIgnore
-	private MasterData masterData;
+	private Device device;
 
 }

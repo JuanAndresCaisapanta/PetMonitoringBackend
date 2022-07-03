@@ -4,7 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.Pet_Monitoring.Entities.Breed;
-import com.Pet_Monitoring.Entities.DetailData;
+import com.Pet_Monitoring.Entities.DeviceDetail;
 import com.Pet_Monitoring.Entities.Establishment;
 import com.Pet_Monitoring.Entities.Medicine;
 import com.Pet_Monitoring.Entities.Professional;
@@ -43,7 +43,7 @@ public class PetDto {
 
 	private List<Professional> professional;
 
-	private List<DetailData> detailData;
+	private List<DeviceDetail> deviceDetail;
 
 	private Breed breed;
 

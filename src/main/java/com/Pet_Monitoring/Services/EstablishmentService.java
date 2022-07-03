@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.Pet_Monitoring.Entities.Establishment;
+import com.Pet_Monitoring.Entities.Pet;
 import com.Pet_Monitoring.Repositories.EstablishmentRepository;
 
 @Service
@@ -42,6 +43,10 @@ public class EstablishmentService {
 
 	public boolean existsById(int id) {
 		return establishmentRepository.existsById(id);
+	}
+	
+	public List<Pet> getPets(String name, Long id){
+		return establishmentRepository.getPets(name, id);
 	}
 
 	public void sendEmail(String fromEmail, String toEmail, String subject, String body) {

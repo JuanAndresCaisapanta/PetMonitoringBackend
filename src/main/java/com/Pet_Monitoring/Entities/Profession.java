@@ -30,7 +30,7 @@ public class Profession {
 	private String name;
 
 	
-	@OneToMany(mappedBy = "profession", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "profession",  cascade =  CascadeType.REMOVE, orphanRemoval = true)
 	@JsonIgnore
 	private List<Professional> professional;
 }

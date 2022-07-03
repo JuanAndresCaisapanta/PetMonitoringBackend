@@ -3,11 +3,15 @@ package com.Pet_Monitoring.Security.Dto;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
+import com.Pet_Monitoring.Entities.Device;
+import com.Pet_Monitoring.Entities.Notification;
+import com.Pet_Monitoring.Entities.Pet;
 import com.Pet_Monitoring.Security.Entities.Role;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -43,5 +47,11 @@ public class UserDto {
 	private Date update_date;
 	
 	private Collection<Role> role = new ArrayList<>();
+	
+	private List<Pet> pet;
+	
+	private List<Device> device;
+	
+	private List<Notification> notification;
 
 }

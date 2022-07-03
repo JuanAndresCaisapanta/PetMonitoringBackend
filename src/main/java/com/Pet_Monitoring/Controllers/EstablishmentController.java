@@ -22,6 +22,7 @@ import com.Pet_Monitoring.Dto.EmailDto;
 import com.Pet_Monitoring.Dto.EstablishmentDto;
 import com.Pet_Monitoring.Dto.Message;
 import com.Pet_Monitoring.Entities.Establishment;
+import com.Pet_Monitoring.Entities.Pet;
 import com.Pet_Monitoring.Services.EstablishmentService;
 import com.Pet_Monitoring.Utils.Util;
 
@@ -54,6 +55,18 @@ public class EstablishmentController {
 		return ResponseEntity.ok(establishment);
 
 	}
+	
+	@GetMapping("pets/{name}/{id}")
+	public ResponseEntity<List<Pet>> getPets(@PathVariable("name") String name_establishment, @PathVariable("id") Long user_id) {
+
+		List<Pet> pets = establishmentService.getPets(name_establishment,user_id);
+		if (pets.isEmpty()) {
+			return ResponseEntity.noContent().build();
+		}
+		return ResponseEntity.ok(pets); 
+
+	}
+	
 
 	@PostMapping
 	public ResponseEntity<?> create(@RequestBody @Validated EstablishmentDto establishmentDto,

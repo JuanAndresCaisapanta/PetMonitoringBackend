@@ -36,8 +36,8 @@ public class MedicineController {
 	@Autowired
 	MedicineService medicineService;
 
-	@GetMapping
-	public ResponseEntity<List<Medicine>> read() {
+	@GetMapping(produces = "application/json")
+	public ResponseEntity<List<Medicine>> readAll() {
 
 		List<Medicine> medicine = medicineService.read();
 		return new ResponseEntity<>(medicine, HttpStatus.OK);

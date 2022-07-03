@@ -53,7 +53,7 @@ public class Professional {
 	
 	@ManyToOne
 	@JoinColumn(name="pet_id")
-	@JsonIgnoreProperties({"establishment","medicine","professional","masterData","image"})
+	@JsonIgnoreProperties({"establishment","medicine","professional","device","image"})
 	private Pet pet;
 
 }
