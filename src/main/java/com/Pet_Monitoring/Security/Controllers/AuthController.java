@@ -84,7 +84,7 @@ public class AuthController {
 		 * if (bindingResult.hasErrors()) return new ResponseEntity<>(new
 		 * Message("campos mal puestos o email inválido"), HttpStatus.BAD_REQUEST);
 		 */
-		if (userService.existsByEmail(userDto.getEmail()))
+		if (userService.existsByUserEmail(userDto.getEmail()))
 			return new ResponseEntity<>(new Message("ese email ya existe"), HttpStatus.BAD_REQUEST);
 		Users user = new Users();
 
@@ -105,13 +105,13 @@ public class AuthController {
 		role.add(roleService.getByRoleName(RoleName.ROLE_USER).get());
 		// role.add(roleService.getByRoleName(RoleName.ROLE_ADMIN).get());
 		user.setRole(role);
-		userService.create(user);
+		userService.createUser(user);
 		return new ResponseEntity<>(new Message("usuario guardado"), HttpStatus.CREATED);
 	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@GetMapping("/validate-token/{token}")
-	public ResponseEntity<?> getById(@PathVariable("token") String token) {
+	public ResponseEntity<?> getValidateToken(@PathVariable("token") String token) {
 		return new ResponseEntity(jwtProvider.validateToken(token), HttpStatus.OK);
 
 	}

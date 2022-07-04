@@ -5,10 +5,10 @@ import java.util.Optional;
 import org.springframework.data.repository.CrudRepository;
 import com.Pet_Monitoring.Entities.TypeMedicine;
 
-public interface TypeMedicineRepository extends CrudRepository<TypeMedicine, Integer> {
+public interface TypeMedicineRepository extends CrudRepository<TypeMedicine, Long> {
 
-	Optional<TypeMedicine> findByName(String name);
+	Optional<TypeMedicine> findByName(String typeMedicineName);
 
-	boolean existsByName(String name);
+	boolean existsByName(String typeMedicineName);
 	
 }

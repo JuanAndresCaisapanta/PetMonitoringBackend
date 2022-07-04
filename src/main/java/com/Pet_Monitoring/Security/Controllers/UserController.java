@@ -40,14 +40,14 @@ public class UserController {
 	PasswordEncoder passwordEncoder;
 
 	@GetMapping(produces = "application/json")
-	public ResponseEntity<List<Users>> readAll() {
-		List<Users> user = userService.read();
+	public ResponseEntity<List<Users>> readAllUser() {
+		List<Users> user = userService.readAllUser();
 		return new ResponseEntity<>(user, HttpStatus.OK);
 	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@GetMapping("/{email}")
-	public ResponseEntity<Users> getByEmail(@PathVariable("email") String email) {
+	public ResponseEntity<Users> getByUserEmail(@PathVariable("email") String email) {
 		// if(!usuariosService.existsById(id))
 		// return new ResponseEntity(new Mensaje("no existe"), HttpStatus.NOT_FOUND);
 		Users user = userService.getByEmail(email).get();
@@ -55,17 +55,17 @@ public class UserController {
 	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	@PutMapping("/{id}")
-	public ResponseEntity<Users> actualizar(@PathVariable("id") Long id, @ModelAttribute UserDto userDto,
+	@PutMapping("/{userId}")
+	public ResponseEntity<Users> updateUser(@PathVariable("userId") Long userId, @ModelAttribute UserDto userDto,
 			@RequestParam(required=false,value="image") MultipartFile image) throws IOException {
-		if (!userService.existsById(id))
+		if (!userService.existsByUserId(userId))
 			return new ResponseEntity(new Message("no existe"), HttpStatus.NOT_FOUND);
-		if (userService.existsByEmail(userDto.getEmail())
-				&& userService.getByEmail(userDto.getEmail()).get().getId() != id)
+		if (userService.existsByUserEmail(userDto.getEmail())
+				&& userService.getByEmail(userDto.getEmail()).get().getId() != userId)
 			return new ResponseEntity(new Message("El email no esta disponible"), HttpStatus.BAD_REQUEST);
 		if (StringUtils.isBlank(userDto.getEmail()))
 			return new ResponseEntity(new Message("el email es obligatorio"), HttpStatus.BAD_REQUEST);
-		Users usuario = userService.getById(id).get();
+		Users usuario = userService.getByUserId(userId).get();
 		
 		usuario.setName(userDto.getName());
 		usuario.setLast_name(userDto.getLast_name());
@@ -77,7 +77,7 @@ public class UserController {
 			byte[] bytesImg = image.getBytes();
 			usuario.setImage(bytesImg);
 		}
-		userService.update(usuario);
+		userService.updateUser(usuario);
 		return new ResponseEntity(usuario, HttpStatus.OK);
 	}
 }

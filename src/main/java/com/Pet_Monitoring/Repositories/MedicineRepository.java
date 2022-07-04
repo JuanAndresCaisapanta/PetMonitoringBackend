@@ -8,8 +8,8 @@ import org.springframework.stereotype.Repository;
 import com.Pet_Monitoring.Entities.Medicine;
 
 @Repository
-public interface MedicineRepository extends CrudRepository<Medicine, Integer>{
+public interface MedicineRepository extends CrudRepository<Medicine, Long>{
 	
-	List<Medicine> findAllByPetId(int id);
+	List<Medicine> findAllByPetId(Long petId);
 
 }

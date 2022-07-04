@@ -20,36 +20,36 @@ public class ProfessionService {
 	@Autowired
 	ProfessionRepository professionRepository;
 
-	public List<Profession> read() {
+	public List<Profession> readAllProfession() {
 		return (List<Profession>) professionRepository.findAll();
 	}
 
-	public void create(@Valid @RequestBody Profession profession) {
+	public void createProfession(@Valid @RequestBody Profession profession) {
 		professionRepository.save(profession);
 	}
 
-	public void update(@Valid @RequestBody Profession profession) {
+	public void updateProfession(@Valid @RequestBody Profession profession) {
 		professionRepository.save(profession);
 	}
 
-	public void delete(int id) {
-		professionRepository.deleteById(id);
+	public void deleteProfession(Long professionId) {
+		professionRepository.deleteById(professionId);
 	}
 	
-	public Optional<Profession> getOne(int id) {
-		return professionRepository.findById(id);
+	public Optional<Profession> getOneProfession(Long professionId) {
+		return professionRepository.findById(professionId);
 	}
 
-	public boolean existsById(int id) {
-		return professionRepository.existsById(id);
+	public boolean existsByProfessionId(Long professionId) {
+		return professionRepository.existsById(professionId);
 	}
 	
-	public boolean existsByName(String name) {
-		return professionRepository.existsByName(name);
+	public boolean existsByProfessionName(String professionName) {
+		return professionRepository.existsByName(professionName);
 	}
 
-	public Optional<Profession> findByName(String name) {
-		return professionRepository.findByName(name);
+	public Optional<Profession> findByProfessionName(String professionName) {
+		return professionRepository.findByName(professionName);
 	}
 	
 }

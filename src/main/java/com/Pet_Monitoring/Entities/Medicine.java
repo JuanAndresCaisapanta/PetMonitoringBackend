@@ -26,7 +26,7 @@ public class Medicine {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	private Long id;
 	
 	@NotNull
 	@Column(unique=true) 

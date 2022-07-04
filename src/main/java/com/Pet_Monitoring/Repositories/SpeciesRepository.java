@@ -8,9 +8,9 @@ import org.springframework.stereotype.Repository;
 import com.Pet_Monitoring.Entities.Species;
 
 @Repository
-public interface SpeciesRepository extends CrudRepository<Species, Integer> {
+public interface SpeciesRepository extends CrudRepository<Species, Long> {
 
-	Optional<Species> findByName(String name);
+	Optional<Species> findByName(String speciesName);
 
-	boolean existsByName(String name);
+	boolean existsByName(String speciesName);
 }

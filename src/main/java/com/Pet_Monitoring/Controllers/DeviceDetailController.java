@@ -41,9 +41,9 @@ public class DeviceDetailController {
 	UserService userService;
 
 	@GetMapping
-	public ResponseEntity<List<DeviceDetail>> read() {
+	public ResponseEntity<List<DeviceDetail>> readAllDeviceDetail() {
 
-		List<DeviceDetail> deviceDetail = deviceDetailService.read();
+		List<DeviceDetail> deviceDetail = deviceDetailService.readAllDeviceDetail();
 		if (deviceDetail.isEmpty()) {
 			return ResponseEntity.noContent().build();
 		}
@@ -51,7 +51,7 @@ public class DeviceDetailController {
 	}
 
 	@PostMapping(produces = "application/json")
-	public ResponseEntity<?> createDetail(@RequestBody @Validated DeviceDetailDto deviceDetailDto) {
+	public ResponseEntity<?> createDeviceDetail(@RequestBody @Validated DeviceDetailDto deviceDetailDto) {
 		DeviceDetail deviceDetail = new DeviceDetail();
 		deviceDetail.setLatitude(deviceDetailDto.getLatitude());
 		deviceDetail.setLongitude(deviceDetailDto.getLongitude());
@@ -60,29 +60,29 @@ public class DeviceDetailController {
 		deviceDetail.setCreation_date(Util.dateNow());
 		deviceDetail.setDevice(deviceDetailDto.getDevice());
 		if (deviceDetailDto.getTemperature() <= 17) {
-			MessageDto user = deviceService.getUser(deviceDetailDto.getDevice().getId());
-			deviceService.sendEmail("server.moniopet@gmail.com", user.getEmailUser(), "Temperaura",
+			MessageDto user = deviceService.getUserDevice(deviceDetailDto.getDevice().getId());
+			deviceService.sendEmailDevice("server.moniopet@gmail.com", user.getEmailUser(), "Temperaura",
 					"la temperatura de " + user.getPetName() + " esta baja");
 			Notification notification = new Notification();
-			Users users = userService.getById(user.getIdUser()).get();
+			Users users = userService.getByUserId(user.getIdUser()).get();
 			notification.setSubject("Temperatura");
 			notification.setText("la temperatura de " + user.getPetName() + " esta baja");
 			notification.setUsers(users);
-			notificationService.create(notification);
+			notificationService.createNotification(notification);
 
 		}
 		if (deviceDetailDto.getBattery() <= 17) {
-			MessageDto user = deviceService.getUser(deviceDetailDto.getDevice().getId());
-			deviceService.sendEmail("server.moniopet@gmail.com", user.getEmailUser(), "Bateria",
+			MessageDto user = deviceService.getUserDevice(deviceDetailDto.getDevice().getId());
+			deviceService.sendEmailDevice("server.moniopet@gmail.com", user.getEmailUser(), "Bateria",
 					"la bateria del dispositivo de " + user.getPetName() + " esta baja");
 			Notification notification = new Notification();
-			Users users = userService.getById(user.getIdUser()).get();
+			Users users = userService.getByUserId(user.getIdUser()).get();
 			notification.setSubject("Bateria");
 			notification.setText("la bateria del dispositivo de " + user.getPetName() + " esta baja");
 			notification.setUsers(users);
-			notificationService.create(notification);
+			notificationService.createNotification(notification);
 		}
-		deviceDetailService.create(deviceDetail);
+		deviceDetailService.createDeviceDetail(deviceDetail);
 		return ResponseEntity.ok(deviceDetail);
 
 	}

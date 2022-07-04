@@ -17,28 +17,28 @@ public class NotificationService {
 	@Autowired
 	NotificationRepository notificationRepository;
 	
-	public List<Notification> readAll() {
+	public List<Notification> readAllNotification() {
 		return (List<Notification>) notificationRepository.findAll();
 	}
 
-	public void create(Notification notification) {
+	public void createNotification(Notification notification) {
 		notificationRepository.save(notification);
 	}
 
-	public void update(Notification notification) {
+	public void updateNotification(Notification notification) {
 		notificationRepository.save(notification);
 	}
 
-	public void delete(Long id) {
-		notificationRepository.deleteById(id);
+	public void deleteNotification(Long notificationId) {
+		notificationRepository.deleteById(notificationId);
 	}
 
-	public Optional<Notification> getOne(Long id) {
-		return notificationRepository.findById(id);
+	public Optional<Notification> getOneNotification(Long notificationId) {
+		return notificationRepository.findById(notificationId);
 	}
 	
-	public List<Notification> findAllByUsersId(Long id){
-		return notificationRepository.findAllByUsersId(id);
+	public List<Notification> findAllByUsersId(Long userId){
+		return notificationRepository.findAllByUsersId(userId);
 	}
 	
 }

@@ -31,20 +31,20 @@ public class ProfessionController {
 	ProfessionService professionService;
 
 	@GetMapping(produces = "application/json")
-	public ResponseEntity<List<Profession>> read() {
+	public ResponseEntity<List<Profession>> readAllProfession() {
 
-		List<Profession> profession = professionService.read();
+		List<Profession> profession = professionService.readAllProfession();
 		return new ResponseEntity<>(profession, HttpStatus.OK);
 
 	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	@GetMapping("/{id}")
-	public ResponseEntity<Profession> getById(@PathVariable("id") int id) {
+	@GetMapping("/{professionId}")
+	public ResponseEntity<Profession> getByProfessionId(@PathVariable("professionId") Long professionId) {
 
-		if (!professionService.existsById(id))
+		if (!professionService.existsByProfessionId(professionId))
 			return new ResponseEntity(new Message("no existe"), HttpStatus.NOT_FOUND);
-		Profession profession = professionService.getOne(id).get();
+		Profession profession = professionService.getOneProfession(professionId).get();
 		return new ResponseEntity<>(profession, HttpStatus.OK);
 
 	}
@@ -61,42 +61,42 @@ public class ProfessionController {
 	 */
 
 	@PostMapping(produces = "application/json")
-	public ResponseEntity<?> create(@RequestBody @Validated ProfessionDto professionDto) {
+	public ResponseEntity<?> createProfession(@RequestBody @Validated ProfessionDto professionDto) {
 
 		if (StringUtils.isBlank(professionDto.getName()))
 			return new ResponseEntity<>(new Message("El nombre es obligatorio"), HttpStatus.BAD_REQUEST);
-		if (professionService.existsByName(professionDto.getName()))
+		if (professionService.existsByProfessionName(professionDto.getName()))
 			return new ResponseEntity<>(new Message("Ese nombre ya existe"), HttpStatus.BAD_REQUEST);
 		Profession profession = new Profession();
 		profession.setName(professionDto.getName());
-		professionService.create(profession);
+		professionService.createProfession(profession);
 		return new ResponseEntity<>(new Message("Profesión creada"), HttpStatus.OK);
 
 	}
 
-	@PutMapping("{id}")
-	public ResponseEntity<?> update(@PathVariable("id") int id, @RequestBody ProfessionDto professionDto) {
+	@PutMapping("{professionId}")
+	public ResponseEntity<?> updateProfession(@PathVariable("professionId") Long professionId, @RequestBody ProfessionDto professionDto) {
 
-		if (!professionService.existsById(id))
+		if (!professionService.existsByProfessionId(professionId))
 			return new ResponseEntity<>(new Message("No existe"), HttpStatus.NOT_FOUND);
-		if (professionService.existsByName(professionDto.getName())
-				&& professionService.findByName(professionDto.getName()).get().getId() != id)
+		if (professionService.existsByProfessionName(professionDto.getName())
+				&& professionService.findByProfessionName(professionDto.getName()).get().getId() != professionId)
 			return new ResponseEntity<>(new Message("Ese nombre ya existe"), HttpStatus.BAD_REQUEST);
 		if (StringUtils.isBlank(professionDto.getName()))
 			return new ResponseEntity<>(new Message("El nombre es obligatorio"), HttpStatus.BAD_REQUEST);
-		Profession profession = professionService.getOne(id).get();
+		Profession profession = professionService.getOneProfession(professionId).get();
 		profession.setName(professionDto.getName());
-		professionService.update(profession);
+		professionService.updateProfession(profession);
 		return new ResponseEntity<>(new Message("Profesión actualizada"), HttpStatus.OK);
 
 	}
 
-	@DeleteMapping("{id}")
-	public ResponseEntity<?> delete(@PathVariable("id") int id) {
+	@DeleteMapping("{professionId}")
+	public ResponseEntity<?> deleteProfession(@PathVariable("professionId") Long professionId) {
 
-		if (!professionService.existsById(id))
+		if (!professionService.existsByProfessionId(professionId))
 			return new ResponseEntity<>(new Message("no existe"), HttpStatus.NOT_FOUND);
-		professionService.delete(id);
+		professionService.deleteProfession(professionId);
 		return new ResponseEntity<>(new Message("Profesión borrada"), HttpStatus.OK);
 
 	}

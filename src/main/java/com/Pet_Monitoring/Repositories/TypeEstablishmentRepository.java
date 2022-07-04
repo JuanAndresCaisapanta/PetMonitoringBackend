@@ -6,8 +6,8 @@ import org.springframework.data.repository.CrudRepository;
 
 import com.Pet_Monitoring.Entities.TypeEstablishment;
 
-public interface TypeEstablishmentRepository extends CrudRepository<TypeEstablishment, Integer> {
-	Optional<TypeEstablishment> findByName(String name);
+public interface TypeEstablishmentRepository extends CrudRepository<TypeEstablishment, Long> {
+	Optional<TypeEstablishment> findByName(String typeEstablishmentName);
 
-	boolean existsByName(String name);
+	boolean existsByName(String typeEstablishmentName);
 }

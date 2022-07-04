@@ -31,20 +31,20 @@ public class TypeMedicineController {
 	TypeMedicineService typeMedicineService;
 
 	@GetMapping(produces = "application/json")
-	public ResponseEntity<List<TypeMedicine>> read() {
+	public ResponseEntity<List<TypeMedicine>> readAllTypeMedicine() {
 
-		List<TypeMedicine> typeMedicine = typeMedicineService.read();
+		List<TypeMedicine> typeMedicine = typeMedicineService.readAllTypeMedicine();
 		return new ResponseEntity<>(typeMedicine, HttpStatus.OK);
 
 	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	@GetMapping("/{id}")
-	public ResponseEntity<TypeMedicine> getById(@PathVariable("id") int id) {
+	@GetMapping("/{typeMedicineId}")
+	public ResponseEntity<TypeMedicine> getByTypeMedicineId(@PathVariable("typeMedicineId") Long typeMedicineId) {
 
-		if (!typeMedicineService.existsById(id))
+		if (!typeMedicineService.existsByTypeMedicineId(typeMedicineId))
 			return new ResponseEntity(new Message("no existe"), HttpStatus.NOT_FOUND);
-		TypeMedicine typeMedicine = typeMedicineService.getOne(id).get();
+		TypeMedicine typeMedicine = typeMedicineService.getOneTypeMedicine(typeMedicineId).get();
 		return new ResponseEntity<>(typeMedicine, HttpStatus.OK);
 
 	}
@@ -61,42 +61,42 @@ public class TypeMedicineController {
 	 */
 
 	@PostMapping(produces = "application/json")
-	public ResponseEntity<?> create(@RequestBody @Validated TypeMedicineDto typeMedicineDto) {
+	public ResponseEntity<?> createTypeMedicine(@RequestBody @Validated TypeMedicineDto typeMedicineDto) {
 
 		if (StringUtils.isBlank(typeMedicineDto.getName()))
 			return new ResponseEntity<>(new Message("El nombre es obligatorio"), HttpStatus.BAD_REQUEST);
-		if (typeMedicineService.existsByName(typeMedicineDto.getName()))
+		if (typeMedicineService.existsByTypeMedicineName(typeMedicineDto.getName()))
 			return new ResponseEntity<>(new Message("Ese nombre ya existe"), HttpStatus.BAD_REQUEST);
 		TypeMedicine typeMedicine = new TypeMedicine();
 		typeMedicine.setName(typeMedicineDto.getName());
-		typeMedicineService.create(typeMedicine);
+		typeMedicineService.createTypeMedicine(typeMedicine);
 		return new ResponseEntity<>(new Message("Tipo de medicina creada"), HttpStatus.OK);
 
 	}
 
-	@PutMapping("{id}")
-	public ResponseEntity<?> update(@PathVariable("id") int id, @RequestBody TypeMedicine typeMedicineDto) {
+	@PutMapping("{typeMedicineId}")
+	public ResponseEntity<?> updateTypeMedicine(@PathVariable("typeMedicineId") Long typeMedicineId, @RequestBody TypeMedicine typeMedicineDto) {
 
-		if (!typeMedicineService.existsById(id))
+		if (!typeMedicineService.existsByTypeMedicineId(typeMedicineId))
 			return new ResponseEntity<>(new Message("No existe"), HttpStatus.NOT_FOUND);
-		if (typeMedicineService.existsByName(typeMedicineDto.getName())
-				&& typeMedicineService.findByName(typeMedicineDto.getName()).get().getId() != id)
+		if (typeMedicineService.existsByTypeMedicineName(typeMedicineDto.getName())
+				&& typeMedicineService.findByTypeMedicineName(typeMedicineDto.getName()).get().getId() != typeMedicineId)
 			return new ResponseEntity<>(new Message("Ese nombre ya existe"), HttpStatus.BAD_REQUEST);
 		if (StringUtils.isBlank(typeMedicineDto.getName()))
 			return new ResponseEntity<>(new Message("El nombre es obligatorio"), HttpStatus.BAD_REQUEST);
-		TypeMedicine typeMedicine = typeMedicineService.getOne(id).get();
+		TypeMedicine typeMedicine = typeMedicineService.getOneTypeMedicine(typeMedicineId).get();
 		typeMedicine.setName(typeMedicineDto.getName());
-		typeMedicineService.update(typeMedicine);
+		typeMedicineService.updateTypeMedicine(typeMedicine);
 		return new ResponseEntity<>(new Message("Tipo de medicina actualizada"), HttpStatus.OK);
 
 	}
 
-	@DeleteMapping("{id}")
-	public ResponseEntity<?> delete(@PathVariable("id") int id) {
+	@DeleteMapping("{typeMedicineId}")
+	public ResponseEntity<?> delete(@PathVariable("typeMedicineId") Long typeMedicineId) {
 
-		if (!typeMedicineService.existsById(id))
+		if (!typeMedicineService.existsByTypeMedicineId(typeMedicineId))
 			return new ResponseEntity<>(new Message("No existe"), HttpStatus.NOT_FOUND);
-		typeMedicineService.delete(id);
+		typeMedicineService.deleteTypeMedicine(typeMedicineId);
 		return new ResponseEntity<>(new Message("Tipo de medicina borrada"), HttpStatus.OK);
 
 	}

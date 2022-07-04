@@ -37,32 +37,32 @@ public class MedicineController {
 	MedicineService medicineService;
 
 	@GetMapping(produces = "application/json")
-	public ResponseEntity<List<Medicine>> readAll() {
+	public ResponseEntity<List<Medicine>> readAllMedicine() {
 
-		List<Medicine> medicine = medicineService.read();
+		List<Medicine> medicine = medicineService.readAllMedicine();
 		return new ResponseEntity<>(medicine, HttpStatus.OK);
 
 	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	@GetMapping("/{id}")
-	public ResponseEntity<Medicine> getById(@PathVariable("id") int id) {
+	@GetMapping("/{medicineId}")
+	public ResponseEntity<Medicine> getByMedicineId(@PathVariable("medicineId") Long medicineId) {
 
-		if (!medicineService.existsById(id))
+		if (!medicineService.existsByMedicineId(medicineId))
 			return new ResponseEntity(new Message("no existe"), HttpStatus.NOT_FOUND);
-		Medicine medicine = medicineService.getOne(id).get();
+		Medicine medicine = medicineService.getOneMedicine(medicineId).get();
 		return new ResponseEntity<>(medicine, HttpStatus.OK);
 
 	}
 
-	@GetMapping("pet/{id}")
-	public ResponseEntity<?> getByPetId(@PathVariable("id") int id) {
-		List<Medicine> medicine = medicineService.findAllByPetId(id);
+	@GetMapping("pet/{petId}")
+	public ResponseEntity<?> getByPetId(@PathVariable("petId") Long petId) {
+		List<Medicine> medicine = medicineService.findAllByPetId(petId);
 		return new ResponseEntity<>(medicine, HttpStatus.OK);
 	}
 
 	@PostMapping(produces = "application/json")
-	public ResponseEntity<?> create(@Valid @ModelAttribute MedicineDto medicineDto, BindingResult bindingResult,
+	public ResponseEntity<?> createMedicine(@Valid @ModelAttribute MedicineDto medicineDto, BindingResult bindingResult,
 			@RequestParam(required = false, value = "image") MultipartFile image) throws IOException {
 		
 		Medicine medicine = new Medicine();
@@ -83,21 +83,21 @@ public class MedicineController {
 		medicine.setCreate_date(Util.dateNow());
 		medicine.setTypeMedicine(medicineDto.getTypeMedicine());
 		medicine.setPet(medicineDto.getPet());
-		medicineService.create(medicine);
+		medicineService.createMedicine(medicine);
 		return new ResponseEntity<>(new Message("Medicina creada"), HttpStatus.OK);
 
 	}
 
-	@PutMapping("/{id}")
-	public ResponseEntity<?> update(@PathVariable("id") int id, @ModelAttribute MedicineDto medicineDto,
+	@PutMapping("/{medicineId}")
+	public ResponseEntity<?> updateMedicine(@PathVariable("medicineId") Long medicineId, @ModelAttribute MedicineDto medicineDto,
 			@RequestParam(required=false,value="image") MultipartFile image)
 			throws IOException {
 
-		if (!medicineService.existsById(id))
+		if (!medicineService.existsByMedicineId(medicineId))
 			return new ResponseEntity<>(new Message("no existe"), HttpStatus.NOT_FOUND);
 		if (StringUtils.isBlank(medicineDto.getManufacturer()))
 			return new ResponseEntity<>(new Message("el nombre es obligatorio"), HttpStatus.BAD_REQUEST);
-		Medicine medicine = medicineService.getOne(id).get();
+		Medicine medicine = medicineService.getOneMedicine(medicineId).get();
 		medicine.setName(medicineDto.getName());
 		medicine.setManufacturer(medicineDto.getManufacturer());
 		medicine.setBatch(medicineDto.getBatch());
@@ -111,17 +111,17 @@ public class MedicineController {
 		}
 		medicine.setUpdate_date(Util.dateNow());
 		medicine.setTypeMedicine(medicineDto.getTypeMedicine());
-		medicineService.update(medicine);
+		medicineService.updateMedicine(medicine);
 		return new ResponseEntity<>(new Message("Medicina actualizada"), HttpStatus.OK);
 
 	}
 
-	@DeleteMapping("/{id}")
-	public ResponseEntity<?> delete(@PathVariable("id") int id) {
+	@DeleteMapping("/{medicineId}")
+	public ResponseEntity<?> deleteMedicine(@PathVariable("medicineId") Long medicineId) {
 
-		if (!medicineService.existsById(id))
+		if (!medicineService.existsByMedicineId(medicineId))
 			return new ResponseEntity<>(new Message("no existe"), HttpStatus.NOT_FOUND);
-		medicineService.delete(id);
+		medicineService.deleteMedicine(medicineId);
 		return new ResponseEntity<>(new Message("Medicina borrada"), HttpStatus.OK);
 
 	}

@@ -16,11 +16,11 @@ public class DeviceDetailService {
 	@Autowired
 	DeviceDetailRepository deviceDetailRepository;
 
-	public List<DeviceDetail> read() {
+	public List<DeviceDetail> readAllDeviceDetail() {
 		return (List<DeviceDetail>) deviceDetailRepository.findAll();
 	}
 
-	public void create(DeviceDetail deviceDetail) {
+	public void createDeviceDetail(DeviceDetail deviceDetail) {
 		deviceDetailRepository.save(deviceDetail);
 	}
 

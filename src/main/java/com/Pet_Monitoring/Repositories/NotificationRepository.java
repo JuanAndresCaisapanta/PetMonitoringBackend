@@ -10,6 +10,6 @@ import com.Pet_Monitoring.Entities.Notification;
 @Repository
 public interface NotificationRepository extends CrudRepository<Notification, Long> {
 
-	List<Notification> findAllByUsersId(Long id);
+	List<Notification> findAllByUsersId(Long userId);
 
 }

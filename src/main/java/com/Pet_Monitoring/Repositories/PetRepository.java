@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 import com.Pet_Monitoring.Entities.Pet;
 
 @Repository
-public interface PetRepository extends CrudRepository<Pet, Integer> {
+public interface PetRepository extends CrudRepository<Pet, Long> {
 
 	/*
 	 * Optional<Pet> findByNombre(String nombre);

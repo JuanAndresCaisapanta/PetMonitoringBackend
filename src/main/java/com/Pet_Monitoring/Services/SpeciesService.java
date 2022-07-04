@@ -20,36 +20,36 @@ public class SpeciesService {
 	@Autowired
 	SpeciesRepository speciesRepository;
 
-	public List<Species> read() {
+	public List<Species> readAllSpecies() {
 		return (List<Species>) speciesRepository.findAll();
 	}
 	
-	public void create(@Valid @RequestBody Species species) {
+	public void createSpecies(@Valid @RequestBody Species species) {
 		speciesRepository.save(species);
 	}
 
-	public void update(@Valid @RequestBody Species species) {
+	public void updateSpecies(@Valid @RequestBody Species species) {
 		speciesRepository.save(species);
 	}
 
-	public void delete(int id) {
-		speciesRepository.deleteById(id);
+	public void deleteSpecies(Long speciesId) {
+		speciesRepository.deleteById(speciesId);
 	}
 
-	public Optional<Species> getOne(int id) {
-		return speciesRepository.findById(id);
+	public Optional<Species> getOneSpecies(Long speciesId) {
+		return speciesRepository.findById(speciesId);
 	}
 
-	public boolean existsById(int id) {
-		return speciesRepository.existsById(id);
+	public boolean existsBySpeciesId(Long speciesId) {
+		return speciesRepository.existsById(speciesId);
 	}
 	
-	public boolean existsByName(String name) {
-		return speciesRepository.existsByName(name);
+	public boolean existsBySpeciesName(String speciesName) {
+		return speciesRepository.existsByName(speciesName);
 	}
 
-	public Optional<Species> findByName(String name) {
-		return speciesRepository.findByName(name);
+	public Optional<Species> findBySpeciesName(String speciesName) {
+		return speciesRepository.findByName(speciesName);
 	}
 
 }

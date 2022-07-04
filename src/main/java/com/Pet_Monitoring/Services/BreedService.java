@@ -17,40 +17,40 @@ public class BreedService {
 	@Autowired
 	BreedRepository breedRepository;
 
-	public List<Breed> read() {
+	public List<Breed> readAllBreed() {
 		return (List<Breed>) breedRepository.findAll();
 	}
 
-	public void create(Breed breed) {
+	public void createBreed(Breed breed) {
 		breedRepository.save(breed);
 	}
 
-	public void update(Breed breed) {
+	public void updateBreed(Breed breed) {
 		breedRepository.save(breed);
 	}
 
-	public void delete(Long id) {
-		breedRepository.deleteById(id);
+	public void deleteBreed(Long breedId) {
+		breedRepository.deleteById(breedId);
 	}
 
-	public Optional<Breed> getOne(Long id) {
-		return breedRepository.findById(id);
+	public Optional<Breed> getOneBreed(Long breedId) {
+		return breedRepository.findById(breedId);
 	}
 
-	public boolean existsById(Long id) {
-		return breedRepository.existsById(id);
+	public boolean existsByBreedId(Long breedId) {
+		return breedRepository.existsById(breedId);
 	}
 
-	public boolean existsByName(String name) {
-		return breedRepository.existsByName(name);
+	public boolean existsByBreedName(String breedName) {
+		return breedRepository.existsByName(breedName);
 	}
 
-	public Optional<Breed> findByName(String name) {
-		return breedRepository.findByName(name);
+	public Optional<Breed> findByBreedName(String breedName) {
+		return breedRepository.findByName(breedName);
 	}
 	
-	public List<Breed> findAllBySpeciesId(int id) {
-		return breedRepository.findAllBySpeciesId(id);
+	public List<Breed> findAllBySpeciesId(Long speciesId) {
+		return breedRepository.findAllBySpeciesId(speciesId);
 	}
 
 }

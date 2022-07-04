@@ -17,28 +17,28 @@ public class PetService {
 	@Autowired
 	PetRepository petRepository;
 
-	public List<Pet> read() {
+	public List<Pet> readAllPet() {
 		return (List<Pet>) petRepository.findAll();
 	}
 
-	public void create(Pet pet) {
+	public void createPet(Pet pet) {
 		petRepository.save(pet);
 	}
 
-	public void update(Pet pet) {
+	public void updatePet(Pet pet) {
 		petRepository.save(pet);
 	}
 
-	public void delete(int id) {
-		petRepository.deleteById(id);
+	public void deletePet(Long petId) {
+		petRepository.deleteById(petId);
 	}
 
-	public Optional<Pet> getOne(int id) {
-		return petRepository.findById(id);
+	public Optional<Pet> getOnePet(Long petId) {
+		return petRepository.findById(petId);
 	}
 
-	public boolean existsById(int id) {
-		return petRepository.existsById(id);
+	public boolean existsByPetId(Long petId) {
+		return petRepository.existsById(petId);
 	}
 
 }

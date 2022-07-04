@@ -20,6 +20,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.Pet_Monitoring.Dto.EmailDto;
 import com.Pet_Monitoring.Dto.Message;
 import com.Pet_Monitoring.Dto.ProfessionalDto;
+import com.Pet_Monitoring.Dto.FullName;
+import com.Pet_Monitoring.Entities.Pet;
 import com.Pet_Monitoring.Entities.Professional;
 import com.Pet_Monitoring.Services.ProfessionalService;
 import com.Pet_Monitoring.Utils.Util;
@@ -33,31 +35,49 @@ public class ProfessionalController {
 	ProfessionalService professionalService;
 
 	@GetMapping(produces = "application/json")
-	public ResponseEntity<List<Professional>> read() {
+	public ResponseEntity<List<Professional>> readAllProfessional() {
 
-		List<Professional> professional = professionalService.read();
+		List<Professional> professional = professionalService.readAllProfessional();
 		return new ResponseEntity<>(professional, HttpStatus.OK);
 	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	@GetMapping("/{id}")
-	public ResponseEntity<Professional> getById(@PathVariable("id") int id) {
+	@GetMapping("/{professionalId}")
+	public ResponseEntity<Professional> getByProfessionalId(@PathVariable("professionalId") Long professionalId) {
 
-		if (!professionalService.existsById(id))
+		if (!professionalService.existsByProfessionalId(professionalId))
 			return new ResponseEntity(new Message("no existe"), HttpStatus.NOT_FOUND);
-		Professional professional = professionalService.getOne(id).get();
+		Professional professional = professionalService.getOneProfessional(professionalId).get();
 		return new ResponseEntity<>(professional, HttpStatus.OK);
 
 	}
 
-	@GetMapping("pet/{id}")
-	public ResponseEntity<?> getByPetId(@PathVariable("id") int id) {
-		List<Professional> professionals = professionalService.findAllByPetId(id);
+	@GetMapping("pet/{petId}")
+	public ResponseEntity<?> getByPetId(@PathVariable("petId") Long petId) {
+		List<Professional> professionals = professionalService.findAllByPetId(petId);
 		return new ResponseEntity<>(professionals, HttpStatus.OK);
 	}
+	
+	@GetMapping("pets/user/{userId}")
+	public ResponseEntity<?> getProfessionalFullNames(@PathVariable("userId") Long userId) {
+		List<FullName> fullName = professionalService.getProfessionalFullNames(userId);
+		return new ResponseEntity<>(fullName, HttpStatus.OK);
+	}
+
+	@GetMapping("pets/{professionId}/{fullName}/{userId}")
+	public ResponseEntity<List<Pet>> getProfessionalPets(@PathVariable("professionId") Long professionId,
+			@PathVariable("fullName") String fullName, @PathVariable("userId") Long userId) {
+		List<Pet> pets = professionalService.getProfessionalPets(professionId, fullName, userId);
+		if (pets.isEmpty()) {
+			return ResponseEntity.noContent().build();
+		}
+		return ResponseEntity.ok(pets);
+	}
+	
+	
 
 	@PostMapping(produces = "application/json")
-	public ResponseEntity<?> create(@RequestBody @Validated ProfessionalDto professionalDto) {
+	public ResponseEntity<?> createProfessional(@RequestBody @Validated ProfessionalDto professionalDto) {
 
 		if (StringUtils.isBlank(professionalDto.getName()))
 			return new ResponseEntity<>(new Message("El nombre es obligatorio"), HttpStatus.BAD_REQUEST);
@@ -73,15 +93,15 @@ public class ProfessionalController {
 		professional.setCreation_date(Util.dateNow());
 		professional.setProfession(professionalDto.getProfession());
 		professional.setPet(professionalDto.getPet());
-		professionalService.create(professional);
+		professionalService.createProfessional(professional);
 		return new ResponseEntity<>(new Message("Profesional creado"), HttpStatus.OK);
 
 	}
 
-	@PutMapping("/{id}")
-	public ResponseEntity<?> update(@PathVariable("id") int id, @RequestBody ProfessionalDto professionalDto) {
+	@PutMapping("/{professionalId}")
+	public ResponseEntity<?> updateProfessional(@PathVariable("professionalId") Long professionalId, @RequestBody ProfessionalDto professionalDto) {
 
-		if (!professionalService.existsById(id))
+		if (!professionalService.existsByProfessionalId(professionalId))
 			return new ResponseEntity<>(new Message("El profesional no existe"), HttpStatus.NOT_FOUND);
 		// if (profesionalesService.existsByNombre(professionalDto.getNombre())
 		// &&
@@ -91,7 +111,7 @@ public class ProfessionalController {
 		// HttpStatus.BAD_REQUEST);
 		if (StringUtils.isBlank(professionalDto.getName()))
 			return new ResponseEntity<>(new Message("El nombre es obligatorio"), HttpStatus.BAD_REQUEST);
-		Professional professional = professionalService.getOne(id).get();
+		Professional professional = professionalService.getOneProfessional(professionalId).get();
 		professional.setName(professionalDto.getName());
 		professional.setLast_name(professionalDto.getLast_name());
 		professional.setAddress(professionalDto.getAddress());
@@ -99,24 +119,24 @@ public class ProfessionalController {
 		professional.setCell_phone(professionalDto.getCell_phone());
 		professional.setUpdate_date(Util.dateNow());
 		professional.setProfession(professionalDto.getProfession());
-		professionalService.update(professional);
+		professionalService.updateProfessional(professional);
 		return new ResponseEntity<>(new Message("Profesional actualizado"), HttpStatus.OK);
 
 	}
 
-	@DeleteMapping("/{id}")
-	public ResponseEntity<?> delete(@PathVariable("id") int id) {
+	@DeleteMapping("/{professionalId}")
+	public ResponseEntity<?> deleteProfessional(@PathVariable("professionalId") Long professionalId) {
 
-		if (!professionalService.existsById(id))
+		if (!professionalService.existsByProfessionalId(professionalId))
 			return new ResponseEntity<>(new Message("El profesional no existe"), HttpStatus.NOT_FOUND);
-		professionalService.delete(id);
+		professionalService.deleteProfessional(professionalId);
 		return new ResponseEntity<>(new Message("Profesional borrado"), HttpStatus.OK);
 
 	}
 
-	@PostMapping("/email")
-	public ResponseEntity<?> sendEmail(@RequestBody @Validated EmailDto emailDto) {
-		professionalService.sendEmail(emailDto.getFromEmail(), emailDto.getToEmail(), emailDto.getSubject(),
+	@PostMapping("/emailProfessional")
+	public ResponseEntity<?> sendEmailProfessional(@RequestBody @Validated EmailDto emailDto) {
+		professionalService.sendEmailProfessional(emailDto.getFromEmail(), emailDto.getToEmail(), emailDto.getSubject(),
 				emailDto.getBody());
 		return new ResponseEntity<>(new Message("Email enviado"), HttpStatus.OK);
 

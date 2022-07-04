@@ -31,20 +31,20 @@ public class SpeciesController {
 	SpeciesService speciesService;
 
 	@GetMapping(produces = "application/json")
-	public ResponseEntity<List<Species>> read() {
+	public ResponseEntity<List<Species>> readAllSpecies() {
 
-		List<Species> species = speciesService.read();
+		List<Species> species = speciesService.readAllSpecies();
 		return new ResponseEntity<>(species, HttpStatus.OK);
 
 	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	@GetMapping("/{id}")
-	public ResponseEntity<Species> getById(@PathVariable("id") int id) {
+	@GetMapping("/{speciesId}")
+	public ResponseEntity<Species> getBySpeciesId(@PathVariable("speciesId") Long speciesId) {
 
-		if (!speciesService.existsById(id))
+		if (!speciesService.existsBySpeciesId(speciesId))
 			return new ResponseEntity(new Message("no existe"), HttpStatus.NOT_FOUND);
-		Species species = speciesService.getOne(id).get();
+		Species species = speciesService.getOneSpecies(speciesId).get();
 		return new ResponseEntity<>(species, HttpStatus.OK);
 
 	}
@@ -61,42 +61,42 @@ public class SpeciesController {
 	 */
 
 	@PostMapping(produces = "application/json")
-	public ResponseEntity<?> create(@RequestBody @Validated SpeciesDto speciesDto) {
+	public ResponseEntity<?> createSpecies(@RequestBody @Validated SpeciesDto speciesDto) {
 
 		if (StringUtils.isBlank(speciesDto.getName()))
 			return new ResponseEntity<>(new Message("El nombre es obligatorio"), HttpStatus.BAD_REQUEST);
-		if (speciesService.existsByName(speciesDto.getName()))
+		if (speciesService.existsBySpeciesName(speciesDto.getName()))
 			return new ResponseEntity<>(new Message("Ese nombre ya existe"), HttpStatus.BAD_REQUEST);
-		Species specie = new Species();
-		specie.setName(speciesDto.getName());
-		speciesService.create(specie);
+		Species species = new Species();
+		species.setName(speciesDto.getName());
+		speciesService.createSpecies(species);
 		return new ResponseEntity<>(new Message("Especie creada"), HttpStatus.OK);
 
 	}
 
-	@PutMapping("{id}")
-	public ResponseEntity<?> update(@PathVariable("id") int id, @RequestBody SpeciesDto speciesDto) {
+	@PutMapping("{speciesId}")
+	public ResponseEntity<?> updateSpecies(@PathVariable("speciesId") Long speciesId, @RequestBody SpeciesDto speciesDto) {
 
-		if (!speciesService.existsById(id))
+		if (!speciesService.existsBySpeciesId(speciesId))
 			return new ResponseEntity<>(new Message("No existe"), HttpStatus.NOT_FOUND);
-		if (speciesService.existsByName(speciesDto.getName())
-				&& speciesService.findByName(speciesDto.getName()).get().getId() != id)
+		if (speciesService.existsBySpeciesName(speciesDto.getName())
+				&& speciesService.findBySpeciesName(speciesDto.getName()).get().getId() != speciesId)
 			return new ResponseEntity<>(new Message("Ese nombre ya existe"), HttpStatus.BAD_REQUEST);
 		if (StringUtils.isBlank(speciesDto.getName()))
 			return new ResponseEntity<>(new Message("El nombre es obligatorio"), HttpStatus.BAD_REQUEST);
-		Species species = speciesService.getOne(id).get();
+		Species species = speciesService.getOneSpecies(speciesId).get();
 		species.setName(speciesDto.getName());
-		speciesService.update(species);
+		speciesService.updateSpecies(species);
 		return new ResponseEntity<>(new Message("Especie actualizada"), HttpStatus.OK);
 
 	}
 
-	@DeleteMapping("{id}")
-	public ResponseEntity<?> delete(@PathVariable("id") int id) {
+	@DeleteMapping("{speciesId}")
+	public ResponseEntity<?> deleteSpecies(@PathVariable("speciesId") Long speciesId) {
 
-		if (!speciesService.existsById(id))
+		if (!speciesService.existsBySpeciesId(speciesId))
 			return new ResponseEntity<>(new Message("No existe"), HttpStatus.NOT_FOUND);
-		speciesService.delete(id);
+		speciesService.deleteSpecies(speciesId);
 		return new ResponseEntity<>(new Message("Especie borrada"), HttpStatus.OK);
 
 	}

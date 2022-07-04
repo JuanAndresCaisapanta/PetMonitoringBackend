@@ -17,34 +17,34 @@ public class TypeEstablishmentService {
 	@Autowired
 	TypeEstablishmentRepository typeEstablishmentRepository;
 
-	public List<TypeEstablishment> read() {
+	public List<TypeEstablishment> readAllTypeEstablishment() {
 		return (List<TypeEstablishment>) typeEstablishmentRepository.findAll();
 	}
 
-	public void create(TypeEstablishment typeEstablishment) {
+	public void createTypeEstablishment(TypeEstablishment typeEstablishment) {
 		typeEstablishmentRepository.save(typeEstablishment);
 	}
 
-	public void update(TypeEstablishment typeEstablishment) {
+	public void updateTypeEstablishment(TypeEstablishment typeEstablishment) {
 		typeEstablishmentRepository.save(typeEstablishment);
 	}
 
-	public void delete(int id) {
-		typeEstablishmentRepository.deleteById(id);
+	public void deleteTypeEstablishment(Long typeEstablishmentId) {
+		typeEstablishmentRepository.deleteById(typeEstablishmentId);
 	}
 
-	public Optional<TypeEstablishment> getOne(int id) {
-		return typeEstablishmentRepository.findById(id);
+	public Optional<TypeEstablishment> getOneTypeEstablishment(Long typeEstablishmentId) {
+		return typeEstablishmentRepository.findById(typeEstablishmentId);
 	}
 
-	public boolean existsById(int id) {
-		return typeEstablishmentRepository.existsById(id);
+	public boolean existsByTypeEstablishmentId(Long typeEstablishmentId) {
+		return typeEstablishmentRepository.existsById(typeEstablishmentId);
 	}
-	public boolean existsByName(String name) {
-		return typeEstablishmentRepository.existsByName(name);
+	public boolean existsByTypeEstablishmentName(String typeEstablishmentName) {
+		return typeEstablishmentRepository.existsByName(typeEstablishmentName);
 	}
 
-	public Optional<TypeEstablishment> findByName(String name) {
-		return typeEstablishmentRepository.findByName(name);
+	public Optional<TypeEstablishment> findByTypeEstablishmentName(String typeEstablishmentName) {
+		return typeEstablishmentRepository.findByName(typeEstablishmentName);
 	}
 }

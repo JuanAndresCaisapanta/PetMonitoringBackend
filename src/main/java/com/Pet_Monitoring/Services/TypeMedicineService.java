@@ -17,35 +17,35 @@ public class TypeMedicineService {
 	@Autowired
 	TypeMedicineRepository typeMedicineRepository;
 
-	public List<TypeMedicine> read() {
+	public List<TypeMedicine> readAllTypeMedicine() {
 		return (List<TypeMedicine>) typeMedicineRepository.findAll();
 	}
 
-	public void create(TypeMedicine typeMedicine) {
+	public void createTypeMedicine(TypeMedicine typeMedicine) {
 		typeMedicineRepository.save(typeMedicine);
 	}
 
-	public void update(TypeMedicine typeMedicine) {
+	public void updateTypeMedicine(TypeMedicine typeMedicine) {
 		typeMedicineRepository.save(typeMedicine);
 	}
 
-	public void delete(int id) {
-		typeMedicineRepository.deleteById(id);
+	public void deleteTypeMedicine(Long typeMedicineId) {
+		typeMedicineRepository.deleteById(typeMedicineId);
 	}
 
-	public Optional<TypeMedicine> getOne(int id) {
-		return typeMedicineRepository.findById(id);
+	public Optional<TypeMedicine> getOneTypeMedicine(Long typeMedicineId) {
+		return typeMedicineRepository.findById(typeMedicineId);
 	}
 
-	public boolean existsById(int id) {
-		return typeMedicineRepository.existsById(id);
+	public boolean existsByTypeMedicineId(Long typeMedicineId) {
+		return typeMedicineRepository.existsById(typeMedicineId);
 	}
 	
-	public boolean existsByName(String name) {
-		return typeMedicineRepository.existsByName(name);
+	public boolean existsByTypeMedicineName(String typeMedicineName) {
+		return typeMedicineRepository.existsByName(typeMedicineName);
 	}
 
-	public Optional<TypeMedicine> findByName(String name) {
-		return typeMedicineRepository.findByName(name);
+	public Optional<TypeMedicine> findByTypeMedicineName(String typeMedicineName) {
+		return typeMedicineRepository.findByName(typeMedicineName);
 	}
 }

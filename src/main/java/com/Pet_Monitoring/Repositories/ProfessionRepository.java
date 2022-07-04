@@ -9,10 +9,10 @@ import org.springframework.stereotype.Repository;
 import com.Pet_Monitoring.Entities.Profession;
 
 @Repository
-public interface ProfessionRepository extends CrudRepository<Profession, Integer> {
+public interface ProfessionRepository extends CrudRepository<Profession, Long> {
 
-	Optional<Profession> findByName(String name);
+	Optional<Profession> findByName(String professionName);
 
-	boolean existsByName(String name);
+	boolean existsByName(String professionName);
 
 }

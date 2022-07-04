@@ -22,9 +22,9 @@ public interface DeviceRepository extends CrudRepository<Device, Long> {
 			+ "where\r\n"
 			+ "	u.id = d.user_id\r\n"
 			+ "	and d.pet_id = p.id\r\n"
-			+ "	and d.id = :device_id", nativeQuery = true)
-	MessageDto getUser(@Param("device_id") Long device_id);
+			+ "	and d.id = :deviceId", nativeQuery = true)
+	MessageDto getUserDevice(@Param("deviceId") Long deviceId);
 	
-	boolean existsByCode(String code);
+	boolean existsByCode(String deviceCode);
 
 }

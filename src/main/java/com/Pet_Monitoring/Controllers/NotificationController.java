@@ -24,15 +24,15 @@ public class NotificationController {
 	@Autowired
 	NotificationService notificationService;
 	
-	@GetMapping("user/{id}")
-	public ResponseEntity<?> findAllByUsersId(@PathVariable("id") Long id) {
-		List<Notification> notifications = notificationService.findAllByUsersId(id);
+	@GetMapping("user/{userId}")
+	public ResponseEntity<?> findAllByUsersId(@PathVariable("userId") Long userId) {
+		List<Notification> notifications = notificationService.findAllByUsersId(userId);
 		return new ResponseEntity<>(notifications, HttpStatus.OK);
 	}
 
-	@DeleteMapping("{id}")
-	public ResponseEntity<?> delete(@PathVariable("id") Long id) {
-		notificationService.delete(id);
+	@DeleteMapping("{notificationId}")
+	public ResponseEntity<?> deleteNotification(@PathVariable("notificationId") Long notificationId) {
+		notificationService.deleteNotification(notificationId);
 		return new ResponseEntity<>(new Message("Notificación borrada"), HttpStatus.OK);
 
 	}

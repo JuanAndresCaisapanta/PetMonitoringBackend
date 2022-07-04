@@ -23,40 +23,40 @@ public class DeviceService {
 	JavaMailSender javaMailSender;
 
 
-	public List<Device> readAll() {
+	public List<Device> readAllDevice() {
 		return (List<Device>) deviceRepository.findAll();
 	}
 
-	public void create(Device device) {
+	public void createDevice(Device device) {
 		deviceRepository.save(device);
 	}
 	
-	public void update(Device device) {
+	public void updateDevice(Device device) {
 		deviceRepository.save(device);
 	}
 	
-	public void delete(Long id) {
-		deviceRepository.deleteById(id);
+	public void deleteDevice(Long deviceId) {
+		deviceRepository.deleteById(deviceId);
 	}
 	
-	public Optional<Device> getOne(Long id) {
-		return deviceRepository.findById(id);
+	public Optional<Device> getOneDevice(Long deviceId) {
+		return deviceRepository.findById(deviceId);
 	}
 	
-	public boolean existsById(Long id) {
-		return deviceRepository.existsById(id);
+	public boolean existsByDeviceId(Long deviceId) {
+		return deviceRepository.existsById(deviceId);
 	}
 	
-	public MessageDto getUser(Long id) {
-		return deviceRepository.getUser(id);
+	public MessageDto getUserDevice(Long deviceId) {
+		return deviceRepository.getUserDevice(deviceId);
 	}
 	
-	public boolean existsByCode(String code) {
-		return deviceRepository.existsByCode(code);
+	public boolean existsByDeviceCode(String deviceCode) {
+		return deviceRepository.existsByCode(deviceCode);
 	}
 
 
-	public void sendEmail(String fromEmail, String toEmail, String subject, String body) {
+	public void sendEmailDevice(String fromEmail, String toEmail, String subject, String body) {
 		SimpleMailMessage message = new SimpleMailMessage();
 		message.setReplyTo(fromEmail);
 		message.setFrom(fromEmail);

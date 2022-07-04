@@ -9,6 +9,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.Pet_Monitoring.Dto.FullName;
 import com.Pet_Monitoring.Entities.Establishment;
 import com.Pet_Monitoring.Entities.Pet;
 import com.Pet_Monitoring.Repositories.EstablishmentRepository;
@@ -21,35 +22,39 @@ public class EstablishmentService {
 	@Autowired
 	JavaMailSender javaMailSender;
 
-	public List<Establishment> read() {
+	public List<Establishment> readAllEstablishment() {
 		return (List<Establishment>) establishmentRepository.findAll();
 	}
 
-	public void create(Establishment establishment) {
+	public void createEstablishment(Establishment establishment) {
 		establishmentRepository.save(establishment);
 	}
 
-	public void update(Establishment establishment) {
+	public void updateEstablishment(Establishment establishment) {
 		establishmentRepository.save(establishment);
 	}
 
-	public void delete(int id) {
-		establishmentRepository.deleteById(id);
+	public void deleteEstablishment(Long establishmentId) {
+		establishmentRepository.deleteById(establishmentId);
 	}
 
-	public Optional<Establishment> getOne(int id) {
-		return establishmentRepository.findById(id);
+	public Optional<Establishment> getOneEstablishment(Long establishmentId) {
+		return establishmentRepository.findById(establishmentId);
 	}
 
-	public boolean existsById(int id) {
-		return establishmentRepository.existsById(id);
+	public boolean existsByEstablishmentId(Long establishmentId) {
+		return establishmentRepository.existsById(establishmentId);
 	}
 	
-	public List<Pet> getPets(String name, Long id){
-		return establishmentRepository.getPets(name, id);
+	public List<Pet> getEstablishmentPets(Long typeEstablishmentId,String fullName, Long userId){
+		return establishmentRepository.getEstablishmentPets(typeEstablishmentId,fullName,userId);
+	}
+	
+	public List<FullName> getEstablishmentFullNames(Long userId) {
+		return establishmentRepository.getEstablishmentFullNames(userId);
 	}
 
-	public void sendEmail(String fromEmail, String toEmail, String subject, String body) {
+	public void sendEmailEstablishment(String fromEmail, String toEmail, String subject, String body) {
 		SimpleMailMessage message = new SimpleMailMessage();
 		message.setReplyTo(fromEmail);
 		message.setFrom(fromEmail);

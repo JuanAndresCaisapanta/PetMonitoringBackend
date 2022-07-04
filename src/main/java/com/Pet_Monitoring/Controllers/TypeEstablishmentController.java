@@ -31,20 +31,20 @@ public class TypeEstablishmentController {
 	TypeEstablishmentService typeEstablishmentService;
 
 	@GetMapping(produces = "application/json")
-	public ResponseEntity<List<TypeEstablishment>> read() {
+	public ResponseEntity<List<TypeEstablishment>> readAllTypeEstablishment() {
 
-		List<TypeEstablishment> typeEstablishment = typeEstablishmentService.read();
+		List<TypeEstablishment> typeEstablishment = typeEstablishmentService.readAllTypeEstablishment();
 		return new ResponseEntity<>(typeEstablishment, HttpStatus.OK);
 
 	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	@GetMapping("/{id}")
-	public ResponseEntity<TypeEstablishment> getById(@PathVariable("id") int id) {
+	@GetMapping("/{typeEstablishmentId}")
+	public ResponseEntity<TypeEstablishment> getByTypeEstablishmentId(@PathVariable("typeEstablishmentId") Long typeEstablishmentId) {
 
-		if (!typeEstablishmentService.existsById(id))
+		if (!typeEstablishmentService.existsByTypeEstablishmentId(typeEstablishmentId))
 			return new ResponseEntity(new Message("no existe"), HttpStatus.NOT_FOUND);
-		TypeEstablishment typeEstablishment = typeEstablishmentService.getOne(id).get();
+		TypeEstablishment typeEstablishment = typeEstablishmentService.getOneTypeEstablishment(typeEstablishmentId).get();
 		return new ResponseEntity<>(typeEstablishment, HttpStatus.OK);
 
 	}
@@ -61,43 +61,43 @@ public class TypeEstablishmentController {
 	 */
 
 	@PostMapping(produces = "application/json")
-	public ResponseEntity<?> create(@RequestBody @Validated TypeEstablishmentDto typeEstablishmentDto) {
+	public ResponseEntity<?> createTypeEstablishment(@RequestBody @Validated TypeEstablishmentDto typeEstablishmentDto) {
 
 		if (StringUtils.isBlank(typeEstablishmentDto.getName()))
 			return new ResponseEntity<>(new Message("El nombre es obligatorio"), HttpStatus.BAD_REQUEST);
-		if (typeEstablishmentService.existsByName(typeEstablishmentDto.getName()))
+		if (typeEstablishmentService.existsByTypeEstablishmentName(typeEstablishmentDto.getName()))
 			return new ResponseEntity<>(new Message("Ese nombre ya existe"), HttpStatus.BAD_REQUEST);
 		TypeEstablishment typeEstablishment = new TypeEstablishment();
 		typeEstablishment.setName(typeEstablishmentDto.getName());
-		typeEstablishmentService.create(typeEstablishment);
+		typeEstablishmentService.createTypeEstablishment(typeEstablishment);
 		return new ResponseEntity<>(new Message("Establecimiento creado"), HttpStatus.OK);
 
 	}
 
-	@PutMapping("/{id}")
-	public ResponseEntity<?> update(@PathVariable("id") int id,
+	@PutMapping("/{typeEstablishmentId}")
+	public ResponseEntity<?> updateTypeEstablishment(@PathVariable("typeEstablishmentId") Long typeEstablishmentId,
 			@RequestBody TypeEstablishmentDto typeEstablishmentDto) {
 
-		if (!typeEstablishmentService.existsById(id))
+		if (!typeEstablishmentService.existsByTypeEstablishmentId(typeEstablishmentId))
 			return new ResponseEntity<>(new Message("No existe"), HttpStatus.NOT_FOUND);
-		if (typeEstablishmentService.existsByName(typeEstablishmentDto.getName())
-				&& typeEstablishmentService.findByName(typeEstablishmentDto.getName()).get().getId() != id)
+		if (typeEstablishmentService.existsByTypeEstablishmentName(typeEstablishmentDto.getName())
+				&& typeEstablishmentService.findByTypeEstablishmentName(typeEstablishmentDto.getName()).get().getId() != typeEstablishmentId)
 			return new ResponseEntity<>(new Message("Ese nombre ya existe"), HttpStatus.BAD_REQUEST);
 		if (StringUtils.isBlank(typeEstablishmentDto.getName()))
 			return new ResponseEntity<>(new Message("El nombre es obligatorio"), HttpStatus.BAD_REQUEST);
-		TypeEstablishment typeEstablishment = typeEstablishmentService.getOne(id).get();
+		TypeEstablishment typeEstablishment = typeEstablishmentService.getOneTypeEstablishment(typeEstablishmentId).get();
 		typeEstablishment.setName(typeEstablishmentDto.getName());
-		typeEstablishmentService.update(typeEstablishment);
+		typeEstablishmentService.updateTypeEstablishment(typeEstablishment);
 		return new ResponseEntity<>(new Message("Tipo de establecimiento actualizado"), HttpStatus.OK);
 
 	}
 
-	@DeleteMapping("/{id}")
-	public ResponseEntity<?> delete(@PathVariable("id") int id) {
+	@DeleteMapping("/{typeEstablishmentId}")
+	public ResponseEntity<?> deleteTypeEstablishment(@PathVariable("typeEstablishmentId") Long typeEstablishmentId) {
 
-		if (!typeEstablishmentService.existsById(id))
+		if (!typeEstablishmentService.existsByTypeEstablishmentId(typeEstablishmentId))
 			return new ResponseEntity<>(new Message("No existe"), HttpStatus.NOT_FOUND);
-		typeEstablishmentService.delete(id);
+		typeEstablishmentService.deleteTypeEstablishment(typeEstablishmentId);
 		return new ResponseEntity<>(new Message("Tipo de establecimiento borrado"), HttpStatus.OK);
 
 	}

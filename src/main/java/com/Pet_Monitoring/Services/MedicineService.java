@@ -17,32 +17,32 @@ public class MedicineService {
 	@Autowired
 	MedicineRepository medicineRepository;
 
-	public List<Medicine> read() {
+	public List<Medicine> readAllMedicine() {
 		return (List<Medicine>) medicineRepository.findAll();
 	}
 
-	public void create(Medicine vacunas) {
+	public void createMedicine(Medicine vacunas) {
 		medicineRepository.save(vacunas);
 	}
 
-	public void update(Medicine vacunas) {
+	public void updateMedicine(Medicine vacunas) {
 		medicineRepository.save(vacunas);
 	}
 
-	public void delete(int id) {
-		medicineRepository.deleteById(id);
+	public void deleteMedicine(Long medicineId) {
+		medicineRepository.deleteById(medicineId);
 	}
 
-	public List<Medicine> findAllByPetId(int id) {
-		return medicineRepository.findAllByPetId(id);
+	public List<Medicine> findAllByPetId(Long petId) {
+		return medicineRepository.findAllByPetId(petId);
 	}
 
-	public Optional<Medicine> getOne(int id) {
-		return medicineRepository.findById(id);
+	public Optional<Medicine> getOneMedicine(Long medicineId) {
+		return medicineRepository.findById(medicineId);
 	}
 
-	public boolean existsById(int id) {
-		return medicineRepository.existsById(id);
+	public boolean existsByMedicineId(Long medicineId) {
+		return medicineRepository.existsById(medicineId);
 	}
 
 }
