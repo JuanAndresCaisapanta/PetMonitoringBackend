@@ -32,21 +32,17 @@ public class SpeciesController {
 
 	@GetMapping(produces = "application/json")
 	public ResponseEntity<List<Species>> readAllSpecies() {
-
 		List<Species> species = speciesService.readAllSpecies();
 		return new ResponseEntity<>(species, HttpStatus.OK);
-
 	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	@GetMapping("/{speciesId}")
-	public ResponseEntity<Species> getBySpeciesId(@PathVariable("speciesId") Long speciesId) {
-
-		if (!speciesService.existsBySpeciesId(speciesId))
+	@GetMapping("/{species_id}")
+	public ResponseEntity<Species> getBySpeciesId(@PathVariable("species_id") Long species_id) {
+		if (!speciesService.existsBySpeciesId(species_id))
 			return new ResponseEntity(new Message("no existe"), HttpStatus.NOT_FOUND);
-		Species species = speciesService.getOneSpecies(speciesId).get();
+		Species species = speciesService.getOneSpecies(species_id).get();
 		return new ResponseEntity<>(species, HttpStatus.OK);
-
 	}
 
 	/*
@@ -62,7 +58,6 @@ public class SpeciesController {
 
 	@PostMapping(produces = "application/json")
 	public ResponseEntity<?> createSpecies(@RequestBody @Validated SpeciesDto speciesDto) {
-
 		if (StringUtils.isBlank(speciesDto.getName()))
 			return new ResponseEntity<>(new Message("El nombre es obligatorio"), HttpStatus.BAD_REQUEST);
 		if (speciesService.existsBySpeciesName(speciesDto.getName()))
@@ -71,34 +66,30 @@ public class SpeciesController {
 		species.setName(speciesDto.getName());
 		speciesService.createSpecies(species);
 		return new ResponseEntity<>(new Message("Especie creada"), HttpStatus.OK);
-
 	}
 
-	@PutMapping("{speciesId}")
-	public ResponseEntity<?> updateSpecies(@PathVariable("speciesId") Long speciesId, @RequestBody SpeciesDto speciesDto) {
-
-		if (!speciesService.existsBySpeciesId(speciesId))
+	@PutMapping("{species_id}")
+	public ResponseEntity<?> updateSpecies(@PathVariable("species_id") Long species_id,
+			@RequestBody SpeciesDto speciesDto) {
+		if (!speciesService.existsBySpeciesId(species_id))
 			return new ResponseEntity<>(new Message("No existe"), HttpStatus.NOT_FOUND);
 		if (speciesService.existsBySpeciesName(speciesDto.getName())
-				&& speciesService.findBySpeciesName(speciesDto.getName()).get().getId() != speciesId)
+				&& speciesService.findBySpeciesName(speciesDto.getName()).get().getId() != species_id)
 			return new ResponseEntity<>(new Message("Ese nombre ya existe"), HttpStatus.BAD_REQUEST);
 		if (StringUtils.isBlank(speciesDto.getName()))
 			return new ResponseEntity<>(new Message("El nombre es obligatorio"), HttpStatus.BAD_REQUEST);
-		Species species = speciesService.getOneSpecies(speciesId).get();
+		Species species = speciesService.getOneSpecies(species_id).get();
 		species.setName(speciesDto.getName());
 		speciesService.updateSpecies(species);
 		return new ResponseEntity<>(new Message("Especie actualizada"), HttpStatus.OK);
-
 	}
 
-	@DeleteMapping("{speciesId}")
-	public ResponseEntity<?> deleteSpecies(@PathVariable("speciesId") Long speciesId) {
-
-		if (!speciesService.existsBySpeciesId(speciesId))
+	@DeleteMapping("{species_id}")
+	public ResponseEntity<?> deleteSpecies(@PathVariable("species_id") Long species_id) {
+		if (!speciesService.existsBySpeciesId(species_id))
 			return new ResponseEntity<>(new Message("No existe"), HttpStatus.NOT_FOUND);
-		speciesService.deleteSpecies(speciesId);
+		speciesService.deleteSpecies(species_id);
 		return new ResponseEntity<>(new Message("Especie borrada"), HttpStatus.OK);
-
 	}
 
 }

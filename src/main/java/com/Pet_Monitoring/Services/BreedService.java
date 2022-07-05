@@ -29,26 +29,26 @@ public class BreedService {
 		breedRepository.save(breed);
 	}
 
-	public void deleteBreed(Long breedId) {
-		breedRepository.deleteById(breedId);
+	public void deleteBreed(Long breed_id) {
+		breedRepository.deleteById(breed_id);
 	}
 
-	public Optional<Breed> getOneBreed(Long breedId) {
-		return breedRepository.findById(breedId);
+	public Optional<Breed> getOneBreed(Long breed_id) {
+		return breedRepository.findById(breed_id);
 	}
 
-	public boolean existsByBreedId(Long breedId) {
-		return breedRepository.existsById(breedId);
+	public boolean existsByBreedId(Long breed_id) {
+		return breedRepository.existsById(breed_id);
 	}
 
-	public boolean existsByBreedName(String breedName) {
-		return breedRepository.existsByName(breedName);
+	public boolean existsByBreedName(String breed_name) {
+		return breedRepository.existsByName(breed_name);
 	}
 
-	public Optional<Breed> findByBreedName(String breedName) {
-		return breedRepository.findByName(breedName);
+	public Optional<Breed> findByBreedName(String breed_name) {
+		return breedRepository.findByName(breed_name);
 	}
-	
+
 	public List<Breed> findAllBySpeciesId(Long speciesId) {
 		return breedRepository.findAllBySpeciesId(speciesId);
 	}

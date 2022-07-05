@@ -49,7 +49,7 @@ public class Device {
 	private Pet pet;
 
 	@ManyToOne
-	@JoinColumn(name = "user_id")
+	@JoinColumn(name = "users_id")
 	@JsonIgnore
 	private Users users;
 

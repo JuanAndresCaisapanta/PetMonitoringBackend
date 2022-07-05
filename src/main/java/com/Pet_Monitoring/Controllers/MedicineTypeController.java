@@ -18,35 +18,31 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.Pet_Monitoring.Dto.Message;
-import com.Pet_Monitoring.Dto.TypeMedicineDto;
-import com.Pet_Monitoring.Entities.TypeMedicine;
-import com.Pet_Monitoring.Services.TypeMedicineService;
+import com.Pet_Monitoring.Dto.MedicineTypeDto;
+import com.Pet_Monitoring.Entities.MedicineType;
+import com.Pet_Monitoring.Services.MedicineTypeService;
 
 @RestController
-@RequestMapping("/typeMedicine")
+@RequestMapping("/medicineType")
 @CrossOrigin
-public class TypeMedicineController {
+public class MedicineTypeController {
 
 	@Autowired
-	TypeMedicineService typeMedicineService;
+	MedicineTypeService medicineTypeService;
 
 	@GetMapping(produces = "application/json")
-	public ResponseEntity<List<TypeMedicine>> readAllTypeMedicine() {
-
-		List<TypeMedicine> typeMedicine = typeMedicineService.readAllTypeMedicine();
-		return new ResponseEntity<>(typeMedicine, HttpStatus.OK);
-
+	public ResponseEntity<List<MedicineType>> readAllMedicineType() {
+		List<MedicineType> medicineType = medicineTypeService.readAllMedicineType();
+		return new ResponseEntity<>(medicineType, HttpStatus.OK);
 	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	@GetMapping("/{typeMedicineId}")
-	public ResponseEntity<TypeMedicine> getByTypeMedicineId(@PathVariable("typeMedicineId") Long typeMedicineId) {
-
-		if (!typeMedicineService.existsByTypeMedicineId(typeMedicineId))
+	@GetMapping("/{medicineType_id}")
+	public ResponseEntity<MedicineType> getByMedicineTypeId(@PathVariable("medicineType_id") Long medicineType_id) {
+		if (!medicineTypeService.existsByMedicineTypeId(medicineType_id))
 			return new ResponseEntity(new Message("no existe"), HttpStatus.NOT_FOUND);
-		TypeMedicine typeMedicine = typeMedicineService.getOneTypeMedicine(typeMedicineId).get();
-		return new ResponseEntity<>(typeMedicine, HttpStatus.OK);
-
+		MedicineType medicineType = medicineTypeService.getOneMedicineType(medicineType_id).get();
+		return new ResponseEntity<>(medicineType, HttpStatus.OK);
 	}
 
 	/*
@@ -61,43 +57,38 @@ public class TypeMedicineController {
 	 */
 
 	@PostMapping(produces = "application/json")
-	public ResponseEntity<?> createTypeMedicine(@RequestBody @Validated TypeMedicineDto typeMedicineDto) {
-
-		if (StringUtils.isBlank(typeMedicineDto.getName()))
+	public ResponseEntity<?> createMedicineType(@RequestBody @Validated MedicineTypeDto medicineTypeDto) {
+		if (StringUtils.isBlank(medicineTypeDto.getName()))
 			return new ResponseEntity<>(new Message("El nombre es obligatorio"), HttpStatus.BAD_REQUEST);
-		if (typeMedicineService.existsByTypeMedicineName(typeMedicineDto.getName()))
+		if (medicineTypeService.existsByMedicineTypeName(medicineTypeDto.getName()))
 			return new ResponseEntity<>(new Message("Ese nombre ya existe"), HttpStatus.BAD_REQUEST);
-		TypeMedicine typeMedicine = new TypeMedicine();
-		typeMedicine.setName(typeMedicineDto.getName());
-		typeMedicineService.createTypeMedicine(typeMedicine);
+		MedicineType medicineType = new MedicineType();
+		medicineType.setName(medicineTypeDto.getName());
+		medicineTypeService.createMedicineType(medicineType);
 		return new ResponseEntity<>(new Message("Tipo de medicina creada"), HttpStatus.OK);
-
 	}
 
-	@PutMapping("{typeMedicineId}")
-	public ResponseEntity<?> updateTypeMedicine(@PathVariable("typeMedicineId") Long typeMedicineId, @RequestBody TypeMedicine typeMedicineDto) {
-
-		if (!typeMedicineService.existsByTypeMedicineId(typeMedicineId))
+	@PutMapping("{medicineType_id}")
+	public ResponseEntity<?> updateMedicineType(@PathVariable("medicineType_id") Long medicineType_id,
+			@RequestBody MedicineType typeMedicineDto) {
+		if (!medicineTypeService.existsByMedicineTypeId(medicineType_id))
 			return new ResponseEntity<>(new Message("No existe"), HttpStatus.NOT_FOUND);
-		if (typeMedicineService.existsByTypeMedicineName(typeMedicineDto.getName())
-				&& typeMedicineService.findByTypeMedicineName(typeMedicineDto.getName()).get().getId() != typeMedicineId)
+		if (medicineTypeService.existsByMedicineTypeName(typeMedicineDto.getName()) && medicineTypeService
+				.findByMedicineTypeName(typeMedicineDto.getName()).get().getId() != medicineType_id)
 			return new ResponseEntity<>(new Message("Ese nombre ya existe"), HttpStatus.BAD_REQUEST);
 		if (StringUtils.isBlank(typeMedicineDto.getName()))
 			return new ResponseEntity<>(new Message("El nombre es obligatorio"), HttpStatus.BAD_REQUEST);
-		TypeMedicine typeMedicine = typeMedicineService.getOneTypeMedicine(typeMedicineId).get();
-		typeMedicine.setName(typeMedicineDto.getName());
-		typeMedicineService.updateTypeMedicine(typeMedicine);
+		MedicineType medicineType = medicineTypeService.getOneMedicineType(medicineType_id).get();
+		medicineType.setName(typeMedicineDto.getName());
+		medicineTypeService.updateMedicineType(medicineType);
 		return new ResponseEntity<>(new Message("Tipo de medicina actualizada"), HttpStatus.OK);
-
 	}
 
-	@DeleteMapping("{typeMedicineId}")
-	public ResponseEntity<?> delete(@PathVariable("typeMedicineId") Long typeMedicineId) {
-
-		if (!typeMedicineService.existsByTypeMedicineId(typeMedicineId))
+	@DeleteMapping("{medicineType_id}")
+	public ResponseEntity<?> deleteMedicineType(@PathVariable("medicineType_id") Long medicineType_id) {
+		if (!medicineTypeService.existsByMedicineTypeId(medicineType_id))
 			return new ResponseEntity<>(new Message("No existe"), HttpStatus.NOT_FOUND);
-		typeMedicineService.deleteTypeMedicine(typeMedicineId);
+		medicineTypeService.deleteMedicineType(medicineType_id);
 		return new ResponseEntity<>(new Message("Tipo de medicina borrada"), HttpStatus.OK);
-
 	}
 }

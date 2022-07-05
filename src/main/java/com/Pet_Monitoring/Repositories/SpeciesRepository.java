@@ -10,7 +10,7 @@ import com.Pet_Monitoring.Entities.Species;
 @Repository
 public interface SpeciesRepository extends CrudRepository<Species, Long> {
 
-	Optional<Species> findByName(String speciesName);
+	Optional<Species> findByName(String species_name);
 
-	boolean existsByName(String speciesName);
+	boolean existsByName(String species_name);
 }

@@ -25,7 +25,6 @@ import com.Pet_Monitoring.Security.Services.RoleService;
 import com.Pet_Monitoring.Security.Services.UserService;
 import com.Pet_Monitoring.Utils.Util;
 
-
 @RestController
 @RequestMapping("/user")
 @CrossOrigin
@@ -57,7 +56,7 @@ public class UserController {
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@PutMapping("/{userId}")
 	public ResponseEntity<Users> updateUser(@PathVariable("userId") Long userId, @ModelAttribute UserDto userDto,
-			@RequestParam(required=false,value="image") MultipartFile image) throws IOException {
+			@RequestParam(required = false, value = "image") MultipartFile image) throws IOException {
 		if (!userService.existsByUserId(userId))
 			return new ResponseEntity(new Message("no existe"), HttpStatus.NOT_FOUND);
 		if (userService.existsByUserEmail(userDto.getEmail())
@@ -66,14 +65,13 @@ public class UserController {
 		if (StringUtils.isBlank(userDto.getEmail()))
 			return new ResponseEntity(new Message("el email es obligatorio"), HttpStatus.BAD_REQUEST);
 		Users usuario = userService.getByUserId(userId).get();
-		
 		usuario.setName(userDto.getName());
 		usuario.setLast_name(userDto.getLast_name());
 		usuario.setEmail(userDto.getEmail());
 		usuario.setAddress(userDto.getAddress());
 		usuario.setPhone(userDto.getPhone());
 		usuario.setUpdate_date(Util.dateNow());
-		if(image!=null) {
+		if (image != null) {
 			byte[] bytesImg = image.getBytes();
 			usuario.setImage(bytesImg);
 		}

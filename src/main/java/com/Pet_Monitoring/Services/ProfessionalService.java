@@ -35,35 +35,35 @@ public class ProfessionalService {
 		professionalRepository.save(profesionales);
 	}
 
-	public void deleteProfessional(Long professionalId) {
-		professionalRepository.deleteById(professionalId);
+	public void deleteProfessional(Long professional_id) {
+		professionalRepository.deleteById(professional_id);
 	}
 
-	public Optional<Professional> getOneProfessional(Long professionalId) {
-		return professionalRepository.findById(professionalId);
+	public Optional<Professional> getOneProfessional(Long professional_id) {
+		return professionalRepository.findById(professional_id);
 	}
 
-	public boolean existsByProfessionalId(Long professionalId) {
-		return professionalRepository.existsById(professionalId);
+	public boolean existsByProfessionalId(Long professional_id) {
+		return professionalRepository.existsById(professional_id);
 	}
 	
-	public List<Professional> findAllByPetId(Long petId) {
-		return professionalRepository.findAllByPetId(petId);
+	public List<Professional> findAllByPetId(Long pet_id) {
+		return professionalRepository.findAllByPetId(pet_id);
 	}
 	
-	public List<Pet> getProfessionalPets(Long professionId,String fullName, Long userId){
-		return professionalRepository.getProfessionalPets(professionId,fullName,userId);
+	public List<Pet> getProfessionalPets(Long profession_id,String professional_fullName, Long user_id){
+		return professionalRepository.getProfessionalPets(profession_id,professional_fullName,user_id);
 	}
 	
-	public List<FullName> getProfessionalFullNames(Long userId) {
-		return professionalRepository.getProfessionalFullNames(userId);
+	public List<FullName> getProfessionalFullNames(Long user_id) {
+		return professionalRepository.getProfessionalFullNames(user_id);
 	}
 	
-	public void sendEmailProfessional(String fromEmail, String toEmail, String subject, String body) {
+	public void sendEmailProfessional(String from_email, String to_email, String subject, String body) {
 		SimpleMailMessage message = new SimpleMailMessage();
-		message.setReplyTo(fromEmail);
-		message.setFrom(fromEmail);
-		message.setTo(toEmail);
+		message.setReplyTo(from_email);
+		message.setFrom(from_email);
+		message.setTo(to_email);
 		message.setSubject(subject);
 		message.setText(body);
 		javaMailSender.send(message);

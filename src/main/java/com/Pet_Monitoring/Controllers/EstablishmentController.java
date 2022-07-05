@@ -32,59 +32,56 @@ import com.Pet_Monitoring.Utils.Util;
 @CrossOrigin
 public class EstablishmentController {
 
-	@Autowired 
+	@Autowired
 	EstablishmentService establishmentService;
 
 	@GetMapping
 	public ResponseEntity<List<Establishment>> readallEstablishment() {
-
 		List<Establishment> device = establishmentService.readAllEstablishment();
 		if (device.isEmpty()) {
 			return ResponseEntity.noContent().build();
 		}
-		return ResponseEntity.ok(device); 
-
+		return ResponseEntity.ok(device);
 	}
 
-	@GetMapping("/{establishmentId}")
-	public ResponseEntity<Establishment> getByEstablishmentId(@PathVariable("establishmentId") Long establishmentId) {
-
-		Establishment establishment = establishmentService.getOneEstablishment(establishmentId).get();
+	@GetMapping("/{establishment_id}")
+	public ResponseEntity<Establishment> getByEstablishmentId(@PathVariable("establishment_id") Long establishment_id) {
+		Establishment establishment = establishmentService.getOneEstablishment(establishment_id).get();
 		if (establishment == null) {
 			return ResponseEntity.notFound().build();
 		}
 		return ResponseEntity.ok(establishment);
-
 	}
-	
-	@GetMapping("pets/user/{userId}")
-	public ResponseEntity<?> getEstablishmentFullNames(@PathVariable("userId") Long userId) {
-		List<FullName> fullName = establishmentService.getEstablishmentFullNames(userId);
+
+	@GetMapping("pets/user/{user_id}")
+	public ResponseEntity<?> getEstablishmentFullNames(@PathVariable("user_id") Long user_id) {
+		List<FullName> fullName = establishmentService.getEstablishmentFullNames(user_id);
 		return new ResponseEntity<>(fullName, HttpStatus.OK);
 	}
 
-	@GetMapping("pets/{typeEstablishmentId}/{fullName}/{userId}")
-	public ResponseEntity<List<Pet>> getEstablishmentPets(@PathVariable("typeEstablishmentId") Long typeEstablishmentId,
-			@PathVariable("fullName") String fullName, @PathVariable("userId") Long userId) {
-		List<Pet> pets = establishmentService.getEstablishmentPets(typeEstablishmentId, fullName, userId);
+	@GetMapping("pets/{establishmentType_id}/{establishment_fullName}/{user_id}")
+	public ResponseEntity<List<Pet>> getEstablishmentPets(
+			@PathVariable("establishmentType_id") Long establishmentType_id,
+			@PathVariable("establishment_fullName") String establishment_fullName,
+			@PathVariable("user_id") Long user_id) {
+		List<Pet> pets = establishmentService.getEstablishmentPets(establishmentType_id, establishment_fullName,
+				user_id);
 		if (pets.isEmpty()) {
 			return ResponseEntity.noContent().build();
 		}
 		return ResponseEntity.ok(pets);
 	}
-	
 
 	@PostMapping
 	public ResponseEntity<?> createEstablishment(@RequestBody @Validated EstablishmentDto establishmentDto,
 			BindingResult bindingResult) {
-
 		if (bindingResult.hasErrors())
 			return new ResponseEntity<>(new Message("Campos invalidos"), HttpStatus.BAD_REQUEST);
 		if (StringUtils.isBlank(establishmentDto.getName()))
 			return new ResponseEntity<>(new Message("El nombre es obligatorio"), HttpStatus.BAD_REQUEST);
 		// if (StringUtils.isBlank(deviceDto.getCode()))
 		// return new ResponseEntity<>(new Message("El codigo es incorrecto"),
-		// HttpStatus.BAD_REQUEST); 
+		// HttpStatus.BAD_REQUEST);
 		Establishment establishment = new Establishment();
 		establishment.setName(establishmentDto.getName());
 		establishment.setAddress(establishmentDto.getAddress());
@@ -92,23 +89,22 @@ public class EstablishmentController {
 		establishment.setCell_phone(establishmentDto.getCell_phone());
 		establishment.setPhone(establishmentDto.getPhone());
 		establishment.setCreation_date(Util.dateNow());
-		establishment.setTypeEstablishment(establishmentDto.getTypeEstablishment());
+		establishment.setEstablishmentType(establishmentDto.getEstablishmentType());
 		establishment.setPet(establishmentDto.getPet());
 		establishmentService.createEstablishment(establishment);
 		return new ResponseEntity<>(new Message("Establecimiento creado"), HttpStatus.OK);
-
 	}
 
-	@PutMapping("/{establishmentId}")
-	public ResponseEntity<?> update(@PathVariable("establishmentid") Long establishmentId, @RequestBody EstablishmentDto establishmentDto,
-			BindingResult bindingResult) {
-		if (!establishmentService.existsByEstablishmentId(establishmentId))
+	@PutMapping("/{establishment_id}")
+	public ResponseEntity<?> update(@PathVariable("establishment_id") Long establishment_id,
+			@RequestBody EstablishmentDto establishmentDto, BindingResult bindingResult) {
+		if (!establishmentService.existsByEstablishmentId(establishment_id))
 			return new ResponseEntity<>(new Message("No existe"), HttpStatus.NOT_FOUND);
 		if (bindingResult.hasErrors())
 			return new ResponseEntity<>(new Message("Campos invalidos"), HttpStatus.BAD_REQUEST);
 		if (StringUtils.isBlank(establishmentDto.getName()))
 			return new ResponseEntity<>(new Message("El nombre es obligatorio"), HttpStatus.BAD_REQUEST);
-		Establishment establishment = establishmentService.getOneEstablishment(establishmentId).get();
+		Establishment establishment = establishmentService.getOneEstablishment(establishment_id).get();
 		establishment.setName(establishmentDto.getName());
 		establishment.setAddress(establishmentDto.getAddress());
 		establishment.setEmail(establishmentDto.getEmail());
@@ -120,23 +116,19 @@ public class EstablishmentController {
 
 	}
 
-	@DeleteMapping("/{establishmentId}")
-	public ResponseEntity<?> delete(@PathVariable("establishmentId") Long establishmentId) {
-
-		if (!establishmentService.existsByEstablishmentId(establishmentId))
+	@DeleteMapping("/{establishment_id}")
+	public ResponseEntity<?> delete(@PathVariable("establishment_id") Long establishment_id) {
+		if (!establishmentService.existsByEstablishmentId(establishment_id))
 			return new ResponseEntity<>(new Message("No existe"), HttpStatus.NOT_FOUND);
-		establishmentService.deleteEstablishment(establishmentId);
+		establishmentService.deleteEstablishment(establishment_id);
 		return new ResponseEntity<>(new Message("Establecimiento borrado"), HttpStatus.OK);
- 
 	}
-
 
 	@PostMapping("/emailEstablishment")
 	public ResponseEntity<?> sendEmailEstablishment(@RequestBody @Validated EmailDto emailDto) {
-	establishmentService.sendEmailEstablishment(emailDto.getFromEmail(), emailDto.getToEmail(), emailDto.getSubject(),
-				emailDto.getBody());
+		establishmentService.sendEmailEstablishment(emailDto.getFrom_email(), emailDto.getTo_email(),
+				emailDto.getSubject(), emailDto.getBody());
 		return new ResponseEntity<>(new Message("Email enviado"), HttpStatus.OK);
-
 	}
-	
+
 }

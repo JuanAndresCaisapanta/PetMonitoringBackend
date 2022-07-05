@@ -37,13 +37,13 @@ public class DeviceController {
 		List<Device> device = deviceService.readAllDevice();
 		if (device.isEmpty()) {
 			return ResponseEntity.noContent().build();
-		}   
+		}
 		return ResponseEntity.ok(device);
 	}
 
-	@GetMapping("/{deviceId}")
-	public ResponseEntity<Device> getByDeviceId(@PathVariable("deviceId") Long deviceId) {
-		Device device = deviceService.getOneDevice(deviceId).get();
+	@GetMapping("/{device_id}")
+	public ResponseEntity<Device> getByDeviceId(@PathVariable("device_id") Long device_id) {
+		Device device = deviceService.getOneDevice(device_id).get();
 		if (device == null) {
 			return ResponseEntity.notFound().build();
 		}
@@ -64,17 +64,13 @@ public class DeviceController {
 
 	@PostMapping
 	public ResponseEntity<?> createDevice(@RequestBody @Validated DeviceDto deviceDto, BindingResult bindingResult) {
-
 		Device device = new Device();
 		if (bindingResult.hasErrors())
 			return new ResponseEntity<>(new Message("Campos invalidos"), HttpStatus.BAD_REQUEST);
-
 		if (StringUtils.isBlank(deviceDto.getCode()))
 			return new ResponseEntity<>(new Message("El codigo es necesario"), HttpStatus.BAD_REQUEST);
-
 		if (deviceService.existsByDeviceCode(deviceDto.getCode()))
 			return new ResponseEntity<>(new Message("El código no esta disponible"), HttpStatus.BAD_REQUEST);
-		
 		device.setCode(deviceDto.getCode());
 		device.setCreation_date(Util.dateNow());
 		device.setPet(deviceDto.getPet());
@@ -82,24 +78,24 @@ public class DeviceController {
 		deviceService.createDevice(device);
 		return ResponseEntity.ok(device.getId());
 	}
-	
-	@PutMapping("/{deviceId}")
-	public ResponseEntity<?> updateDevice(@PathVariable("deviceId") Long deviceId, @RequestBody DeviceDto deviceDto) {
-		if (!deviceService.existsByDeviceId(deviceId))
+
+	@PutMapping("/{device_id}")
+	public ResponseEntity<?> updateDevice(@PathVariable("device_id") Long device_id, @RequestBody DeviceDto deviceDto) {
+		if (!deviceService.existsByDeviceId(device_id))
 			return new ResponseEntity<>(new Message("El dispositivo no existe"), HttpStatus.NOT_FOUND);
 		if (StringUtils.isBlank(deviceDto.getCallback_code()))
 			return new ResponseEntity<>(new Message("El callback es obligatorio"), HttpStatus.BAD_REQUEST);
-		Device device = deviceService.getOneDevice(deviceId).get();
+		Device device = deviceService.getOneDevice(device_id).get();
 		device.setCallback_code(deviceDto.getCallback_code());
 		deviceService.updateDevice(device);
 		return new ResponseEntity<>(new Message("Dispositivo actualizado"), HttpStatus.OK);
 	}
 
-	@DeleteMapping("{deviceId}")
-	public ResponseEntity<?> deleteDevice(@PathVariable("deviceId") Long deviceId) {
-		if (!deviceService.existsByDeviceId(deviceId))
+	@DeleteMapping("{device_id}")
+	public ResponseEntity<?> deleteDevice(@PathVariable("device_id") Long device_id) {
+		if (!deviceService.existsByDeviceId(device_id))
 			return new ResponseEntity<>(new Message("No existe"), HttpStatus.NOT_FOUND);
-		deviceService.deleteDevice(deviceId);
+		deviceService.deleteDevice(device_id);
 		return new ResponseEntity<>(new Message("Dispositivo borrado"), HttpStatus.OK);
 	}
 

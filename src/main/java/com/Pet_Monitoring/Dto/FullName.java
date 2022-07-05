@@ -2,6 +2,6 @@ package com.Pet_Monitoring.Dto;
 
 public interface FullName {
 	
-	String getFullName();
+	String getFull_name();
 
 }

@@ -29,16 +29,16 @@ public class NotificationService {
 		notificationRepository.save(notification);
 	}
 
-	public void deleteNotification(Long notificationId) {
-		notificationRepository.deleteById(notificationId);
+	public void deleteNotification(Long notification_id) {
+		notificationRepository.deleteById(notification_id);
 	}
 
-	public Optional<Notification> getOneNotification(Long notificationId) {
-		return notificationRepository.findById(notificationId);
+	public Optional<Notification> getOneNotification(Long notification_id) {
+		return notificationRepository.findById(notification_id);
 	}
 	
-	public List<Notification> findAllByUsersId(Long userId){
-		return notificationRepository.findAllByUsersId(userId);
+	public List<Notification> findAllByUsersId(Long user_id){
+		return notificationRepository.findAllByUsersId(user_id);
 	}
 	
 }

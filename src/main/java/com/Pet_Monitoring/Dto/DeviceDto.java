@@ -23,5 +23,5 @@ public class DeviceDto {
 
 	private Users users;
 
-	private List<DeviceDetail> deviceDetail;
+	private List<DeviceDetail> device_detail;
 }

@@ -2,10 +2,10 @@ package com.Pet_Monitoring.Dto;
 
 public interface MessageDto {
 
-	Long getIdUser();
+	Long getUser_id();
 
-	String getEmailUser();
+	String getUser_email();
 
-	String getPetName();
+	String getPet_name();
 
 }

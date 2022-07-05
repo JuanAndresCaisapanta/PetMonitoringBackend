@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class TypeEstablishmentDto {
+public class EstablishmentTypeDto {
 	
 	private String name;
 

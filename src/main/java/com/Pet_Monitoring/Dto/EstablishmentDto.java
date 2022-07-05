@@ -1,7 +1,7 @@
 package com.Pet_Monitoring.Dto;
 
 import com.Pet_Monitoring.Entities.Pet;
-import com.Pet_Monitoring.Entities.TypeEstablishment;
+import com.Pet_Monitoring.Entities.EstablishmentType;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -22,7 +22,7 @@ public class EstablishmentDto {
 
 	private String phone;
 
-	private TypeEstablishment typeEstablishment;
+	private EstablishmentType establishmentType;
 
 	private Pet pet;
 }

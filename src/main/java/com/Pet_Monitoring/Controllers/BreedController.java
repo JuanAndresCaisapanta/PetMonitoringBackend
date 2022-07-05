@@ -32,24 +32,22 @@ public class BreedController {
 
 	@GetMapping(produces = "application/json")
 	public ResponseEntity<List<Breed>> readAllBreed() {
-
 		List<Breed> breed = breedService.readAllBreed();
 		return new ResponseEntity<>(breed, HttpStatus.OK);
-
 	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	@GetMapping("/{breedId}")
-	public ResponseEntity<Breed> getByBreedId(@PathVariable("breedId") Long breedId) {
-		if (!breedService.existsByBreedId(breedId))
+	@GetMapping("/{breed_id}")
+	public ResponseEntity<Breed> getByBreedId(@PathVariable("breed_id") Long breed_id) {
+		if (!breedService.existsByBreedId(breed_id))
 			return new ResponseEntity(new Message("no existe"), HttpStatus.NOT_FOUND);
-		Breed breed = breedService.getOneBreed(breedId).get();
+		Breed breed = breedService.getOneBreed(breed_id).get();
 		return new ResponseEntity<>(breed, HttpStatus.OK);
 	}
 
-	@GetMapping("species/{speciesId}")
-	public ResponseEntity<?> getBySpeciesId(@PathVariable("speciesId") Long speciesId) {
-		List<Breed> breed = breedService.findAllBySpeciesId(speciesId);
+	@GetMapping("species/{species_id}")
+	public ResponseEntity<?> getBySpeciesId(@PathVariable("species_id") Long species_id) {
+		List<Breed> breed = breedService.findAllBySpeciesId(species_id);
 		return new ResponseEntity<>(breed, HttpStatus.OK);
 	}
 
@@ -66,7 +64,6 @@ public class BreedController {
 
 	@PostMapping(produces = "application/json")
 	public ResponseEntity<?> createBreed(@RequestBody @Validated BreedDto breedDto) {
-
 		if (StringUtils.isBlank(breedDto.getName()))
 			return new ResponseEntity<>(new Message("El nombre es obligatorio"), HttpStatus.BAD_REQUEST);
 		if (breedService.existsByBreedName(breedDto.getName()))
@@ -76,20 +73,18 @@ public class BreedController {
 		breed.setSpecies(breedDto.getSpecies());
 		breedService.createBreed(breed);
 		return new ResponseEntity<>(new Message("Raza creada"), HttpStatus.OK);
-
 	}
 
-	@PutMapping("{breedId}")
-	public ResponseEntity<?> updateBreed(@PathVariable("breedId") Long breedId, @RequestBody BreedDto breedDto) {
-
-		if (!breedService.existsByBreedId(breedId))
+	@PutMapping("{breed_id}")
+	public ResponseEntity<?> updateBreed(@PathVariable("breed_id") Long breed_id, @RequestBody BreedDto breedDto) {
+		if (!breedService.existsByBreedId(breed_id))
 			return new ResponseEntity<>(new Message("No existe"), HttpStatus.NOT_FOUND);
 		if (breedService.existsByBreedName(breedDto.getName())
-				&& breedService.findByBreedName(breedDto.getName()).get().getId() != breedId)
+				&& breedService.findByBreedName(breedDto.getName()).get().getId() != breed_id)
 			return new ResponseEntity<>(new Message("Ese nombre ya existe"), HttpStatus.BAD_REQUEST);
 		if (StringUtils.isBlank(breedDto.getName()))
 			return new ResponseEntity<>(new Message("El nombre es obligatorio"), HttpStatus.BAD_REQUEST);
-		Breed breed = breedService.getOneBreed(breedId).get();
+		Breed breed = breedService.getOneBreed(breed_id).get();
 		breed.setName(breedDto.getName());
 		breed.setSpecies(breedDto.getSpecies());
 		breedService.updateBreed(breed);
@@ -97,14 +92,12 @@ public class BreedController {
 
 	}
 
-	@DeleteMapping("{breedId}")
-	public ResponseEntity<?> deleteBreed(@PathVariable("breedId") Long breedId) {
-
-		if (!breedService.existsByBreedId(breedId))
+	@DeleteMapping("{breed_id}")
+	public ResponseEntity<?> deleteBreed(@PathVariable("breed_id") Long breed_id) {
+		if (!breedService.existsByBreedId(breed_id))
 			return new ResponseEntity<>(new Message("No existe"), HttpStatus.NOT_FOUND);
-		breedService.deleteBreed(breedId);
+		breedService.deleteBreed(breed_id);
 		return new ResponseEntity<>(new Message("Raza borrada"), HttpStatus.OK);
-
 	}
-
+	
 }

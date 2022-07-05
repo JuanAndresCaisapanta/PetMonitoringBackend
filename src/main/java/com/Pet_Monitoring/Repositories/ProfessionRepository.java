@@ -11,8 +11,8 @@ import com.Pet_Monitoring.Entities.Profession;
 @Repository
 public interface ProfessionRepository extends CrudRepository<Profession, Long> {
 
-	Optional<Profession> findByName(String professionName);
+	Optional<Profession> findByName(String profession_name);
 
-	boolean existsByName(String professionName);
+	boolean existsByName(String profession_name);
 
 }

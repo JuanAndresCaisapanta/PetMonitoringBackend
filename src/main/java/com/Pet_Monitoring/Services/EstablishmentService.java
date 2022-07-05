@@ -34,31 +34,31 @@ public class EstablishmentService {
 		establishmentRepository.save(establishment);
 	}
 
-	public void deleteEstablishment(Long establishmentId) {
-		establishmentRepository.deleteById(establishmentId);
+	public void deleteEstablishment(Long establishment_id) {
+		establishmentRepository.deleteById(establishment_id);
 	}
 
-	public Optional<Establishment> getOneEstablishment(Long establishmentId) {
-		return establishmentRepository.findById(establishmentId);
+	public Optional<Establishment> getOneEstablishment(Long establishment_id) {
+		return establishmentRepository.findById(establishment_id);
 	}
 
-	public boolean existsByEstablishmentId(Long establishmentId) {
-		return establishmentRepository.existsById(establishmentId);
-	}
-	
-	public List<Pet> getEstablishmentPets(Long typeEstablishmentId,String fullName, Long userId){
-		return establishmentRepository.getEstablishmentPets(typeEstablishmentId,fullName,userId);
-	}
-	
-	public List<FullName> getEstablishmentFullNames(Long userId) {
-		return establishmentRepository.getEstablishmentFullNames(userId);
+	public boolean existsByEstablishmentId(Long establishment_id) {
+		return establishmentRepository.existsById(establishment_id);
 	}
 
-	public void sendEmailEstablishment(String fromEmail, String toEmail, String subject, String body) {
+	public List<Pet> getEstablishmentPets(Long establishmentType_id, String establishment_fullName, Long user_id) {
+		return establishmentRepository.getEstablishmentPets(establishmentType_id, establishment_fullName, user_id);
+	}
+
+	public List<FullName> getEstablishmentFullNames(Long user_id) {
+		return establishmentRepository.getEstablishmentFullNames(user_id);
+	}
+
+	public void sendEmailEstablishment(String from_email, String to_email, String subject, String body) {
 		SimpleMailMessage message = new SimpleMailMessage();
-		message.setReplyTo(fromEmail);
-		message.setFrom(fromEmail);
-		message.setTo(toEmail);
+		message.setReplyTo(from_email);
+		message.setFrom(from_email);
+		message.setTo(to_email);
 		message.setSubject(subject);
 		message.setText(body);
 		javaMailSender.send(message);

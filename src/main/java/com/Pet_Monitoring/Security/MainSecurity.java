@@ -69,7 +69,7 @@ public class MainSecurity extends WebSecurityConfigurerAdapter{
                 .antMatchers("/professional/**").hasAnyAuthority("ROLE_USER","ROLE_ADMIN")
                 .antMatchers("/profession/**").hasAnyAuthority("ROLE_USER","ROLE_ADMIN")
                 .antMatchers("/notification/**").hasAnyAuthority("ROLE_USER","ROLE_ADMIN")
-                .antMatchers("/typeMedicine/**").hasAnyAuthority("ROLE_USER","ROLE_ADMIN")
+                .antMatchers("/medicineType/**").hasAnyAuthority("ROLE_USER","ROLE_ADMIN")
                 .antMatchers("/device-detail/**").hasAnyAuthority("ROLE_USER","ROLE_ADMIN")
                 .anyRequest().authenticated()
                 .and()

@@ -9,9 +9,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class EmailDto {
 
-	private String fromEmail;
+	private String from_email;
 	
-	private String toEmail;
+	private String to_email;
 	
 	private String subject;
 	

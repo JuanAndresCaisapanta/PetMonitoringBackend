@@ -29,16 +29,16 @@ public class PetService {
 		petRepository.save(pet);
 	}
 
-	public void deletePet(Long petId) {
-		petRepository.deleteById(petId);
+	public void deletePet(Long pet_id) {
+		petRepository.deleteById(pet_id);
 	}
 
-	public Optional<Pet> getOnePet(Long petId) {
-		return petRepository.findById(petId);
+	public Optional<Pet> getOnePet(Long pet_id) {
+		return petRepository.findById(pet_id);
 	}
 
-	public boolean existsByPetId(Long petId) {
-		return petRepository.existsById(petId);
+	public boolean existsByPetId(Long pet_id) {
+		return petRepository.existsById(pet_id);
 	}
 
 }

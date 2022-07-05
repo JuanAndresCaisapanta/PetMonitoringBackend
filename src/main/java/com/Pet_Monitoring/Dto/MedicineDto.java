@@ -3,7 +3,7 @@ package com.Pet_Monitoring.Dto;
 import java.util.Date;
 
 import com.Pet_Monitoring.Entities.Pet;
-import com.Pet_Monitoring.Entities.TypeMedicine;
+import com.Pet_Monitoring.Entities.MedicineType;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import lombok.AllArgsConstructor;
@@ -34,7 +34,7 @@ public class MedicineDto {
 	@JsonFormat(pattern = "dd/MM/yyyy")
 	private Date application_date;
 
-	private TypeMedicine typeMedicine;
+	private MedicineType medicineType;
 
 	private Pet pet;
 

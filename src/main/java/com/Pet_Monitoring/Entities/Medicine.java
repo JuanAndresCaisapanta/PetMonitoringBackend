@@ -65,8 +65,8 @@ public class Medicine {
 	private Date update_date;
 
 	@ManyToOne
-	@JoinColumn(name = "typeMedicine_id")
-	private TypeMedicine typeMedicine;
+	@JoinColumn(name = "medicineType_id")
+	private MedicineType medicineType;
 
 	@ManyToOne
 	@JoinColumn(name = "pet_id")

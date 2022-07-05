@@ -32,24 +32,24 @@ public class SpeciesService {
 		speciesRepository.save(species);
 	}
 
-	public void deleteSpecies(Long speciesId) {
-		speciesRepository.deleteById(speciesId);
+	public void deleteSpecies(Long species_id) {
+		speciesRepository.deleteById(species_id);
 	}
 
-	public Optional<Species> getOneSpecies(Long speciesId) {
-		return speciesRepository.findById(speciesId);
+	public Optional<Species> getOneSpecies(Long species_id) {
+		return speciesRepository.findById(species_id);
 	}
 
-	public boolean existsBySpeciesId(Long speciesId) {
-		return speciesRepository.existsById(speciesId);
+	public boolean existsBySpeciesId(Long species_id) {
+		return speciesRepository.existsById(species_id);
 	}
 	
-	public boolean existsBySpeciesName(String speciesName) {
-		return speciesRepository.existsByName(speciesName);
+	public boolean existsBySpeciesName(String species_name) {
+		return speciesRepository.existsByName(species_name);
 	}
 
-	public Optional<Species> findBySpeciesName(String speciesName) {
-		return speciesRepository.findByName(speciesName);
+	public Optional<Species> findBySpeciesName(String species_name) {
+		return speciesRepository.findByName(species_name);
 	}
 
 }

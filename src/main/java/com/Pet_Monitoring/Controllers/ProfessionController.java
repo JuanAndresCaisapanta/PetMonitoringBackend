@@ -32,21 +32,17 @@ public class ProfessionController {
 
 	@GetMapping(produces = "application/json")
 	public ResponseEntity<List<Profession>> readAllProfession() {
-
 		List<Profession> profession = professionService.readAllProfession();
 		return new ResponseEntity<>(profession, HttpStatus.OK);
-
 	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	@GetMapping("/{professionId}")
-	public ResponseEntity<Profession> getByProfessionId(@PathVariable("professionId") Long professionId) {
-
-		if (!professionService.existsByProfessionId(professionId))
+	@GetMapping("/{profession_id}")
+	public ResponseEntity<Profession> getByProfessionId(@PathVariable("profession_id") Long profession_id) {
+		if (!professionService.existsByProfessionId(profession_id))
 			return new ResponseEntity(new Message("no existe"), HttpStatus.NOT_FOUND);
-		Profession profession = professionService.getOneProfession(professionId).get();
+		Profession profession = professionService.getOneProfession(profession_id).get();
 		return new ResponseEntity<>(profession, HttpStatus.OK);
-
 	}
 
 	/*
@@ -62,7 +58,6 @@ public class ProfessionController {
 
 	@PostMapping(produces = "application/json")
 	public ResponseEntity<?> createProfession(@RequestBody @Validated ProfessionDto professionDto) {
-
 		if (StringUtils.isBlank(professionDto.getName()))
 			return new ResponseEntity<>(new Message("El nombre es obligatorio"), HttpStatus.BAD_REQUEST);
 		if (professionService.existsByProfessionName(professionDto.getName()))
@@ -71,34 +66,30 @@ public class ProfessionController {
 		profession.setName(professionDto.getName());
 		professionService.createProfession(profession);
 		return new ResponseEntity<>(new Message("Profesión creada"), HttpStatus.OK);
-
 	}
 
-	@PutMapping("{professionId}")
-	public ResponseEntity<?> updateProfession(@PathVariable("professionId") Long professionId, @RequestBody ProfessionDto professionDto) {
-
-		if (!professionService.existsByProfessionId(professionId))
+	@PutMapping("{profession_id}")
+	public ResponseEntity<?> updateProfession(@PathVariable("profession_id") Long profession_id,
+			@RequestBody ProfessionDto professionDto) {
+		if (!professionService.existsByProfessionId(profession_id))
 			return new ResponseEntity<>(new Message("No existe"), HttpStatus.NOT_FOUND);
 		if (professionService.existsByProfessionName(professionDto.getName())
-				&& professionService.findByProfessionName(professionDto.getName()).get().getId() != professionId)
+				&& professionService.findByProfessionName(professionDto.getName()).get().getId() != profession_id)
 			return new ResponseEntity<>(new Message("Ese nombre ya existe"), HttpStatus.BAD_REQUEST);
 		if (StringUtils.isBlank(professionDto.getName()))
 			return new ResponseEntity<>(new Message("El nombre es obligatorio"), HttpStatus.BAD_REQUEST);
-		Profession profession = professionService.getOneProfession(professionId).get();
+		Profession profession = professionService.getOneProfession(profession_id).get();
 		profession.setName(professionDto.getName());
 		professionService.updateProfession(profession);
 		return new ResponseEntity<>(new Message("Profesión actualizada"), HttpStatus.OK);
-
 	}
 
-	@DeleteMapping("{professionId}")
-	public ResponseEntity<?> deleteProfession(@PathVariable("professionId") Long professionId) {
-
-		if (!professionService.existsByProfessionId(professionId))
+	@DeleteMapping("{profession_id}")
+	public ResponseEntity<?> deleteProfession(@PathVariable("profession_id") Long profession_id) {
+		if (!professionService.existsByProfessionId(profession_id))
 			return new ResponseEntity<>(new Message("no existe"), HttpStatus.NOT_FOUND);
-		professionService.deleteProfession(professionId);
+		professionService.deleteProfession(profession_id);
 		return new ResponseEntity<>(new Message("Profesión borrada"), HttpStatus.OK);
-
 	}
 
 }

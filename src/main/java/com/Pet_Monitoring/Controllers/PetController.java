@@ -43,14 +43,12 @@ public class PetController {
 	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	@GetMapping("/{petId}")
-	public ResponseEntity<Pet> getByPetId(@PathVariable("petId") Long petId) {
-
-		if (!petService.existsByPetId(petId))
+	@GetMapping("/{pet_id}")
+	public ResponseEntity<Pet> getByPetId(@PathVariable("pet_id") Long pet_id) {
+		if (!petService.existsByPetId(pet_id))
 			return new ResponseEntity(new Message("no existe"), HttpStatus.NOT_FOUND);
-		Pet pet = petService.getOnePet(petId).get();
+		Pet pet = petService.getOnePet(pet_id).get();
 		return new ResponseEntity(pet, HttpStatus.OK);
-
 	}
 
 	/*
@@ -67,7 +65,6 @@ public class PetController {
 	@PostMapping(produces = "application/json")
 	public ResponseEntity<?> createPet(@Valid @ModelAttribute PetDto petDto, BindingResult bindingResult,
 			@RequestParam(required = false, value = "image") MultipartFile image) throws IOException {
-
 		if (StringUtils.isBlank(petDto.getName()))
 			return new ResponseEntity<>(new Message("el nombre es obligatorio"), HttpStatus.BAD_REQUEST); //
 		// if (petService.existsByNombre(petDto.getName()))
@@ -92,21 +89,19 @@ public class PetController {
 		pet.setUsers(petDto.getUsers());
 		petService.createPet(pet);
 		return new ResponseEntity<>(new Message("Mascota creada"), HttpStatus.OK);
-
 	}
 
-	@PutMapping("/{petId}")
-	public ResponseEntity<?> updatePet(@PathVariable("petId") Long petId, @ModelAttribute PetDto petDto,
-			@RequestParam(required=false,value="image") MultipartFile image) throws IOException {
-
-		if (!petService.existsByPetId(petId))
+	@PutMapping("/{pet_id}")
+	public ResponseEntity<?> updatePet(@PathVariable("pet_id") Long pet_id, @ModelAttribute PetDto petDto,
+			@RequestParam(required = false, value = "image") MultipartFile image) throws IOException {
+		if (!petService.existsByPetId(pet_id))
 			return new ResponseEntity<>(new Message("no existe"), HttpStatus.NOT_FOUND);
 //		if (petService.existsByNombre(mascotasDto.getNombre())
 //				&& petService.getByNombre(mascotasDto.getNombre()).get().getId() != id)
 //			return new ResponseEntity<>(new Mensaje("ese nombre ya existe"), HttpStatus.BAD_REQUEST);
 		if (StringUtils.isBlank(petDto.getName()))
 			return new ResponseEntity<>(new Message("el nombre es obligatorio"), HttpStatus.BAD_REQUEST);
-		Pet pet = petService.getOnePet(petId).get();
+		Pet pet = petService.getOnePet(pet_id).get();
 		pet.setName(petDto.getName());
 		pet.setColor_main(petDto.getColor_main());
 		pet.setColor_secondary(petDto.getColor_secondary());
@@ -116,23 +111,20 @@ public class PetController {
 		pet.setBirth_date(petDto.getBirth_date());
 		pet.setUpdate_date(Util.dateNow());
 		pet.setBreed(petDto.getBreed());
-		if(image!=null) {
+		if (image != null) {
 			byte[] bytesImg = image.getBytes();
 			pet.setImage(bytesImg);
 		}
 		petService.updatePet(pet);
 		return new ResponseEntity<>(new Message("Mascota actualizada"), HttpStatus.OK);
-
 	}
 
-	@DeleteMapping("/{petId}")
-	public ResponseEntity<?> deletePet(@PathVariable("petId") Long petId) {
-
-		if (!petService.existsByPetId(petId))
+	@DeleteMapping("/{pet_id}")
+	public ResponseEntity<?> deletePet(@PathVariable("pet_id") Long pet_id) {
+		if (!petService.existsByPetId(pet_id))
 			return new ResponseEntity<>(new Message("no existe"), HttpStatus.NOT_FOUND);
-		petService.deletePet(petId);
+		petService.deletePet(pet_id);
 		return new ResponseEntity<>(new Message("Mascota borrada"), HttpStatus.OK);
-
 	}
 
 }

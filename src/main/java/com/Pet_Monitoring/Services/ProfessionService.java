@@ -32,24 +32,24 @@ public class ProfessionService {
 		professionRepository.save(profession);
 	}
 
-	public void deleteProfession(Long professionId) {
-		professionRepository.deleteById(professionId);
+	public void deleteProfession(Long profession_id) {
+		professionRepository.deleteById(profession_id);
 	}
 	
-	public Optional<Profession> getOneProfession(Long professionId) {
-		return professionRepository.findById(professionId);
+	public Optional<Profession> getOneProfession(Long profession_id) {
+		return professionRepository.findById(profession_id);
 	}
 
-	public boolean existsByProfessionId(Long professionId) {
-		return professionRepository.existsById(professionId);
+	public boolean existsByProfessionId(Long profession_id) {
+		return professionRepository.existsById(profession_id);
 	}
 	
-	public boolean existsByProfessionName(String professionName) {
-		return professionRepository.existsByName(professionName);
+	public boolean existsByProfessionName(String profession_name) {
+		return professionRepository.existsByName(profession_name);
 	}
 
-	public Optional<Profession> findByProfessionName(String professionName) {
-		return professionRepository.findByName(professionName);
+	public Optional<Profession> findByProfessionName(String profession_name) {
+		return professionRepository.findByName(profession_name);
 	}
 	
 }

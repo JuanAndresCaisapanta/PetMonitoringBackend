@@ -49,8 +49,8 @@ public class Establishment {
 	private Date update_date;
 	
 	@ManyToOne
-	@JoinColumn(name = "typeEstablishment_id")
-	private TypeEstablishment typeEstablishment;
+	@JoinColumn(name = "establishmentType_id")
+	private EstablishmentType establishmentType;
 	
 	@ManyToOne
 	@JoinColumn(name = "pet_id")

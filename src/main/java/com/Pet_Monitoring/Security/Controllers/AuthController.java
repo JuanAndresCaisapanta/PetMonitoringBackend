@@ -88,7 +88,7 @@ public class AuthController {
 			return new ResponseEntity<>(new Message("ese email ya existe"), HttpStatus.BAD_REQUEST);
 		Users user = new Users();
 
-		if (image==null) {
+		if (image == null) {
 			user.setImage(Util.extractBytes("src//main//resources//static//images//user.png"));
 		} else {
 			byte[] bytesImg = image.getBytes();
@@ -113,7 +113,6 @@ public class AuthController {
 	@GetMapping("/validate-token/{token}")
 	public ResponseEntity<?> getValidateToken(@PathVariable("token") String token) {
 		return new ResponseEntity(jwtProvider.validateToken(token), HttpStatus.OK);
-
 	}
 
 }

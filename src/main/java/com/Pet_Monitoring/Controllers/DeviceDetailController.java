@@ -61,24 +61,24 @@ public class DeviceDetailController {
 		deviceDetail.setDevice(deviceDetailDto.getDevice());
 		if (deviceDetailDto.getTemperature() <= 17) {
 			MessageDto user = deviceService.getUserDevice(deviceDetailDto.getDevice().getId());
-			deviceService.sendEmailDevice("server.moniopet@gmail.com", user.getEmailUser(), "Temperaura",
-					"la temperatura de " + user.getPetName() + " esta baja");
+			deviceService.sendEmailDevice("server.moniopet@gmail.com", user.getUser_email(), "Temperaura",
+					"la temperatura de " + user.getPet_name() + " esta baja");
 			Notification notification = new Notification();
-			Users users = userService.getByUserId(user.getIdUser()).get();
+			Users users = userService.getByUserId(user.getUser_id()).get();
 			notification.setSubject("Temperatura");
-			notification.setText("la temperatura de " + user.getPetName() + " esta baja");
+			notification.setText("la temperatura de " + user.getPet_name() + " esta baja");
 			notification.setUsers(users);
 			notificationService.createNotification(notification);
 
 		}
 		if (deviceDetailDto.getBattery() <= 17) {
 			MessageDto user = deviceService.getUserDevice(deviceDetailDto.getDevice().getId());
-			deviceService.sendEmailDevice("server.moniopet@gmail.com", user.getEmailUser(), "Bateria",
-					"la bateria del dispositivo de " + user.getPetName() + " esta baja");
+			deviceService.sendEmailDevice("server.moniopet@gmail.com", user.getUser_email(), "Bateria",
+					"la bateria del dispositivo de " + user.getPet_name() + " esta baja");
 			Notification notification = new Notification();
-			Users users = userService.getByUserId(user.getIdUser()).get();
+			Users users = userService.getByUserId(user.getUser_id()).get();
 			notification.setSubject("Bateria");
-			notification.setText("la bateria del dispositivo de " + user.getPetName() + " esta baja");
+			notification.setText("la bateria del dispositivo de " + user.getPet_name() + " esta baja");
 			notification.setUsers(users);
 			notificationService.createNotification(notification);
 		}
