@@ -28,7 +28,6 @@ import com.Pet_Monitoring.Utils.Util;
 @RestController
 @RequestMapping("/device-detail")
 @CrossOrigin
-@Transactional
 public class DeviceDetailController {
 
 	@Autowired
