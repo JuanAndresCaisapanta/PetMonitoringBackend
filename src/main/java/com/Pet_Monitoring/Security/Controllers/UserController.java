@@ -27,7 +27,7 @@ import com.Pet_Monitoring.Utils.Util;
 
 @RestController
 @RequestMapping("/user")
-@CrossOrigin
+@CrossOrigin(origins = {"http://localhost:8080","https://moniopet.vercel.app"})
 public class UserController {
 
 	@Autowired

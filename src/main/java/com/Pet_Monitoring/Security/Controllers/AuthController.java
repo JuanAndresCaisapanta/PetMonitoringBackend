@@ -43,7 +43,7 @@ import antlr.Utils;
 
 @RestController
 @RequestMapping("/auth")
-@CrossOrigin
+@CrossOrigin(origins = {"http://localhost:8080","https://moniopet.vercel.app"})
 public class AuthController {
 
 	@Autowired

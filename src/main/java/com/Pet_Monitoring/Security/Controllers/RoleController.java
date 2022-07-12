@@ -8,7 +8,7 @@ import com.Pet_Monitoring.Security.Services.RoleService;
 
 @RestController
 @RequestMapping("/role")
-@CrossOrigin
+@CrossOrigin(origins = {"http://localhost:8080","https://moniopet.vercel.app"})
 public class RoleController {
 
 	RoleService roleService;

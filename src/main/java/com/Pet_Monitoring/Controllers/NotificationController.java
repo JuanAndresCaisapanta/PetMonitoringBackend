@@ -18,7 +18,7 @@ import com.Pet_Monitoring.Services.NotificationService;
 
 @RestController
 @RequestMapping("/notification")
-@CrossOrigin
+@CrossOrigin(origins = {"http://localhost:8080","https://moniopet.vercel.app"})
 public class NotificationController {
 	
 	@Autowired
