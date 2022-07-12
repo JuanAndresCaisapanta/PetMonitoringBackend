@@ -39,6 +39,8 @@ import com.Pet_Monitoring.Security.Services.RoleService;
 import com.Pet_Monitoring.Security.Services.UserService;
 import com.Pet_Monitoring.Utils.Util;
 
+import antlr.Utils;
+
 @RestController
 @RequestMapping("/auth")
 @CrossOrigin
@@ -100,7 +102,7 @@ public class AuthController {
 		user.setPassword(passwordEncoder.encode(userDto.getPassword()));
 		user.setAddress(userDto.getAddress());
 		user.setPhone(userDto.getPhone());
-		user.setCreation_date(userDto.getCreation_date());
+		user.setCreation_date(Util.dateNow());
 		Collection<Role> role = new ArrayList<>();
 		role.add(roleService.getByRoleName(RoleName.ROLE_USER).get());
 		// role.add(roleService.getByRoleName(RoleName.ROLE_ADMIN).get());

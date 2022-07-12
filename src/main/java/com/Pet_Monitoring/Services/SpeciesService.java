@@ -51,5 +51,9 @@ public class SpeciesService {
 	public Optional<Species> findBySpeciesName(String species_name) {
 		return speciesRepository.findByName(species_name);
 	}
+	
+	public Optional<Species>findTopByOrderBySpeciesIdDesc(){
+		return speciesRepository.findTopByOrderByIdDesc();
+	}
 
 }

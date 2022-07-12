@@ -13,4 +13,6 @@ public interface SpeciesRepository extends CrudRepository<Species, Long> {
 	Optional<Species> findByName(String species_name);
 
 	boolean existsByName(String species_name);
+	
+	Optional<Species>findTopByOrderByIdDesc();
 }

@@ -29,7 +29,6 @@ public class Medicine {
 	private Long id;
 	
 	@NotNull
-	@Column(unique=true) 
 	private String name;
 	
 	private byte[] image;

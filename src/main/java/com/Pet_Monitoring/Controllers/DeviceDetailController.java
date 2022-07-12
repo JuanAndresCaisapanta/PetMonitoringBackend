@@ -59,7 +59,7 @@ public class DeviceDetailController {
 		deviceDetail.setBattery(deviceDetailDto.getBattery());
 		deviceDetail.setCreation_date(Util.dateNow());
 		deviceDetail.setDevice(deviceDetailDto.getDevice());
-		if (deviceDetailDto.getTemperature() <= 17) {
+		if (deviceDetailDto.getTemperature() < 38) {
 			MessageDto user = deviceService.getUserDevice(deviceDetailDto.getDevice().getId());
 			deviceService.sendEmailDevice("server.moniopet@gmail.com", user.getUser_email(), "Temperaura",
 					"la temperatura de " + user.getPet_name() + " esta baja");
@@ -71,7 +71,7 @@ public class DeviceDetailController {
 			notificationService.createNotification(notification);
 
 		}
-		if (deviceDetailDto.getBattery() <= 17) {
+		if (deviceDetailDto.getBattery() <= 1500) {
 			MessageDto user = deviceService.getUserDevice(deviceDetailDto.getDevice().getId());
 			deviceService.sendEmailDevice("server.moniopet@gmail.com", user.getUser_email(), "Bateria",
 					"la bateria del dispositivo de " + user.getPet_name() + " esta baja");
