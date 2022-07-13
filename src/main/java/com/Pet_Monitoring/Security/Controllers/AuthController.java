@@ -43,7 +43,7 @@ import antlr.Utils;
 
 @RestController
 @RequestMapping("/auth")
-@CrossOrigin
+@CrossOrigin(value = "*")
 public class AuthController {
 
 	@Autowired
