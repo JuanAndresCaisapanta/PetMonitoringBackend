@@ -1,5 +1,6 @@
 package com.Pet_Monitoring.Repositories;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.repository.CrudRepository;
@@ -15,4 +16,6 @@ public interface SpeciesRepository extends CrudRepository<Species, Long> {
 	boolean existsByName(String species_name);
 	
 	Optional<Species>findTopByOrderByIdDesc();
+	
+	List<Species> findByOrderByIdDesc();
 }
