@@ -18,7 +18,7 @@ import com.Pet_Monitoring.Services.NotificationService;
 
 @RestController
 @RequestMapping("/notification")
-@CrossOrigin(value="*")
+@CrossOrigin(origins = "*")
 public class NotificationController {
 	
 	@Autowired
