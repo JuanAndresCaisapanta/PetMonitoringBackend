@@ -27,7 +27,6 @@ import com.Pet_Monitoring.Utils.Util;
 
 @RestController
 @RequestMapping("/user")
-@CrossOrigin
 public class UserController {
 
 	@Autowired
