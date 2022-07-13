@@ -22,7 +22,7 @@ public class SpeciesService {
 	SpeciesRepository speciesRepository;
 
 	public List<Species> readAllSpecies() {
-		return (List<Species>) speciesRepository.findByOrderByIdDesc();
+		return (List<Species>) speciesRepository.findByOrderByIdAsc();
 	}
 	
 	public void createSpecies(@Valid @RequestBody Species species) {

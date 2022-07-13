@@ -17,5 +17,5 @@ public interface SpeciesRepository extends CrudRepository<Species, Long> {
 	
 	Optional<Species>findTopByOrderByIdDesc();
 	
-	List<Species> findByOrderByIdDesc();
+	List<Species> findByOrderByIdAsc();
 }
