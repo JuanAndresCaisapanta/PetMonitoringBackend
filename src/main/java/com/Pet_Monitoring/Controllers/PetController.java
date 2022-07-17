@@ -72,7 +72,7 @@ public class PetController {
 		// HttpStatus.BAD_REQUEST);
 		Pet pet = new Pet();
 		if (image == null) {
-			pet.setImage(Util.extractBytes("src//main//resources//static//images//pet-profile.jpg"));
+			pet.setImage(Util.extractBytes("https://i.ibb.co/3436j52/pet-profile.jpg"));
 		} else {
 			byte[] bytesImg = image.getBytes();
 			pet.setImage(bytesImg);

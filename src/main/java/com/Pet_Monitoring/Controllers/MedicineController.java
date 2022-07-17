@@ -80,7 +80,7 @@ public class MedicineController {
 			@RequestParam(required = false, value = "image") MultipartFile image) throws IOException {
 		Medicine medicine = new Medicine();
 		if (image == null) {
-			medicine.setImage(Util.extractBytes("src//main//resources//static//images//medicine-profile.png"));
+			medicine.setImage(Util.extractBytes("https://i.ibb.co/xL4p3Vd/medicine-profile.png"));
 		} else {
 			byte[] bytesImg = image.getBytes();
 			medicine.setImage(bytesImg);

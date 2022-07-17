@@ -1,5 +1,6 @@
 package com.Pet_Monitoring.Repositories;
 
+import java.util.List;
 import java.util.Optional;
 
 
@@ -14,5 +15,7 @@ public interface ProfessionRepository extends CrudRepository<Profession, Long> {
 	Optional<Profession> findByName(String profession_name);
 
 	boolean existsByName(String profession_name);
+	
+	List<Profession> findByOrderByIdAsc();
 
 }

@@ -29,7 +29,7 @@ public class Species {
 	@NotNull
 	private String name;
 
-	@OneToMany(mappedBy = "species",  cascade =  CascadeType.REMOVE, orphanRemoval = true)
+	@OneToMany(mappedBy = "species")
 	@JsonIgnore
 	private List<Breed> breed;
 }

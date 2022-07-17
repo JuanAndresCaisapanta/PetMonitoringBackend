@@ -61,16 +61,16 @@ public class Pet {
 	@JsonFormat(pattern = "dd/MM/yyyy")
 	private Date update_date;
 
-	@OneToMany(mappedBy = "pet",  cascade =  CascadeType.REMOVE, orphanRemoval = true)
+	@OneToMany(mappedBy = "pet")
 	private List<Establishment> establishment;
 	
-	@OneToMany(mappedBy = "pet",  cascade =  CascadeType.REMOVE, orphanRemoval = true)
+	@OneToMany(mappedBy = "pet")
 	private List<Medicine> medicine;
 	
-	@OneToMany(mappedBy = "pet",  cascade =  CascadeType.REMOVE, orphanRemoval = true)
+	@OneToMany(mappedBy = "pet")
 	private List<Professional> professional;
 	
-	@OneToMany(mappedBy = "pet",  cascade =  CascadeType.REMOVE, orphanRemoval = true)
+	@OneToMany(mappedBy = "pet")
 	private List<Device> device; 
 
 	@ManyToOne

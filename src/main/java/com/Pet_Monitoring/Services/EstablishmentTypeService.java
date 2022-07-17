@@ -18,7 +18,7 @@ public class EstablishmentTypeService {
 	EstablishmentTypeRepository establishmentTypeRepository;
 
 	public List<EstablishmentType> readAllEstablishmentType() {
-		return (List<EstablishmentType>) establishmentTypeRepository.findAll();
+		return (List<EstablishmentType>) establishmentTypeRepository.findByOrderByIdAsc();
 	}
 
 	public void createEstablishmentType(EstablishmentType establishmentType) {

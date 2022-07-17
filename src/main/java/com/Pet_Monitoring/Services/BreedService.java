@@ -18,7 +18,7 @@ public class BreedService {
 	BreedRepository breedRepository;
 
 	public List<Breed> readAllBreed() {
-		return (List<Breed>) breedRepository.findAll();
+		return (List<Breed>) breedRepository.findByOrderByIdAsc();
 	}
 
 	public void createBreed(Breed breed) {

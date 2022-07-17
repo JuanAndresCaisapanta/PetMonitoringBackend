@@ -21,7 +21,7 @@ public class ProfessionService {
 	ProfessionRepository professionRepository;
 
 	public List<Profession> readAllProfession() {
-		return (List<Profession>) professionRepository.findAll();
+		return (List<Profession>) professionRepository.findByOrderByIdAsc();
 	}
 
 	public void createProfession(@Valid @RequestBody Profession profession) {

@@ -1,11 +1,14 @@
 package com.Pet_Monitoring.Utils;
 
-import java.io.File;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.nio.file.Files;
+import java.net.URL;
+import java.net.URLConnection;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
+
+import org.apache.tomcat.util.http.fileupload.IOUtils;
 
 public class Util {
 
@@ -16,9 +19,16 @@ public class Util {
 	}
 
 	public static byte[] extractBytes(String ImagePath) throws IOException {
-		File fi = new File(ImagePath);
-		byte[] fileContent = Files.readAllBytes(fi.toPath());
-		return fileContent;
+	    	URL url = new URL(ImagePath);
+	        URLConnection conn = url.openConnection();
+	        conn.setConnectTimeout(5000);
+	        conn.setReadTimeout(5000);
+	        conn.connect(); 
+
+	        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+	        IOUtils.copy(conn.getInputStream(), baos);
+
+	        return baos.toByteArray();
 	}
 
 }

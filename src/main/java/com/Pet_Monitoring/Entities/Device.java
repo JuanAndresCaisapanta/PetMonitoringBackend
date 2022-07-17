@@ -53,7 +53,7 @@ public class Device {
 	@JsonIgnore
 	private Users users;
 
-	@OneToMany(mappedBy = "device",  cascade =  CascadeType.REMOVE, orphanRemoval = true)
+	@OneToMany(mappedBy = "device")
 	private List<DeviceDetail> deviceDetail;
 	
 }

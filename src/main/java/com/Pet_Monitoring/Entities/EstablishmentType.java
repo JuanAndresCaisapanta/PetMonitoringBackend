@@ -29,7 +29,7 @@ public class EstablishmentType {
 	@NotNull
 	private String name;
 
-	@OneToMany(mappedBy = "establishmentType",  cascade =  CascadeType.REMOVE, orphanRemoval = true)
+	@OneToMany(mappedBy = "establishmentType")
 	@JsonIgnore
 	private List<Establishment> establishment;
 	

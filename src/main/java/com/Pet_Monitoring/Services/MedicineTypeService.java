@@ -18,7 +18,7 @@ public class MedicineTypeService {
 	MedicineTypeRepository medicineTypeRepository;
 
 	public List<MedicineType> readAllMedicineType() {
-		return (List<MedicineType>) medicineTypeRepository.findAll();
+		return (List<MedicineType>) medicineTypeRepository.findByOrderByIdAsc();
 	}
 
 	public void createMedicineType(MedicineType medicineType) {
