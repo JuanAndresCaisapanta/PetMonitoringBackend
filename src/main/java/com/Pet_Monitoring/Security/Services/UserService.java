@@ -18,7 +18,7 @@ public class UserService {
 	UserRepository userRepository;
 
 	public List<Users> readAllUser() {
-		return (List<Users>) userRepository.findAll();
+		return (List<Users>) userRepository.findByOrderByIdAsc();
 	}
 
 	public Optional<Users> getByEmail(String userEmail) {

@@ -104,7 +104,7 @@ public class AuthController {
 		user.setPhone(userDto.getPhone());
 		user.setCreation_date(Util.dateNow());
 		Collection<Role> role = new ArrayList<>();
-		role.add(roleService.getByRoleName(RoleName.ROLE_USER).get());
+		role.add(roleService.getByRoleName(RoleName.User).get());
 		// role.add(roleService.getByRoleName(RoleName.ROLE_ADMIN).get());
 		user.setRole(role);
 		userService.createUser(user);

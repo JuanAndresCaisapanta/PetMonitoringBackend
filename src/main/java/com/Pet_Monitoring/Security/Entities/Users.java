@@ -68,13 +68,13 @@ public class Users {
 	inverseJoinColumns = @JoinColumn(name = "role_id"))
 	private  Collection<Role> role = new ArrayList<>();
 
-	@OneToMany(mappedBy = "users", cascade =  CascadeType.REMOVE, orphanRemoval = true)
+	@OneToMany(mappedBy = "users")
 	private List<Pet> pet;
 
-	@OneToMany(mappedBy = "users", cascade =  CascadeType.REMOVE, orphanRemoval = true)
+	@OneToMany(mappedBy = "users")
 	private List<Device> device;
 	
-	@OneToMany(mappedBy = "users", cascade =  CascadeType.REMOVE, orphanRemoval = true)
+	@OneToMany(mappedBy = "users")
 	private List<Notification> notification;
 
 }
