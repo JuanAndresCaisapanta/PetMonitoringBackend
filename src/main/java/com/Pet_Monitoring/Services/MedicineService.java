@@ -20,7 +20,7 @@ public class MedicineService {
 	MedicineRepository medicineRepository;
 
 	public List<Medicine> readAllMedicine() {
-		return (List<Medicine>) medicineRepository.findAll();
+		return (List<Medicine>) medicineRepository.findByOrderByIdAsc();
 	}
 
 	public void createMedicine(Medicine vacunas) {

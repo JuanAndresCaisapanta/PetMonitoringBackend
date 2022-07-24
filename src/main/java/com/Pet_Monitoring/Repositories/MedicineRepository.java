@@ -8,6 +8,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.Pet_Monitoring.Dto.FullName;
+import com.Pet_Monitoring.Entities.Device;
 import com.Pet_Monitoring.Entities.Medicine;
 import com.Pet_Monitoring.Entities.Pet;
 
@@ -23,5 +24,5 @@ public interface MedicineRepository extends CrudRepository<Medicine, Long>{
 	@Query(value = "select distinct m.name as full_name  from medicine m,pet p, users u  where m.pet_id =p.id and p.users_id =u.id  and p.users_id =:user_id", nativeQuery = true)
 	List<FullName> getMedicineFullNames(@Param("user_id") Long user_id);
 
-
+	List<Medicine> findByOrderByIdAsc();
 }

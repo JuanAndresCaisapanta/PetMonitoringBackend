@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.Pet_Monitoring.Dto.Message;
+import com.Pet_Monitoring.Entities.Pet;
 import com.Pet_Monitoring.Security.Dto.UserDto;
 import com.Pet_Monitoring.Security.Entities.Users;
 import com.Pet_Monitoring.Security.Services.RoleService;
@@ -52,6 +54,15 @@ public class UserController {
 		Users user = userService.getByEmail(email).get();
 		return new ResponseEntity(user, HttpStatus.OK);
 	}
+	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@GetMapping("/id/{user_id}")
+	public ResponseEntity<Users> getByUserId(@PathVariable("user_id") Long user_id) {
+		if (!userService.existsByUserId(user_id))
+			return new ResponseEntity(new Message("no existe"), HttpStatus.NOT_FOUND);
+		Users user = userService.getByUserId(user_id).get();
+		return new ResponseEntity(user, HttpStatus.OK);
+	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@PutMapping("/{userId}")
@@ -77,5 +88,13 @@ public class UserController {
 		}
 		userService.updateUser(usuario);
 		return new ResponseEntity(usuario, HttpStatus.OK);
+	}
+	
+	@DeleteMapping("/{user_id}")
+	public ResponseEntity<?> deletePet(@PathVariable("user_id") Long user_id) {
+		if (!userService.existsByUserId(user_id))
+			return new ResponseEntity<>(new Message("no existe"), HttpStatus.NOT_FOUND);
+		userService.deleteUser(user_id);
+		return new ResponseEntity<>(new Message("Usuario borrado"), HttpStatus.OK);
 	}
 }

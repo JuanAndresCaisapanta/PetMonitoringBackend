@@ -19,6 +19,10 @@ public class DeviceDetailService {
 	public List<DeviceDetail> readAllDeviceDetail() {
 		return (List<DeviceDetail>) deviceDetailRepository.findAll();
 	}
+	
+	public List<DeviceDetail>findAllByDeviceId(Long device_id){
+		return deviceDetailRepository.findAllByDeviceId(device_id);
+	}
 
 	public void createDeviceDetail(DeviceDetail deviceDetail) {
 		deviceDetailRepository.save(deviceDetail);

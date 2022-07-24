@@ -91,7 +91,7 @@ public class AuthController {
 		Users user = new Users();
 
 		if (image == null) {
-			user.setImage(Util.extractBytes("src//main//resources//static//images//user.png"));
+			user.setImage(Util.extractBytes("https://i.ibb.co/6DX9405/user.png"));
 		} else {
 			byte[] bytesImg = image.getBytes();
 			user.setImage(bytesImg);

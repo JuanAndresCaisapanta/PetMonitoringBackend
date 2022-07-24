@@ -23,7 +23,7 @@ public class EstablishmentService {
 	JavaMailSender javaMailSender;
 
 	public List<Establishment> readAllEstablishment() {
-		return (List<Establishment>) establishmentRepository.findAll();
+		return (List<Establishment>) establishmentRepository.findByOrderByIdAsc();
 	}
 
 	public void createEstablishment(Establishment establishment) {

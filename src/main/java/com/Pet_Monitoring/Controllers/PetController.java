@@ -24,6 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.Pet_Monitoring.Dto.PetDto;
 import com.Pet_Monitoring.Dto.Message;
+import com.Pet_Monitoring.Entities.Breed;
 import com.Pet_Monitoring.Entities.Pet;
 import com.Pet_Monitoring.Services.PetService;
 import com.Pet_Monitoring.Utils.Util;
@@ -49,6 +50,12 @@ public class PetController {
 			return new ResponseEntity(new Message("no existe"), HttpStatus.NOT_FOUND);
 		Pet pet = petService.getOnePet(pet_id).get();
 		return new ResponseEntity(pet, HttpStatus.OK);
+	}
+	
+	@GetMapping("users/{user_id}")
+	public ResponseEntity<?> getBySpeciesId(@PathVariable("user_id") Long user_id) {
+		List<Pet> pets = petService.findAllByUsersId(user_id);
+		return new ResponseEntity<>(pets, HttpStatus.OK);
 	}
 
 	/*

@@ -24,7 +24,7 @@ public class ProfessionalService {
 	JavaMailSender javaMailSender;
 
 	public List<Professional> readAllProfessional() {
-		return (List<Professional>) professionalRepository.findAll();
+		return (List<Professional>) professionalRepository.findByOrderByIdAsc();
 	}
 
 	public void createProfessional(Professional professional) {

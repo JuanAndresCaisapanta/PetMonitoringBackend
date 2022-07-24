@@ -18,7 +18,11 @@ public class PetService {
 	PetRepository petRepository;
 
 	public List<Pet> readAllPet() {
-		return (List<Pet>) petRepository.findAll();
+		return petRepository.findByOrderByIdAsc();
+	}
+	
+	public List<Pet> findAllByUsersId(Long user_id){
+		return petRepository.findAllByUsersId(user_id);
 	}
 
 	public void createPet(Pet pet) {

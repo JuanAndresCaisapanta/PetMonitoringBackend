@@ -17,6 +17,7 @@ import javax.validation.constraints.NotNull;
 import com.Pet_Monitoring.Security.Entities.Users;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -79,7 +80,7 @@ public class Pet {
 
 	@ManyToOne
 	@JoinColumn(name = "users_id")
-	@JsonIgnore
+	@JsonIgnoreProperties({"role","pet","device","notification","image","creation_date","update_date","password"})
 	private Users users;
 
 }

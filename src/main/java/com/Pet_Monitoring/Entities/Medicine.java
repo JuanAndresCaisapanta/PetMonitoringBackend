@@ -13,6 +13,7 @@ import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -69,7 +70,7 @@ public class Medicine {
 
 	@ManyToOne
 	@JoinColumn(name = "pet_id")
-	@JsonIgnore
+	@JsonIgnoreProperties({"establishment","medicine","professional","device","image"})
 	private Pet pet;
 
 }

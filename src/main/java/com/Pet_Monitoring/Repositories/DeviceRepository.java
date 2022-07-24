@@ -1,5 +1,7 @@
 package com.Pet_Monitoring.Repositories;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
@@ -7,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.Pet_Monitoring.Dto.MessageDto;
 import com.Pet_Monitoring.Entities.Device;
+import com.Pet_Monitoring.Entities.Pet;
 
 @Repository
 public interface DeviceRepository extends CrudRepository<Device, Long> {
@@ -27,4 +30,5 @@ public interface DeviceRepository extends CrudRepository<Device, Long> {
 	
 	boolean existsByCode(String device_code);
 
+	List<Device> findByOrderByIdAsc();
 }

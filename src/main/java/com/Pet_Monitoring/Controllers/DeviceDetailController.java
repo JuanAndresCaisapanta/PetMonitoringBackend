@@ -5,19 +5,23 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.Pet_Monitoring.Dto.DeviceDetailDto;
+import com.Pet_Monitoring.Dto.Message;
 import com.Pet_Monitoring.Dto.MessageDto;
 import com.Pet_Monitoring.Entities.DeviceDetail;
 import com.Pet_Monitoring.Entities.Notification;
+import com.Pet_Monitoring.Entities.Pet;
 import com.Pet_Monitoring.Security.Entities.Users;
 import com.Pet_Monitoring.Security.Services.UserService;
 import com.Pet_Monitoring.Services.DeviceDetailService;
@@ -46,7 +50,14 @@ public class DeviceDetailController {
 		if (deviceDetail.isEmpty()) {
 			return ResponseEntity.noContent().build();
 		}
-		return ResponseEntity.ok(deviceDetail);
+		return new ResponseEntity<>(deviceDetail, HttpStatus.OK);
+	}
+	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@GetMapping("/device/{device_id}")
+	public ResponseEntity<List<DeviceDetail>> getByDeviceId(@PathVariable("device_id") Long device_id) {
+		List<DeviceDetail> deviceDetails = deviceDetailService.findAllByDeviceId(device_id);
+		return new ResponseEntity(deviceDetails, HttpStatus.OK);
 	}
 
 	@PostMapping(produces = "application/json")

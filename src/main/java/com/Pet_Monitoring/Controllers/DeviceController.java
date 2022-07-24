@@ -32,13 +32,10 @@ public class DeviceController {
 	@Autowired
 	DeviceService deviceService;
 
-	@GetMapping
+	@GetMapping(produces = "application/json")
 	public ResponseEntity<List<Device>> readAllDevice() {
-		List<Device> device = deviceService.readAllDevice();
-		if (device.isEmpty()) {
-			return ResponseEntity.noContent().build();
-		}
-		return ResponseEntity.ok(device);
+		List<Device> devices = deviceService.readAllDevice();
+		return new ResponseEntity<>(devices, HttpStatus.OK);
 	}
 
 	@GetMapping("/{device_id}")
