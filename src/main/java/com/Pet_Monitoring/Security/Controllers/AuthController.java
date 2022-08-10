@@ -6,6 +6,8 @@ import java.util.Collection;
 
 import javax.validation.Valid;
 
+import org.apache.commons.lang3.RandomStringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -38,8 +40,6 @@ import com.Pet_Monitoring.Security.Jwt.JwtProvider;
 import com.Pet_Monitoring.Security.Services.RoleService;
 import com.Pet_Monitoring.Security.Services.UserService;
 import com.Pet_Monitoring.Utils.Util;
-
-import antlr.Utils;
 
 @RestController
 @RequestMapping("/auth")
@@ -82,10 +82,6 @@ public class AuthController {
 	@PostMapping("/register")
 	public ResponseEntity<?> register(@Valid @ModelAttribute UserDto userDto, BindingResult bindingResult,
 			@RequestParam(required = false, value = "image") MultipartFile image) throws IOException {
-		/*
-		 * if (bindingResult.hasErrors()) return new ResponseEntity<>(new
-		 * Message("campos mal puestos o email inválido"), HttpStatus.BAD_REQUEST);
-		 */
 		if (userService.existsByUserEmail(userDto.getEmail()))
 			return new ResponseEntity<>(new Message("ese email ya existe"), HttpStatus.BAD_REQUEST);
 		Users user = new Users();
@@ -109,6 +105,22 @@ public class AuthController {
 		user.setRole(role);
 		userService.createUser(user);
 		return new ResponseEntity<>(new Message("usuario guardado"), HttpStatus.CREATED);
+	}
+
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@GetMapping("/forget-password/{email}")
+	public ResponseEntity<?> updatePassword(@PathVariable("email") String email) {
+		if (!userService.existsByUserEmail(email))
+			return new ResponseEntity(new Message("El email no existe"), HttpStatus.BAD_REQUEST);
+		if (StringUtils.isBlank(email))
+			return new ResponseEntity(new Message("el email es obligatorio"), HttpStatus.BAD_REQUEST);
+		String password = RandomStringUtils.randomAlphanumeric(6).toUpperCase();
+		Users user = userService.getByEmail(email).get();
+		user.setPassword(passwordEncoder.encode(password));
+		userService.updateUser(user);
+		userService.sendEmailUser("server.moniopet@gmail.com", user.getEmail(), "Contraseña Olvidada",
+				"Su nueva contraseña es: " + password);
+		return new ResponseEntity<>(new Message("Contraseña enviada"), HttpStatus.CREATED);
 	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })

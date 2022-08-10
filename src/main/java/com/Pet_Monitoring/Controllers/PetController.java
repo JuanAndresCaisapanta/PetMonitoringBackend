@@ -24,7 +24,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.Pet_Monitoring.Dto.PetDto;
 import com.Pet_Monitoring.Dto.Message;
-import com.Pet_Monitoring.Entities.Breed;
 import com.Pet_Monitoring.Entities.Pet;
 import com.Pet_Monitoring.Services.PetService;
 import com.Pet_Monitoring.Utils.Util;
@@ -130,7 +129,11 @@ public class PetController {
 	public ResponseEntity<?> deletePet(@PathVariable("pet_id") Long pet_id) {
 		if (!petService.existsByPetId(pet_id))
 			return new ResponseEntity<>(new Message("no existe"), HttpStatus.NOT_FOUND);
-		petService.deletePet(pet_id);
+		try {
+			petService.deletePet(pet_id);
+		} catch (Exception e) {
+		}
+		
 		return new ResponseEntity<>(new Message("Mascota borrada"), HttpStatus.OK);
 	}
 

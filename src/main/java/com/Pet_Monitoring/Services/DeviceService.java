@@ -22,7 +22,7 @@ public class DeviceService {
 	JavaMailSender javaMailSender;
 
 	public List<Device> readAllDevice() {
-		return (List<Device>) deviceRepository.findByOrderByIdAsc();
+		return (List<Device>) deviceRepository.findDeviceByOrderByIdAsc();
 	}
 
 	public void createDevice(Device device) {

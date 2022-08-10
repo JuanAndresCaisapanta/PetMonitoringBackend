@@ -6,7 +6,6 @@ import java.util.Optional;
 import org.springframework.data.repository.CrudRepository;
 
 import com.Pet_Monitoring.Entities.EstablishmentType;
-import com.Pet_Monitoring.Entities.Profession;
 
 public interface EstablishmentTypeRepository extends CrudRepository<EstablishmentType, Long> {
 	Optional<EstablishmentType> findByName(String establishmentType_name);

@@ -2,8 +2,6 @@ package com.Pet_Monitoring.Controllers;
 
 import java.util.List;
 
-import javax.transaction.Transactional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +19,6 @@ import com.Pet_Monitoring.Dto.Message;
 import com.Pet_Monitoring.Dto.MessageDto;
 import com.Pet_Monitoring.Entities.DeviceDetail;
 import com.Pet_Monitoring.Entities.Notification;
-import com.Pet_Monitoring.Entities.Pet;
 import com.Pet_Monitoring.Security.Entities.Users;
 import com.Pet_Monitoring.Security.Services.UserService;
 import com.Pet_Monitoring.Services.DeviceDetailService;
@@ -60,9 +57,22 @@ public class DeviceDetailController {
 		return new ResponseEntity(deviceDetails, HttpStatus.OK);
 	}
 
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@PostMapping(produces = "application/json")
 	public ResponseEntity<?> createDeviceDetail(@RequestBody @Validated DeviceDetailDto deviceDetailDto) {
 		DeviceDetail deviceDetail = new DeviceDetail();
+		if(deviceDetailDto.getLatitude()==0) {
+			return new ResponseEntity(new Message("latitud no valida"), HttpStatus.NOT_FOUND);
+		}
+		if(deviceDetailDto.getLongitude()==0) {
+			return new ResponseEntity(new Message("longitud no valida"), HttpStatus.NOT_FOUND);
+		}
+		if(deviceDetailDto.getTemperature()==0) {
+			return new ResponseEntity(new Message("temperatura no valida"), HttpStatus.NOT_FOUND);
+		}
+		if(deviceDetailDto.getBattery()==0) {
+			return new ResponseEntity(new Message("bateria no valida"), HttpStatus.NOT_FOUND);
+		}
 		deviceDetail.setLatitude(deviceDetailDto.getLatitude());
 		deviceDetail.setLongitude(deviceDetailDto.getLongitude());
 		deviceDetail.setTemperature(deviceDetailDto.getTemperature());

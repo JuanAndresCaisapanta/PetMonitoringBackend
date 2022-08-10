@@ -14,7 +14,8 @@ public class Util {
 
 	public static Date dateNow() {
 		LocalDateTime localDateTime = LocalDateTime.now();
-		Date date = Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant());
+		ZoneId zoneIdEc = ZoneId.of("America/Guayaquil");
+		Date date = Date.from(localDateTime.atZone(zoneIdEc).toInstant());
 		return date;
 	}
 

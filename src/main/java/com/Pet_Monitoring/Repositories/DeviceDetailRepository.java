@@ -6,7 +6,6 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 import com.Pet_Monitoring.Entities.DeviceDetail;
-import com.Pet_Monitoring.Entities.Pet;
 
 @Repository
 public interface DeviceDetailRepository extends CrudRepository<DeviceDetail, Long>{

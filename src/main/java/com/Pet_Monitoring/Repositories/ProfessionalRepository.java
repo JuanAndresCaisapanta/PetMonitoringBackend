@@ -8,7 +8,6 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.Pet_Monitoring.Dto.FullName;
-import com.Pet_Monitoring.Entities.Medicine;
 import com.Pet_Monitoring.Entities.Pet;
 import com.Pet_Monitoring.Entities.Professional;
 
@@ -17,7 +16,8 @@ public interface ProfessionalRepository extends CrudRepository<Professional, Lon
 
 	List<Professional> findAllByPetId(Long petId);
 
-	List<Professional> findByOrderByIdAsc();
+	@Query(value = "SELECT pr FROM Professional pr, Pet p, Users u WHERE pr.pet.id = p.id and p.users.id =u.id and u.status =true ORDER BY pr.id  asc")
+	List<Professional> findProfessionalByOrderByIdAsc();
 	
 	@Query(value = "SELECT distinct p FROM Professional pr, Pet p, Users u WHERE pr.pet.id=p.id and p.users.id=u.id and pr.profession.id = :profession_id and concat( pr.name,' ', pr.last_name) = :professional_fullName and u.id = :user_id")
 	List<Pet> getProfessionalPets(@Param("profession_id") Long profession_id,

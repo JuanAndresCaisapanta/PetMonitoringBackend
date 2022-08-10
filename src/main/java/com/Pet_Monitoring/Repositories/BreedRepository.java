@@ -7,7 +7,6 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 import com.Pet_Monitoring.Entities.Breed;
-import com.Pet_Monitoring.Entities.Profession;
 
 @Repository
 public interface BreedRepository extends CrudRepository<Breed, Long> {

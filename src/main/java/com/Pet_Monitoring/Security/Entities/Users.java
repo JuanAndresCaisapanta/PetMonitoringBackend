@@ -5,7 +5,6 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -17,6 +16,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.JoinColumn;
 import javax.validation.constraints.NotNull;
+
+import org.hibernate.annotations.Where;
 
 import com.Pet_Monitoring.Entities.Device;
 import com.Pet_Monitoring.Entities.Notification;
@@ -31,6 +32,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Where(clause = "status=true")
 public class Users {
 
 	@Id
@@ -62,6 +64,9 @@ public class Users {
 	@JsonFormat(pattern = "yyyy-MM-dd")
 	private Date update_date;
 
+	@Column(name = "status", columnDefinition = "boolean DEFAULT 'true'")
+	private Boolean status = true;
+	
 	@NotNull
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "users_role", joinColumns = @JoinColumn(name = "users_id"),
@@ -69,6 +74,7 @@ public class Users {
 	private  Collection<Role> role = new ArrayList<>();
 
 	@OneToMany(mappedBy = "users")
+	
 	private List<Pet> pet;
 
 	@OneToMany(mappedBy = "users")

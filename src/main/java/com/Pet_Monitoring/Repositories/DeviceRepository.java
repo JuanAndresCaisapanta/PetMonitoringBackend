@@ -9,7 +9,6 @@ import org.springframework.stereotype.Repository;
 
 import com.Pet_Monitoring.Dto.MessageDto;
 import com.Pet_Monitoring.Entities.Device;
-import com.Pet_Monitoring.Entities.Pet;
 
 @Repository
 public interface DeviceRepository extends CrudRepository<Device, Long> {
@@ -30,5 +29,6 @@ public interface DeviceRepository extends CrudRepository<Device, Long> {
 	
 	boolean existsByCode(String device_code);
 
-	List<Device> findByOrderByIdAsc();
+	@Query(value = "SELECT d FROM Device d, Users u WHERE d.users.id =u.id and u.status =true ORDER BY d.id  asc")
+	List<Device> findDeviceByOrderByIdAsc();
 }
