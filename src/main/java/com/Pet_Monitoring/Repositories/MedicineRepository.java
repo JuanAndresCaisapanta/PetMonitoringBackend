@@ -14,8 +14,6 @@ import com.Pet_Monitoring.Entities.Pet;
 @Repository
 public interface MedicineRepository extends CrudRepository<Medicine, Long>{
 	
-	List<Medicine> findAllByPetId(Long pet_id);
-	
 	@Query(value = "SELECT distinct p FROM Pet p, Medicine m, Users u WHERE m.pet.id=p.id and p.users.id=u.id and m.medicineType.id = :medicineType_id and m.name = :medicine_fullName and u.id = :user_id")
 	List<Pet> getMedicinePets(@Param("medicineType_id") Long medicineType_id,
 			@Param("medicine_fullName") String medicine_fullName, @Param("user_id") Long user_id);

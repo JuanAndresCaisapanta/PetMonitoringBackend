@@ -83,7 +83,7 @@ public class AuthController {
 	public ResponseEntity<?> register(@Valid @ModelAttribute UserDto userDto, BindingResult bindingResult,
 			@RequestParam(required = false, value = "image") MultipartFile image) throws IOException {
 		if (userService.existsByUserEmail(userDto.getEmail()))
-			return new ResponseEntity<>(new Message("ese email ya existe"), HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>(new Message("El correo electrónico ya existe"), HttpStatus.BAD_REQUEST);
 		Users user = new Users();
 
 		if (image == null) {
@@ -109,11 +109,11 @@ public class AuthController {
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@GetMapping("/forget-password/{email}")
-	public ResponseEntity<?> updatePassword(@PathVariable("email") String email) {
+	public ResponseEntity<?> forgetPassword(@PathVariable("email") String email) {
 		if (!userService.existsByUserEmail(email))
-			return new ResponseEntity(new Message("El email no existe"), HttpStatus.BAD_REQUEST);
+			return new ResponseEntity(new Message("El correo electrónico no existe"), HttpStatus.BAD_REQUEST);
 		if (StringUtils.isBlank(email))
-			return new ResponseEntity(new Message("el email es obligatorio"), HttpStatus.BAD_REQUEST);
+			return new ResponseEntity(new Message("El correo electrónico es obligatorio"), HttpStatus.BAD_REQUEST);
 		String password = RandomStringUtils.randomAlphanumeric(6).toUpperCase();
 		Users user = userService.getByEmail(email).get();
 		user.setPassword(passwordEncoder.encode(password));

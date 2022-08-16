@@ -20,10 +20,10 @@ import com.Pet_Monitoring.Services.NotificationService;
 @RequestMapping("/notification")
 @CrossOrigin(origins = "*")
 public class NotificationController {
-	
+
 	@Autowired
 	NotificationService notificationService;
-	
+
 	@GetMapping("user/{user_id}")
 	public ResponseEntity<?> findAllByUsersId(@PathVariable("user_id") Long user_id) {
 		List<Notification> notifications = notificationService.findAllByUsersId(user_id);
@@ -32,8 +32,13 @@ public class NotificationController {
 
 	@DeleteMapping("{notification_id}")
 	public ResponseEntity<?> deleteNotification(@PathVariable("notification_id") Long notification_id) {
-		notificationService.deleteNotification(notification_id);
-		return new ResponseEntity<>(new Message("Notificación borrada"), HttpStatus.OK);
+		try {
+			notificationService.deleteNotification(notification_id);
+			return new ResponseEntity<>(new Message("Notificación borrada"), HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(new Message("Error al eliminar la notificación"), HttpStatus.BAD_REQUEST);
+		}
+
 	}
-	
+
 }

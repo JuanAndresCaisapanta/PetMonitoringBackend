@@ -47,9 +47,6 @@ public class ProfessionalService {
 		return professionalRepository.existsById(professional_id);
 	}
 	
-	public List<Professional> findAllByPetId(Long pet_id) {
-		return professionalRepository.findAllByPetId(pet_id);
-	}
 	
 	public List<Pet> getProfessionalPets(Long profession_id,String professional_fullName, Long user_id){
 		return professionalRepository.getProfessionalPets(profession_id,professional_fullName,user_id);

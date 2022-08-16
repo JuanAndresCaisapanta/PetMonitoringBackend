@@ -20,16 +20,14 @@ public class Util {
 	}
 
 	public static byte[] extractBytes(String ImagePath) throws IOException {
-	    	URL url = new URL(ImagePath);
-	        URLConnection conn = url.openConnection();
-	        conn.setConnectTimeout(5000);
-	        conn.setReadTimeout(5000);
-	        conn.connect(); 
-
-	        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-	        IOUtils.copy(conn.getInputStream(), baos);
-
-	        return baos.toByteArray();
+		URL url = new URL(ImagePath);
+		URLConnection conn = url.openConnection();
+		conn.setConnectTimeout(5000);
+		conn.setReadTimeout(5000);
+		conn.connect();
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		IOUtils.copy(conn.getInputStream(), baos);
+		return baos.toByteArray();
 	}
 
 }

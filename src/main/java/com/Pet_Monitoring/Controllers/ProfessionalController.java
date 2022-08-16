@@ -44,15 +44,9 @@ public class ProfessionalController {
 	@GetMapping("/{professional_id}")
 	public ResponseEntity<Professional> getByProfessionalId(@PathVariable("professional_id") Long professional_id) {
 		if (!professionalService.existsByProfessionalId(professional_id))
-			return new ResponseEntity(new Message("no existe"), HttpStatus.NOT_FOUND);
+			return new ResponseEntity(new Message("El profesional no existe"), HttpStatus.NOT_FOUND);
 		Professional professional = professionalService.getOneProfessional(professional_id).get();
 		return new ResponseEntity<>(professional, HttpStatus.OK);
-	}
-
-	@GetMapping("pet/{pet_id}")
-	public ResponseEntity<?> getByPetId(@PathVariable("pet_id") Long pet_id) {
-		List<Professional> professionals = professionalService.findAllByPetId(pet_id);
-		return new ResponseEntity<>(professionals, HttpStatus.OK);
 	}
 
 	@GetMapping("pets/user/{user_id}")
@@ -75,10 +69,8 @@ public class ProfessionalController {
 	@PostMapping(produces = "application/json")
 	public ResponseEntity<?> createProfessional(@RequestBody @Validated ProfessionalDto professionalDto) {
 		if (StringUtils.isBlank(professionalDto.getName()))
-			return new ResponseEntity<>(new Message("El nombre es obligatorio"), HttpStatus.BAD_REQUEST);
-		// if (professionalService.existsByNombre(professionalDto.getNombre()))
-		// return new ResponseEntity<>(new Mensaje("ese nombre ya existe"),
-		// HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>(new Message("El nombre del profesional es obligatorio"),
+					HttpStatus.BAD_REQUEST);
 		Professional professional = new Professional();
 		professional.setName(professionalDto.getName());
 		professional.setLast_name(professionalDto.getLast_name());
@@ -97,14 +89,9 @@ public class ProfessionalController {
 			@RequestBody ProfessionalDto professionalDto) {
 		if (!professionalService.existsByProfessionalId(professional_id))
 			return new ResponseEntity<>(new Message("El profesional no existe"), HttpStatus.NOT_FOUND);
-		// if (profesionalesService.existsByNombre(professionalDto.getNombre())
-		// &&
-		// profesionalesService.getByNombre(professionalDto.getNombre()).get().getId()
-		// != id)
-		// return new ResponseEntity<>(new Mensaje("ese nombre ya existe"),
-		// HttpStatus.BAD_REQUEST);
 		if (StringUtils.isBlank(professionalDto.getName()))
-			return new ResponseEntity<>(new Message("El nombre es obligatorio"), HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>(new Message("El nombre del profesional es obligatorio"),
+					HttpStatus.BAD_REQUEST);
 		Professional professional = professionalService.getOneProfessional(professional_id).get();
 		professional.setName(professionalDto.getName());
 		professional.setLast_name(professionalDto.getLast_name());
@@ -121,15 +108,19 @@ public class ProfessionalController {
 	public ResponseEntity<?> deleteProfessional(@PathVariable("professional_id") Long professional_id) {
 		if (!professionalService.existsByProfessionalId(professional_id))
 			return new ResponseEntity<>(new Message("El profesional no existe"), HttpStatus.NOT_FOUND);
-		professionalService.deleteProfessional(professional_id);
-		return new ResponseEntity<>(new Message("Profesional borrado"), HttpStatus.OK);
+		try {
+			professionalService.deleteProfessional(professional_id);
+			return new ResponseEntity<>(new Message("Profesional borrado"), HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(new Message("Error al borrar el profesional"), HttpStatus.BAD_REQUEST);
+		}
 	}
 
 	@PostMapping("/emailProfessional")
 	public ResponseEntity<?> sendEmailProfessional(@RequestBody @Validated EmailDto emailDto) {
 		professionalService.sendEmailProfessional(emailDto.getFrom_email(), emailDto.getTo_email(),
 				emailDto.getSubject(), emailDto.getBody());
-		return new ResponseEntity<>(new Message("Email enviado"), HttpStatus.OK);
+		return new ResponseEntity<>(new Message("Correo electrónico enviado"), HttpStatus.OK);
 	}
 
 }

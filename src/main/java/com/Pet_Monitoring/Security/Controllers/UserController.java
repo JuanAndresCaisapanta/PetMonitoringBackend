@@ -51,9 +51,9 @@ public class UserController {
 	@GetMapping("/{email}")
 	public ResponseEntity<Users> getByUserEmail(@PathVariable("email") String email) {
 		if (!userService.existsByUserEmail(email))
-			return new ResponseEntity(new Message("El email no existe"), HttpStatus.BAD_REQUEST);
+			return new ResponseEntity(new Message("El correo electrónico no existe"), HttpStatus.BAD_REQUEST);
 		if (StringUtils.isBlank(email))
-			return new ResponseEntity(new Message("el email es obligatorio"), HttpStatus.BAD_REQUEST);
+			return new ResponseEntity(new Message("El correo electrónico es obligatorio"), HttpStatus.BAD_REQUEST);
 		Users user = userService.getByEmail(email).get();
 		return new ResponseEntity(user, HttpStatus.OK);
 	}
@@ -62,7 +62,7 @@ public class UserController {
 	@GetMapping("/id/{user_id}")
 	public ResponseEntity<Users> getByUserId(@PathVariable("user_id") Long user_id) {
 		if (!userService.existsByUserId(user_id))
-			return new ResponseEntity(new Message("no existe"), HttpStatus.NOT_FOUND);
+			return new ResponseEntity(new Message("El usuario no existe"), HttpStatus.NOT_FOUND);
 		Users user = userService.getByUserId(user_id).get();
 		return new ResponseEntity(user, HttpStatus.OK);
 	}
@@ -75,9 +75,9 @@ public class UserController {
 			return new ResponseEntity(new Message("no existe"), HttpStatus.NOT_FOUND);
 		if (userService.existsByUserEmail(userDto.getEmail())
 				&& userService.getByEmail(userDto.getEmail()).get().getId() != user_id)
-			return new ResponseEntity(new Message("El email no esta disponible"), HttpStatus.BAD_REQUEST);
+			return new ResponseEntity(new Message("El correo electrónico no esta disponible"), HttpStatus.BAD_REQUEST);
 		if (StringUtils.isBlank(userDto.getEmail()))
-			return new ResponseEntity(new Message("el email es obligatorio"), HttpStatus.BAD_REQUEST);
+			return new ResponseEntity(new Message("El correo electrónico es obligatorio"), HttpStatus.BAD_REQUEST);
 		Users user = userService.getByUserId(user_id).get();
 		user.setName(userDto.getName());
 		user.setLast_name(userDto.getLast_name());
@@ -106,10 +106,14 @@ public class UserController {
 	}
 
 	@DeleteMapping("/{user_id}")
-	public ResponseEntity<?> deletePet(@PathVariable("user_id") Long user_id) {
+	public ResponseEntity<?> deleteUser(@PathVariable("user_id") Long user_id) {
 		if (!userService.existsByUserId(user_id))
 			return new ResponseEntity<>(new Message("no existe"), HttpStatus.NOT_FOUND);
+		try {
 		userService.deleteUser(user_id);
 		return new ResponseEntity<>(new Message("Usuario borrado"), HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(new Message("Error al borrar el usuario"), HttpStatus.OK);
+		}
 	}
 }

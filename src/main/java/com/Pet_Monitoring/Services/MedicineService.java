@@ -35,10 +35,6 @@ public class MedicineService {
 		medicineRepository.deleteById(medicine_id);
 	}
 
-	public List<Medicine> findAllByPetId(Long pet_id) {
-		return medicineRepository.findAllByPetId(pet_id);
-	}
-
 	public Optional<Medicine> getOneMedicine(Long medicine_id) {
 		return medicineRepository.findById(medicine_id);
 	}

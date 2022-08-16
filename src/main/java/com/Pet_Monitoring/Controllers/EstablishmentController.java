@@ -78,10 +78,8 @@ public class EstablishmentController {
 		if (bindingResult.hasErrors())
 			return new ResponseEntity<>(new Message("Campos invalidos"), HttpStatus.BAD_REQUEST);
 		if (StringUtils.isBlank(establishmentDto.getName()))
-			return new ResponseEntity<>(new Message("El nombre es obligatorio"), HttpStatus.BAD_REQUEST);
-		// if (StringUtils.isBlank(deviceDto.getCode()))
-		// return new ResponseEntity<>(new Message("El codigo es incorrecto"),
-		// HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>(new Message("El nombre del establecimiento es obligatorio"),
+					HttpStatus.BAD_REQUEST);
 		Establishment establishment = new Establishment();
 		establishment.setName(establishmentDto.getName());
 		establishment.setAddress(establishmentDto.getAddress());
@@ -99,11 +97,12 @@ public class EstablishmentController {
 	public ResponseEntity<?> update(@PathVariable("establishment_id") Long establishment_id,
 			@RequestBody EstablishmentDto establishmentDto, BindingResult bindingResult) {
 		if (!establishmentService.existsByEstablishmentId(establishment_id))
-			return new ResponseEntity<>(new Message("No existe"), HttpStatus.NOT_FOUND);
+			return new ResponseEntity<>(new Message("El establecimiento no existe"), HttpStatus.NOT_FOUND);
 		if (bindingResult.hasErrors())
 			return new ResponseEntity<>(new Message("Campos invalidos"), HttpStatus.BAD_REQUEST);
 		if (StringUtils.isBlank(establishmentDto.getName()))
-			return new ResponseEntity<>(new Message("El nombre es obligatorio"), HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>(new Message("El nombre del establecimiento es obligatorio"),
+					HttpStatus.BAD_REQUEST);
 		Establishment establishment = establishmentService.getOneEstablishment(establishment_id).get();
 		establishment.setName(establishmentDto.getName());
 		establishment.setAddress(establishmentDto.getAddress());
@@ -120,15 +119,19 @@ public class EstablishmentController {
 	public ResponseEntity<?> delete(@PathVariable("establishment_id") Long establishment_id) {
 		if (!establishmentService.existsByEstablishmentId(establishment_id))
 			return new ResponseEntity<>(new Message("No existe"), HttpStatus.NOT_FOUND);
-		establishmentService.deleteEstablishment(establishment_id);
-		return new ResponseEntity<>(new Message("Establecimiento borrado"), HttpStatus.OK);
+		try {
+			establishmentService.deleteEstablishment(establishment_id);
+			return new ResponseEntity<>(new Message("Establecimiento borrado"), HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(new Message("Error al eliminar el establecimiento"), HttpStatus.BAD_REQUEST);
+		}
 	}
 
 	@PostMapping("/emailEstablishment")
 	public ResponseEntity<?> sendEmailEstablishment(@RequestBody @Validated EmailDto emailDto) {
 		establishmentService.sendEmailEstablishment(emailDto.getFrom_email(), emailDto.getTo_email(),
 				emailDto.getSubject(), emailDto.getBody());
-		return new ResponseEntity<>(new Message("Email enviado"), HttpStatus.OK);
+		return new ResponseEntity<>(new Message("Correo electrónico enviado"), HttpStatus.OK);
 	}
 
 }

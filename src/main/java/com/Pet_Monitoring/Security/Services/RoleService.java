@@ -20,20 +20,5 @@ public class RoleService {
 	public Optional<Role> getByRoleName(RoleName name) {
 		return roleRepository.findByName(name);
 	}
-
-	public void createRole(Role role) {
-		roleRepository.save(role);
-	}
-
-	/*
-	 * public void addRoleToUser(String email, String roleName) {
-	 * 
-	 * User user = userRepository.findByEmail(email); Role role =
-	 * roleRepository.findByName(roleName);
-	 * 
-	 * user.getRole().add(role);
-	 * 
-	 * }
-	 */
-
+	
 }

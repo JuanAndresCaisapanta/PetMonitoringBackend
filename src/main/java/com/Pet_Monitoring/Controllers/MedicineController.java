@@ -53,12 +53,6 @@ public class MedicineController {
 		return new ResponseEntity<>(medicine, HttpStatus.OK);
 	}
 
-	@GetMapping("pet/{pet_id}")
-	public ResponseEntity<?> getByPetId(@PathVariable("pet_id") Long pet_id) {
-		List<Medicine> medicine = medicineService.findAllByPetId(pet_id);
-		return new ResponseEntity<>(medicine, HttpStatus.OK);
-	}
-
 	@GetMapping("pets/user/{user_id}")
 	public ResponseEntity<?> getMedicineFullNames(@PathVariable("user_id") Long user_id) {
 		List<FullName> fullName = medicineService.getMedicineFullNames(user_id);
@@ -66,7 +60,7 @@ public class MedicineController {
 	}
 
 	@GetMapping("pets/{medicineType_id}/{medicine_fullName}/{user_id}")
-	public ResponseEntity<List<Pet>> getEstablishmentPets(@PathVariable("medicineType_id") Long medicineType_id,
+	public ResponseEntity<List<Pet>> getMedicinePets(@PathVariable("medicineType_id") Long medicineType_id,
 			@PathVariable("medicine_fullName") String medicine_fullName, @PathVariable("user_id") Long user_id) {
 		List<Pet> pets = medicineService.getMedicinePets(medicineType_id, medicine_fullName, user_id);
 		if (pets.isEmpty()) {
@@ -105,14 +99,15 @@ public class MedicineController {
 			@ModelAttribute MedicineDto medicineDto,
 			@RequestParam(required = false, value = "image") MultipartFile image) throws IOException {
 		if (!medicineService.existsByMedicineId(medicine_id))
-			return new ResponseEntity<>(new Message("no existe"), HttpStatus.NOT_FOUND);
+			return new ResponseEntity<>(new Message("La medicina no existe"), HttpStatus.NOT_FOUND);
 		if (StringUtils.isBlank(medicineDto.getManufacturer()))
-			return new ResponseEntity<>(new Message("el nombre es obligatorio"), HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>(new Message("El nombre de la medicina es obligatorio"), HttpStatus.BAD_REQUEST);
 		Medicine medicine = medicineService.getOneMedicine(medicine_id).get();
 		medicine.setName(medicineDto.getName());
 		medicine.setManufacturer(medicineDto.getManufacturer());
 		medicine.setBatch(medicineDto.getBatch());
 		medicine.setApplicator(medicineDto.getApplicator());
+		medicine.setDescription(medicineDto.getDescription());
 		medicine.setProduction_date(medicineDto.getProduction_date());
 		medicine.setExpiration_date(medicineDto.getExpiration_date());
 		medicine.setApplication_date(medicineDto.getApplication_date());
@@ -129,8 +124,12 @@ public class MedicineController {
 	@DeleteMapping("/{medicine_id}")
 	public ResponseEntity<?> deleteMedicine(@PathVariable("medicine_id") Long medicine_id) {
 		if (!medicineService.existsByMedicineId(medicine_id))
-			return new ResponseEntity<>(new Message("no existe"), HttpStatus.NOT_FOUND);
-		medicineService.deleteMedicine(medicine_id);
-		return new ResponseEntity<>(new Message("Medicina borrada"), HttpStatus.OK);
+			return new ResponseEntity<>(new Message("La medicina no existe"), HttpStatus.NOT_FOUND);
+		try {
+			medicineService.deleteMedicine(medicine_id);
+			return new ResponseEntity<>(new Message("Medicina borrada"), HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(new Message("Error al borrar la medicina"), HttpStatus.BAD_REQUEST);
+		}
 	}
 }

@@ -14,8 +14,6 @@ import com.Pet_Monitoring.Entities.Professional;
 @Repository
 public interface ProfessionalRepository extends CrudRepository<Professional, Long> {
 
-	List<Professional> findAllByPetId(Long petId);
-
 	@Query(value = "SELECT pr FROM Professional pr, Pet p, Users u WHERE pr.pet.id = p.id and p.users.id =u.id and u.status =true ORDER BY pr.id  asc")
 	List<Professional> findProfessionalByOrderByIdAsc();
 	

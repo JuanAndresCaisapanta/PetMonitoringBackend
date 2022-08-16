@@ -41,30 +41,21 @@ public class EstablishmentTypeController {
 	public ResponseEntity<EstablishmentType> getByEstablishmentTypeId(
 			@PathVariable("establishmentType_id") Long establishmentType_id) {
 		if (!establishmentTypeService.existsByEstablishmentTypeId(establishmentType_id))
-			return new ResponseEntity(new Message("no existe"), HttpStatus.NOT_FOUND);
+			return new ResponseEntity(new Message("El tipo de establecimiento no existe"), HttpStatus.NOT_FOUND);
 		EstablishmentType establishmentType = establishmentTypeService.getOneEstablishmentType(establishmentType_id)
 				.get();
 		return new ResponseEntity<>(establishmentType, HttpStatus.OK);
 	}
 
-	/*
-	 * @SuppressWarnings({ "unchecked", "rawtypes" })
-	 * 
-	 * @GetMapping("/listanombre/{nombre}") public ResponseEntity<Species>
-	 * getByNombre(@PathVariable("nombre") String nombre) { if
-	 * (!especiesService.existsByNombre(nombre)) return new ResponseEntity(new
-	 * Mensaje("no existe"), HttpStatus.NOT_FOUND); Species especie =
-	 * especiesService.getByNombre(nombre).get(); return new
-	 * ResponseEntity<>(especie, HttpStatus.OK); }
-	 */
-
 	@PostMapping(produces = "application/json")
 	public ResponseEntity<?> createEstablishmentType(
 			@RequestBody @Validated EstablishmentTypeDto establishmentTypeDto) {
 		if (StringUtils.isBlank(establishmentTypeDto.getName()))
-			return new ResponseEntity<>(new Message("El nombre es obligatorio"), HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>(new Message("El nombre del tipo de establecimiento es obligatorio"),
+					HttpStatus.BAD_REQUEST);
 		if (establishmentTypeService.existsByEstablishmentTypeName(establishmentTypeDto.getName()))
-			return new ResponseEntity<>(new Message("Ese nombre ya existe"), HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>(new Message("El nombre del tipo de establecimiento ya existe"),
+					HttpStatus.BAD_REQUEST);
 		EstablishmentType establishmentType = new EstablishmentType();
 		establishmentType.setName(establishmentTypeDto.getName());
 		establishmentTypeService.createEstablishmentType(establishmentType);
@@ -75,13 +66,15 @@ public class EstablishmentTypeController {
 	public ResponseEntity<?> updateEstablishmentType(@PathVariable("establishmentType_id") Long establishmentType_id,
 			@RequestBody EstablishmentTypeDto establishmentTypeDto) {
 		if (!establishmentTypeService.existsByEstablishmentTypeId(establishmentType_id))
-			return new ResponseEntity<>(new Message("No existe"), HttpStatus.NOT_FOUND);
+			return new ResponseEntity<>(new Message("El tipo de establecimiento no existe"), HttpStatus.NOT_FOUND);
 		if (establishmentTypeService.existsByEstablishmentTypeName(establishmentTypeDto.getName())
 				&& establishmentTypeService.findByEstablishmentTypeName(establishmentTypeDto.getName()).get()
 						.getId() != establishmentType_id)
-			return new ResponseEntity<>(new Message("Ese nombre ya existe"), HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>(new Message("El nombre del tipo de establecimiento ya existe"),
+					HttpStatus.BAD_REQUEST);
 		if (StringUtils.isBlank(establishmentTypeDto.getName()))
-			return new ResponseEntity<>(new Message("El nombre es obligatorio"), HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>(new Message("El nombre del tipo de establecimiento es obligatorio"),
+					HttpStatus.BAD_REQUEST);
 		EstablishmentType establishmentType = establishmentTypeService.getOneEstablishmentType(establishmentType_id)
 				.get();
 		establishmentType.setName(establishmentTypeDto.getName());
@@ -92,9 +85,15 @@ public class EstablishmentTypeController {
 	@DeleteMapping("/{establishmentType_id}")
 	public ResponseEntity<?> deleteEstablishmentType(@PathVariable("establishmentType_id") Long establishmentType_id) {
 		if (!establishmentTypeService.existsByEstablishmentTypeId(establishmentType_id))
-			return new ResponseEntity<>(new Message("No existe"), HttpStatus.NOT_FOUND);
-		establishmentTypeService.deleteEstablishmentType(establishmentType_id);
-		return new ResponseEntity<>(new Message("Tipo de establecimiento borrado"), HttpStatus.OK);
+			return new ResponseEntity<>(new Message("El tipo de establecimiento no existe"), HttpStatus.NOT_FOUND);
+		try {
+			establishmentTypeService.deleteEstablishmentType(establishmentType_id);
+			return new ResponseEntity<>(new Message("Tipo de establecimiento borrado"), HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(new Message("Error al borrar el tipo de establecimiento"),
+					HttpStatus.BAD_REQUEST);
+		}
+
 	}
 
 }

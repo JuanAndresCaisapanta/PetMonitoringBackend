@@ -47,25 +47,13 @@ public class DeviceController {
 		return ResponseEntity.ok(device);
 	}
 
-	/*
-	 * @RequestMapping(value = "/time/{id}", method = RequestMethod.GET, produces =
-	 * "application/json") public ResponseEntity<?> getTimeById(@PathVariable("id")
-	 * int id) {
-	 * 
-	 * Device device = deviceService.getOne(id).get(); return new
-	 * ResponseEntity<>("{ \"407B49\":{ \"downlinkData\": \"000000000000000A\"} }",
-	 * HttpStatus.OK);
-	 * 
-	 * }
-	 */
-
 	@PostMapping
 	public ResponseEntity<?> createDevice(@RequestBody @Validated DeviceDto deviceDto, BindingResult bindingResult) {
 		Device device = new Device();
 		if (bindingResult.hasErrors())
 			return new ResponseEntity<>(new Message("Campos invalidos"), HttpStatus.BAD_REQUEST);
 		if (StringUtils.isBlank(deviceDto.getCode()))
-			return new ResponseEntity<>(new Message("El codigo es necesario"), HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>(new Message("El código es necesario"), HttpStatus.BAD_REQUEST);
 		if (deviceService.existsByDeviceCode(deviceDto.getCode()))
 			return new ResponseEntity<>(new Message("El código no esta disponible"), HttpStatus.BAD_REQUEST);
 		device.setCode(deviceDto.getCode());
@@ -81,7 +69,8 @@ public class DeviceController {
 		if (!deviceService.existsByDeviceId(device_id))
 			return new ResponseEntity<>(new Message("El dispositivo no existe"), HttpStatus.NOT_FOUND);
 		if (StringUtils.isBlank(deviceDto.getCallback_code()))
-			return new ResponseEntity<>(new Message("El callback es obligatorio"), HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>(new Message("El callback del dispostivo es obligatorio"),
+					HttpStatus.BAD_REQUEST);
 		Device device = deviceService.getOneDevice(device_id).get();
 		device.setCallback_code(deviceDto.getCallback_code());
 		deviceService.updateDevice(device);
@@ -91,9 +80,13 @@ public class DeviceController {
 	@DeleteMapping("{device_id}")
 	public ResponseEntity<?> deleteDevice(@PathVariable("device_id") Long device_id) {
 		if (!deviceService.existsByDeviceId(device_id))
-			return new ResponseEntity<>(new Message("No existe"), HttpStatus.NOT_FOUND);
-		deviceService.deleteDevice(device_id);
-		return new ResponseEntity<>(new Message("Dispositivo borrado"), HttpStatus.OK);
+			return new ResponseEntity<>(new Message("El dispositivo no existe"), HttpStatus.NOT_FOUND);
+		try {
+			deviceService.deleteDevice(device_id);
+			return new ResponseEntity<>(new Message("Dispositivo borrado"), HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(new Message("Error al borrar el dispostivo"), HttpStatus.BAD_REQUEST);
+		}
 	}
 
 }
