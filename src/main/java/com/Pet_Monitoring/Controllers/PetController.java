@@ -52,7 +52,7 @@ public class PetController {
 	}
 
 	@GetMapping("users/{user_id}")
-	public ResponseEntity<?> getBySpeciesId(@PathVariable("user_id") Long user_id) {
+	public ResponseEntity<?> getByUsersId(@PathVariable("user_id") Long user_id) {
 		List<Pet> pets = petService.findAllByUsersId(user_id);
 		return new ResponseEntity<>(pets, HttpStatus.OK);
 	}

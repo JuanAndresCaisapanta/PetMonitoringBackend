@@ -32,4 +32,5 @@ public class Profession {
 	@OneToMany(mappedBy = "profession")
 	@JsonIgnore
 	private List<Professional> professional;
+	
 }

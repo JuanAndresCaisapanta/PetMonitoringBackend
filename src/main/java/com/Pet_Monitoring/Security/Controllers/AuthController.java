@@ -85,7 +85,6 @@ public class AuthController {
 		if (userService.existsByUserEmail(userDto.getEmail()))
 			return new ResponseEntity<>(new Message("El correo electrónico ya existe"), HttpStatus.BAD_REQUEST);
 		Users user = new Users();
-
 		if (image == null) {
 			user.setImage(Util.extractBytes("https://i.ibb.co/6DX9405/user.png"));
 		} else {

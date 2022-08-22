@@ -21,62 +21,54 @@ import com.Pet_Monitoring.Security.Services.UserDetailsServiceImp;
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-public class MainSecurity extends WebSecurityConfigurerAdapter{
-	
+public class MainSecurity extends WebSecurityConfigurerAdapter {
+
 	@Autowired
-    UserDetailsServiceImp userDetailsService;
+	UserDetailsServiceImp userDetailsService;
 
-    @Autowired
-    JwtEntryPoint jwtEntryPoint;
+	@Autowired
+	JwtEntryPoint jwtEntryPoint;
 
-    @Bean
-    public JwtTokenFilter jwtTokenFilter(){
-        return new JwtTokenFilter();
-    }
+	@Bean
+	public JwtTokenFilter jwtTokenFilter() {
+		return new JwtTokenFilter();
+	}
 
-    @Bean
-    public PasswordEncoder passwordEncoder(){
-        return new BCryptPasswordEncoder();
-    }
+	@Bean
+	public PasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
 
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
-    }
+	@Override
+	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+		auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
+	}
 
-    @Bean
-    @Override
-    public AuthenticationManager authenticationManagerBean() throws Exception {
-        return super.authenticationManagerBean();
-    }
+	@Bean
+	@Override
+	public AuthenticationManager authenticationManagerBean() throws Exception {
+		return super.authenticationManagerBean();
+	}
 
-    @Override
-    protected AuthenticationManager authenticationManager() throws Exception {
-        return super.authenticationManager();
-    }
+	@Override
+	protected AuthenticationManager authenticationManager() throws Exception {
+		return super.authenticationManager();
+	}
 
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http.cors().and().csrf().disable()
-                .authorizeRequests()
-                .antMatchers("/auth/**").permitAll()
-                .antMatchers("/user/**").hasAnyAuthority("User","Admin")
-                .antMatchers("/pet/**").hasAnyAuthority("User","Admin")
-                .antMatchers("/device/**").hasAnyAuthority("User","Admin")
-                .antMatchers("/species/**").hasAnyAuthority("User","Admin")
-                .antMatchers("/breed/**").hasAnyAuthority("User","Admin")
-                .antMatchers("/medicine/**").hasAnyAuthority("User","Admin")
-                .antMatchers("/professional/**").hasAnyAuthority("User","Admin")
-                .antMatchers("/profession/**").hasAnyAuthority("User","Admin")
-                .antMatchers("/notification/**").hasAnyAuthority("User","Admin")
-                .antMatchers("/medicineType/**").hasAnyAuthority("User","Admin")
-                .antMatchers("/device-detail/**").hasAnyAuthority("User","Admin")
-                .anyRequest().authenticated()
-                .and()
-                .exceptionHandling().authenticationEntryPoint(jwtEntryPoint)
-                .and()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-        http.addFilterBefore(jwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
-    }
-    
+	@Override
+	protected void configure(HttpSecurity http) throws Exception {
+		http.cors().and().csrf().disable().authorizeRequests().antMatchers("/auth/**").permitAll()
+				.antMatchers("/user/**").hasAnyAuthority("User", "Admin").antMatchers("/pet/**")
+				.hasAnyAuthority("User", "Admin").antMatchers("/device/**").hasAnyAuthority("User", "Admin")
+				.antMatchers("/species/**").hasAnyAuthority("User", "Admin").antMatchers("/breed/**")
+				.hasAnyAuthority("User", "Admin").antMatchers("/medicine/**").hasAnyAuthority("User", "Admin")
+				.antMatchers("/professional/**").hasAnyAuthority("User", "Admin").antMatchers("/profession/**")
+				.hasAnyAuthority("User", "Admin").antMatchers("/notification/**").hasAnyAuthority("User", "Admin")
+				.antMatchers("/medicineType/**").hasAnyAuthority("User", "Admin").antMatchers("/device-detail/**")
+				.hasAnyAuthority("User", "Admin").anyRequest().authenticated().and().exceptionHandling()
+				.authenticationEntryPoint(jwtEntryPoint).and().sessionManagement()
+				.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+		http.addFilterBefore(jwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
+	}
+
 }

@@ -38,7 +38,6 @@ public class NotificationController {
 		} catch (Exception e) {
 			return new ResponseEntity<>(new Message("Error al eliminar la notificación"), HttpStatus.BAD_REQUEST);
 		}
-
 	}
 
 }

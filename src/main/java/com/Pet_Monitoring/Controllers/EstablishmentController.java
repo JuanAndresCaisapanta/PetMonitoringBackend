@@ -36,7 +36,7 @@ public class EstablishmentController {
 	EstablishmentService establishmentService;
 
 	@GetMapping
-	public ResponseEntity<List<Establishment>> readallEstablishment() {
+	public ResponseEntity<List<Establishment>> readAllEstablishment() {
 		List<Establishment> device = establishmentService.readAllEstablishment();
 		if (device.isEmpty()) {
 			return ResponseEntity.noContent().build();
@@ -94,7 +94,7 @@ public class EstablishmentController {
 	}
 
 	@PutMapping("/{establishment_id}")
-	public ResponseEntity<?> update(@PathVariable("establishment_id") Long establishment_id,
+	public ResponseEntity<?> updateEstablishment(@PathVariable("establishment_id") Long establishment_id,
 			@RequestBody EstablishmentDto establishmentDto, BindingResult bindingResult) {
 		if (!establishmentService.existsByEstablishmentId(establishment_id))
 			return new ResponseEntity<>(new Message("El establecimiento no existe"), HttpStatus.NOT_FOUND);
@@ -116,7 +116,7 @@ public class EstablishmentController {
 	}
 
 	@DeleteMapping("/{establishment_id}")
-	public ResponseEntity<?> delete(@PathVariable("establishment_id") Long establishment_id) {
+	public ResponseEntity<?> deleteEstablishment(@PathVariable("establishment_id") Long establishment_id) {
 		if (!establishmentService.existsByEstablishmentId(establishment_id))
 			return new ResponseEntity<>(new Message("No existe"), HttpStatus.NOT_FOUND);
 		try {

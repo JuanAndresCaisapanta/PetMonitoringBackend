@@ -36,12 +36,6 @@ public class SpeciesController {
 		return new ResponseEntity<>(species, HttpStatus.OK);
 	}
 
-	@GetMapping("/last_id")
-	public ResponseEntity<Species> findTopByOrderBySpeciesIdDesc() {
-		Species species = speciesService.findTopByOrderBySpeciesIdDesc().get();
-		return new ResponseEntity<>(species, HttpStatus.OK);
-	}
-
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@GetMapping("/{species_id}")
 	public ResponseEntity<Species> getBySpeciesId(@PathVariable("species_id") Long species_id) {

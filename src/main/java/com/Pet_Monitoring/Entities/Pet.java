@@ -46,7 +46,6 @@ public class Pet {
 	@NotNull
 	private String sex;
 	
-	
 	private Boolean sterilization;
 	
 	private byte[] image;
